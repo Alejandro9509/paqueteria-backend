@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RtpProGuiaEtiqueta" printOrder="Horizontal" pageWidth="283" pageHeight="425" orientation="Landscape" columnWidth="283" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="9e90107f-c023-4d8f-afa1-ac987ce45e37">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SOPO CALIDAD"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="cm"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="cm"/>
+	<parameter name="ID" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[exec usp_ObtenerDatosRptProGuiaEtiquetaRangosPQ $P{ID}]]>
+	</queryString>
+	<field name="IdGuia" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="IdGuia"/>
+		<property name="com.jaspersoft.studio.field.label" value="IdGuia"/>
+	</field>
+	<field name="FolioGuia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FolioGuia"/>
+		<property name="com.jaspersoft.studio.field.label" value="FolioGuia"/>
+	</field>
+	<field name="ctd" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ctd"/>
+		<property name="com.jaspersoft.studio.field.label" value="ctd"/>
+	</field>
+	<field name="NombreRemitente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NombreRemitente"/>
+		<property name="com.jaspersoft.studio.field.label" value="NombreRemitente"/>
+	</field>
+	<field name="TelefonoRemitente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TelefonoRemitente"/>
+		<property name="com.jaspersoft.studio.field.label" value="TelefonoRemitente"/>
+	</field>
+	<field name="DomicilioRemitente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DomicilioRemitente"/>
+		<property name="com.jaspersoft.studio.field.label" value="DomicilioRemitente"/>
+	</field>
+	<field name="Origen" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Origen"/>
+		<property name="com.jaspersoft.studio.field.label" value="Origen"/>
+	</field>
+	<field name="NombreDestinatario" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NombreDestinatario"/>
+		<property name="com.jaspersoft.studio.field.label" value="NombreDestinatario"/>
+	</field>
+	<field name="TelefonoDestinatario" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TelefonoDestinatario"/>
+		<property name="com.jaspersoft.studio.field.label" value="TelefonoDestinatario"/>
+	</field>
+	<field name="DomicilioDestinatario" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DomicilioDestinatario"/>
+		<property name="com.jaspersoft.studio.field.label" value="DomicilioDestinatario"/>
+	</field>
+	<field name="Destino" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Destino"/>
+		<property name="com.jaspersoft.studio.field.label" value="Destino"/>
+	</field>
+	<field name="Partida" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="PaqueteIndex"/>
+		<property name="com.jaspersoft.studio.field.label" value="PaqueteIndex"/>
+	</field>
+	<field name="IdEmbarqueDetalle" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="IdEmbarqueDetalle"/>
+		<property name="com.jaspersoft.studio.field.label" value="IdEmbarqueDetalle"/>
+	</field>
+	<field name="Logo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Logo"/>
+		<property name="com.jaspersoft.studio.field.label" value="Logo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="SisParametros"/>
+	</field>
+	<field name="zonaOperativa" class="java.lang.String"/>
+	<field name="tipoEntrega" class="java.lang.String"/>
+	<field name="sucursalOrigen" class="java.lang.String"/>
+	<field name="sucursalDestino" class="java.lang.String"/>
+	<field name="PaqueteIndex" class="java.lang.Integer"/>
+	<variable name="SumPaquetes" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{ctd}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="425" splitType="Stretch">
+			<staticText>
+				<reportElement x="13" y="60" width="40" height="12" uuid="f828679c-3aa5-47f5-a5e5-43119e7f240a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[ORIGEN:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="170" y="366" width="84" height="39" uuid="517c61f5-4289-485e-9ca8-f412863e30b4"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Partida}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="ScaleFont">
+				<reportElement x="74" y="11" width="137" height="20" uuid="85a292ae-737f-4335-88ed-e73f8c0da342"/>
+				<textElement verticalAlignment="Middle" markup="styled">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FolioGuia}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RetainShape">
+				<reportElement x="20" y="11" width="53" height="47" uuid="c5753898-94d3-447d-affe-37880ff19fe3"/>
+				<imageExpression><![CDATA[new java.io.ByteArrayInputStream(org.apache.commons.codec.binary.Base64.decodeBase64($F{Logo}.getBytes()))]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="13" y="76" width="100" height="14" uuid="2b6147b3-c65a-423f-b28e-6e7320400e86"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[REMITENTE:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="13" y="90" width="253" height="86" uuid="87f8ade7-8db4-4fca-8270-fb49ee3500a1"/>
+			</rectangle>
+			<textField>
+				<reportElement x="13" y="92" width="234" height="21" uuid="a5a555c6-7f6c-47de-80cc-a78850023dd1">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NombreRemitente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="53" y="114" width="194" height="21" uuid="c5286db9-7f32-419e-b7c8-22b87d278c35">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TelefonoRemitente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="113" width="50" height="22" uuid="b4d9599b-ada2-493f-9431-c1e43e56a2dd">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<text><![CDATA[TEL:]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" x="73" y="136" width="186" height="40" uuid="42d03cbe-d3e4-43a5-b993-659a17dc3f47"/>
+				<textElement verticalAlignment="Top">
+					<font size="8"/>
+					<paragraph leftIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DomicilioRemitente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="135" width="70" height="22" uuid="90bdf287-22a4-46c9-92af-74bcd1018e2c">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<text><![CDATA[DIRECCIÓN:]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="13" y="180" width="234" height="14" uuid="8a75b579-9eb3-4193-9375-eebd8234cc09">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Origen}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="200" width="40" height="12" uuid="79c820cd-5155-4ec7-8b6c-05f8bca51b9a"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[DESTINO:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="13" y="217" width="254" height="96" uuid="acc1eaa4-1e06-4d41-b5d0-51c8ca1f8201"/>
+			</rectangle>
+			<textField>
+				<reportElement x="13" y="217" width="224" height="25" uuid="7e1507c3-9b29-464d-b121-dce0ed9e9806">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NombreDestinatario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="53" y="242" width="184" height="18" uuid="2f63df45-0e14-47b8-b301-0c6c3955ce34"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TelefonoDestinatario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="242" width="50" height="18" uuid="9a63c46d-16db-4cd8-8978-4f1c764e81b2">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<text><![CDATA[TEL:]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" x="73" y="260" width="186" height="33" uuid="2d03463e-66d4-44f4-b8b6-e22194a96650"/>
+				<textElement verticalAlignment="Top">
+					<font size="8"/>
+					<paragraph leftIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DomicilioDestinatario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="260" width="70" height="25" uuid="86f22e56-8a5a-4892-b3bb-a50b0255759e">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<text><![CDATA[DIRECCIÓN:]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" x="13" y="313" width="224" height="17" uuid="54db26f2-5902-492e-bb50-25617f2a670f">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Destino}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="13" y="293" width="27" height="20" uuid="6ca03e5d-4f40-4aed-869b-5a8dd21603bd">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<text><![CDATA[Z.O.:]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" x="40" y="293" width="219" height="20" uuid="338aab49-7215-4818-aa42-06121ee53830"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{zonaOperativa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="140" y="330" width="82" height="10" uuid="a792b27f-52f0-47c0-b7bc-93fd920de648">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<text><![CDATA[TIPO DE ENTREGA]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight">
+				<reportElement positionType="Float" x="140" y="340" width="82" height="16" uuid="a26e8036-4460-4b69-a24b-ffee9efc784b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+					<paragraph leftIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipoEntrega}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="123" y="375" width="44" height="20" uuid="45e92ec1-8854-406f-b61e-1b9bd91a3c33">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<text><![CDATA[PARTIDA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="53" y="60" width="138" height="12" uuid="60f00a08-1e35-4db1-81e6-aad1c9b55531">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sucursalOrigen}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="53" y="200" width="194" height="12" uuid="fdde84cb-9d10-4351-9356-cf2e83603125">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sucursalDestino}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

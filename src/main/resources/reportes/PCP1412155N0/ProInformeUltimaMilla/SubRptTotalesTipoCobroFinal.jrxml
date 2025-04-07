@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SubRptTotalesTipoCobroFinal" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="0252d059-6237-459c-b33f-04bfc4056f2b">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PLATEROS CALIDAD"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<parameter name="Id_Guia" class="java.lang.String"/>
+	<parameter name="IdUltimaMilla" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[$P{IdUltimaMilla}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="BaseDir" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:\\Users\\CertuitLap58\\JaspersoftWorkspace\\MyReports\\GM-PQ-Reportes\\ADI880815DA7\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[EXEC usp_ObtenerTotalCobrosRutaUltimaMillaPQ  $P{IdUltimaMilla}]]>
+	</queryString>
+	<field name="total" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="total"/>
+		<property name="com.jaspersoft.studio.field.label" value="total"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField textAdjust="StretchHeight" pattern="¤#,##0.###;¤(-#,##0.###)" isBlankWhenNull="true">
+				<reportElement x="120" y="0" width="63" height="15" isPrintWhenDetailOverflows="true" uuid="a8e3462d-d6dc-4108-ae7b-f2e4689f1e2f">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="0" rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="37" y="0" width="83" height="15" uuid="01d33db3-9502-4882-9fd2-ba65ff128bcd">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[TOTAL COBROS]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SubRptGuiaDetallePaquete" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="0252d059-6237-459c-b33f-04bfc4056f2b">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GM-PQ-Certuit"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="Id_Guia" class="java.lang.String"/>
+	<parameter name="IdInforme" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[$P{IdInforme}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="BaseDir" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[EXEC usp_RptInformeTotalesPQ $P{IdInforme}]]>
+	</queryString>
+	<field name="flete" class="java.math.BigDecimal"/>
+	<field name="seguro" class="java.math.BigDecimal"/>
+	<field name="entrega" class="java.math.BigDecimal"/>
+	<field name="recoleccion" class="java.math.BigDecimal"/>
+	<field name="carga" class="java.math.BigDecimal"/>
+	<field name="descarga" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="70" height="15" uuid="3a2f9c88-ed5d-458d-8d27-f1d0d3a6de17">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+					<paragraph leftIndent="0" rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[Flete]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField textAdjust="StretchHeight" pattern="$#,##0.00#;$(#,##0.00#)" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="70" height="15" uuid="129732e0-440b-4290-8af1-08365ce3e6de">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2" rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{flete}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

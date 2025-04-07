@@ -1,0 +1,40 @@
+{
+  "groups": [
+    {
+      "name": "app",
+      "type": "com.certuit.base.config.AppProperties",
+      "sourceType": "com.certuit.base.config.AppProperties"
+    },
+    {
+      "name": "app.auth",
+      "type": "com.certuit.base.config.AppProperties$Auth",
+      "sourceType": "com.certuit.base.config.AppProperties",
+      "sourceMethod": "getAuth()"
+    },
+    {
+      "name": "app.oauth2",
+      "type": "com.certuit.base.config.AppProperties$OAuth2",
+      "sourceType": "com.certuit.base.config.AppProperties",
+      "sourceMethod": "getOauth2()"
+    },
+    {
+      "name": "spring.datasource",
+      "type": "javax.sql.DataSource",
+      "sourceType": "com.certuit.base.config.AppDBConfig",
+      "sourceMethod": "dataSource()"
+    },
+    {
+      "name": "storage",
+      "type": "com.certuit.base.config.StorageProperties",
+      "sourceType": "com.certuit.base.config.StorageProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "storage.location",
+      "type": "java.lang.String",
+      "sourceType": "com.certuit.base.config.StorageProperties"
+    }
+  ],
+  "hints": []
+}

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2021-08-27T16:51:01 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SubReporteImporteEnLetras" pageWidth="120" pageHeight="120" columnWidth="120" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e0d10034-da41-496e-90fd-b3b4810f473f">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GM-PQ-Certuit"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="IMPORTE" class="java.math.BigDecimal"/>
+	<queryString>
+		<![CDATA[select dbo.Uf_GetNumeroEnLetras(1350) as importe]]>
+	</queryString>
+	<field name="importe" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="60" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="120" height="60" uuid="01668bbc-368b-4ec5-aed9-c3f0537855a8">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Bottom" markup="styled">
+					<font fontName="Trebuchet MS" size="9" isBold="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["IMPORTE  EN  LETRA: ( "+ $F{importe} +" )"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.3.final using JasperReports Library version 6.20.3-415f9428cffdb6805c6f85bbb29ebaf18813a2ab  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptCorteCaja" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="30b344af-7992-4020-b608-f942210cb49e">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[IlByb0NvcnRlQ2FqYUd1aWFzUFEiICwxNSwxNSxjMTU0MzE3OS1kZjE0LTRkOGQtYmJkOC1jYTMw
+YjJhMDM0NzM7IlByb0VtYmFycXVlUFEiICwzNTksMTUsNDFjM2UzM2UtODFlOS00MGFjLWEyMTUt
+OWExNmEyYjVhZDZkOyJQcm9HdWlhUFEiICwyMjAsMTUsMmEyMzY5ODEtZTU0Yi00M2NhLTgyNDIt
+MGY3NTJiODNmZTI1OyJDYXRUaXBvQ29icm9QUSIgLDUzMiwxNSwwMDdkYzVkMC00Y2E1LTQ4MWYt
+YTcwZS05MTM3ODRlZWJmYjU7]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CALIDAD SOPO"/>
+	<parameter name="FechaCorte" class="java.lang.String"/>
+	<parameter name="BaseDir" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+    CONCAT('TOTAL ',UPPER(cobro.Descripcion)) as tipoCobro,
+    SUM(pccg.Total) as total
+from ProCorteCajaGuiasPQ pccg
+         inner join ProGuiaPQ pgpq on pgpq.IdGuia=pccg.IdGuia
+         inner join ProEmbarquePQ pepq on pepq.IdEmbarque=pgpq.IdEmbarque
+         left join CatTipoCobroPQ cobro on cobro.IdTipoCobro = pepq.IdTipoCobro
+where pccg.IdCorte in (select IdCorte
+                      from ProCorteCajaPQ
+                      where CAST(FechaHora AS DATE) = $P{FechaCorte})
+GROUP BY cobro.Descripcion]]>
+	</queryString>
+	<field name="tipoCobro" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tipoCobro"/>
+		<property name="com.jaspersoft.studio.field.label" value="tipoCobro"/>
+	</field>
+	<field name="total" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="total"/>
+		<property name="com.jaspersoft.studio.field.label" value="total"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField textAdjust="StretchHeight" pattern="$#,##0.###;$(-#,##0.###)" isBlankWhenNull="true">
+				<reportElement x="150" y="0" width="100" height="15" isPrintWhenDetailOverflows="true" uuid="5d8afd12-58ca-441c-9c4d-341bc078d385">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="0" rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="150" height="15" isPrintWhenDetailOverflows="true" uuid="873c5b08-571b-4e4b-be41-cd57baa55d09">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipoCobro}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

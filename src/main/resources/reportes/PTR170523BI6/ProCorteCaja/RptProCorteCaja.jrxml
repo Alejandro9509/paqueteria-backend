@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.3.final using JasperReports Library version 6.20.3-415f9428cffdb6805c6f85bbb29ebaf18813a2ab  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptCorteCaja" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="30b344af-7992-4020-b608-f942210cb49e">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CALIDAD SOPO"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="IdCorte" class="java.lang.Integer"/>
+	<parameter name="BaseDir" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+    IIF(pcc.IdOperador > 0, pcc.IdOperador, pcc.IdUsuario) as idPersona,
+    IIF(pcc.IdOperador > 0, operador.Nombre, usuario.Nombre) as nombrePersona,
+    pcc.IdCorte as idCorte,
+    FORMAT(pcc.FechaHora, 'dd/MM/yyy') as fechaRegistro,
+    FORMAT(pcc.FechaHora, 'HH:mm') as horaRegistro,
+    ROUND(pcc.Total,2) as total, p.Logo,
+    pcc.FolioCorte as folioCorte,
+    pcc.IdSucursal AS idSucursal,
+    UPPER(sucursal.Sucursal) as sucursal
+from ProCorteCajaPQ pcc
+         inner join SisParametros p on p.IdParametro = (select IdParametro from SisParametros)
+         left join CatOperadores operador on operador.IdOperador = pcc.IdOperador
+         left join CatUsuarios usuario on usuario.IdUsuario = pcc.IdUsuario
+         INNER join CatSucursales sucursal on  sucursal.IdSucursal = pcc.IdSucursal
+where pcc.IdCorte = $P{IdCorte}]]>
+	</queryString>
+	<field name="fechaRegistro" class="java.lang.String"/>
+	<field name="horaRegistro" class="java.lang.String"/>
+	<field name="idCorte" class="java.lang.Integer"/>
+	<field name="total" class="java.lang.Double"/>
+	<field name="nombrePersona" class="java.lang.String"/>
+	<field name="Logo" class="java.lang.String"/>
+	<field name="folioCorte" class="java.lang.String"/>
+	<field name="sucursal" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="68" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<image scaleImage="RetainShape">
+				<reportElement x="0" y="2" width="90" height="27" uuid="88187d55-0895-4e10-8145-27307f9618ef"/>
+				<imageExpression><![CDATA[new java.io.ByteArrayInputStream(org.apache.commons.codec.binary.Base64.decodeBase64($F{Logo}.getBytes()))]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="-20" y="-4" width="842" height="27" uuid="3c714205-67a2-4f93-af89-c8205ca06d10">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font size="20"/>
+				</textElement>
+				<text><![CDATA[Corte de Caja]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="661" y="3" width="29" height="12" uuid="4a35ad08-8fae-4731-b91a-be00abc57d82">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="690" y="3" width="70" height="12" uuid="0e7326b9-1cc9-4370-a66a-27ebc57c631b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaRegistro}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="690" y="15" width="70" height="12" uuid="72e418b9-40db-42a6-87e0-cee569968118">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{horaRegistro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="646" y="15" width="44" height="12" uuid="6f265f05-f3cc-418a-8586-707b7b462a77">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hora:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="29" width="100" height="12" uuid="218a1813-d81a-4330-b710-1cc21f5fa651">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OPERADOR/USUARIO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="41" width="90" height="12" uuid="396b3f20-bab2-49e7-a930-c03a93e42c13">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA REPARTO: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="53" width="80" height="12" uuid="deb74b24-53e9-48d9-a8ec-fa137265cd28">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FOLIO CORTE: ]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="100" y="29" width="180" height="12" uuid="2b482691-232a-4d47-8d44-6d24afaf4939">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombrePersona}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="90" y="41" width="180" height="12" uuid="8dd7f4f0-fa8b-4aaf-a1e9-0fb026b3df40">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaRegistro}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="80" y="53" width="180" height="12" uuid="0fa3440d-2bb4-41c5-b296-585c27725b99">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{folioCorte}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="646" y="27" width="44" height="12" uuid="b207d1ee-0268-4938-83b5-dd1e1debf835">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sucursal:]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="690" y="27" width="110" height="12" uuid="93889138-3ef8-44c0-a01a-8d511492a72f">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sucursal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="10" width="800" height="30" uuid="e40b7399-cdf8-464e-99d6-17b3e9faf142">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<subreportParameter name="IdCorte">
+					<subreportParameterExpression><![CDATA[$P{IdCorte}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{BaseDir}+"ProCorteCaja/SubRptGuiaCorteCaja.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="60">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="25" width="800" height="30" uuid="16ba0126-ac60-4734-b5aa-b198c9164adc">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<subreportParameter name="IdCorte">
+					<subreportParameterExpression><![CDATA[$P{IdCorte}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{BaseDir}+"ProCorteCaja/SubRptCorteCajaTotales.jasper"]]></subreportExpression>
+			</subreport>
+			<line>
+				<reportElement x="0" y="2" width="800" height="1" uuid="64c99dff-341f-4368-a259-4ed4d2bfb3bf">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="0" y="59" width="800" height="1" uuid="6e3c9b38-1266-436c-aa45-c84743ac1b5e">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="3" width="128" height="17" uuid="581138a4-aa4e-401e-9259-ab63598b860a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ENTREGADAS/PAGADAS]]></text>
+			</staticText>
+		</band>
+		<band height="31">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="50" y="7" width="70" height="15" uuid="34354010-95fb-4d26-9901-24785b61b955">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight" pattern="$#,##0.###;$(-#,##0.###)" isBlankWhenNull="true">
+				<reportElement x="120" y="7" width="80" height="15" isPrintWhenDetailOverflows="true" uuid="e1383c4a-418c-4056-b7e8-d432ccdb506e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="0" rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="24" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="1" y="2" width="109" height="18" uuid="163154e4-421a-40a2-9fbc-8d9ea46e6ed6"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Reporte Corte de Caja]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="2" width="576" height="18" uuid="103155a5-ad8d-4168-864c-d53fde510a99"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="686" y="2" width="73" height="18" uuid="6014fe8a-0c0c-4a42-8bb6-34777998616b"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="760" y="2" width="40" height="18" uuid="5ab0a29d-9305-4077-8525-eee95e8c5b2d"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

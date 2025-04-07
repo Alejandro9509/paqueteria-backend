@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.6.final using JasperReports Library version 6.20.6-5c96b6aa8a39ac1dc6b6bea4b81168e16dd39231  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptProGuia" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="30b344af-7992-4020-b608-f942210cb49e">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<style name="Style1" isDefault="true" mode="Opaque" forecolor="#1F1E1E" backcolor="#FFFFFF" isBlankWhenNull="false"/>
+	<parameter name="Id_Viaje" class="java.lang.Integer"/>
+	<parameter name="BaseDir" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["C:\\Users\\CertuitLap58\\JaspersoftWorkspace\\MyReports\\GM-PQ-Reportes\\SOPO110101PQ1\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="IdInforme" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select isnull(PVDP.FolioFiscalUUID,'') as FolioFiscalUUID,isnull(PVDP.NoSerieCertificadoSAT,'') as NoSerieCertificadoSAT,isnull(cer.NoSerieCertificado,'') as NoSerieCertificado, PVDP.FechaTimbrado,
+       FORMAT(proinfor.Fecha, 'dd-MM-yyyy') + ' ' +  convert(char(5),convert(time(0),proinfor.Hora)) as FechaHora,
+       isnull(PVDP.SelloDigital,'') as SelloDigital,isnull(PVDP.SelloSAT,'') as SelloSAT,isnull(PVDP.CadenaOriginalTimbrado,'') as CadenaOriginalTimbrado,isnull(proinfor.Kilometros,0)  as Kilometros, proinfor.FolioInforme,
+       p.Logo, viaje.FolioViaje,viaje.CandadoOficial,viaje.Identificador
+from ProInformePQ proinfor
+         left join CatCertificados as cer on cer.IdCertificado = proinfor.IdCertificado
+         inner join SisParametros p on p.IdParametro = (select IdParametro from SisParametros)
+inner join ProViajeDetalleParadasPQ PVDP ON PVDP.IdInforme = $P{IdInforme} and PVDP.IdViaje =  $P{Id_Viaje} 
+         inner join ProViajesPQ viaje ON viaje.IdViaje = PVDP.IdViaje
+where proinfor.IdInforme =  $P{IdInforme}]]>
+	</queryString>
+	<field name="FolioFiscalUUID" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FolioFiscalUUID"/>
+		<property name="com.jaspersoft.studio.field.label" value="FolioFiscalUUID"/>
+	</field>
+	<field name="NoSerieCertificadoSAT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NoSerieCertificadoSAT"/>
+		<property name="com.jaspersoft.studio.field.label" value="NoSerieCertificadoSAT"/>
+	</field>
+	<field name="NoSerieCertificado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NoSerieCertificado"/>
+		<property name="com.jaspersoft.studio.field.label" value="NoSerieCertificado"/>
+	</field>
+	<field name="FechaTimbrado" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.name" value="FechaTimbrado"/>
+		<property name="com.jaspersoft.studio.field.label" value="FechaTimbrado"/>
+	</field>
+	<field name="FechaHora" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FechaHora"/>
+		<property name="com.jaspersoft.studio.field.label" value="FechaHora"/>
+	</field>
+	<field name="SelloDigital" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="SelloDigital"/>
+		<property name="com.jaspersoft.studio.field.label" value="SelloDigital"/>
+	</field>
+	<field name="SelloSAT" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="SelloSAT"/>
+		<property name="com.jaspersoft.studio.field.label" value="SelloSAT"/>
+	</field>
+	<field name="CadenaOriginalTimbrado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="CadenaOriginalTimbrado"/>
+		<property name="com.jaspersoft.studio.field.label" value="CadenaOriginalTimbrado"/>
+	</field>
+	<field name="Kilometros" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="Kilometros"/>
+		<property name="com.jaspersoft.studio.field.label" value="Kilometros"/>
+	</field>
+	<field name="FolioInforme" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FolioInforme"/>
+		<property name="com.jaspersoft.studio.field.label" value="FolioInforme"/>
+	</field>
+	<field name="Logo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Logo"/>
+		<property name="com.jaspersoft.studio.field.label" value="Logo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="SisParametros"/>
+	</field>
+	<field name="FolioViaje" class="java.lang.String"/>
+	<field name="CandadoOficial" class="java.lang.String"/>
+	<field name="Identificador" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="196" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<image scaleImage="RetainShape">
+				<reportElement x="0" y="2" width="130" height="123" uuid="88187d55-0895-4e10-8145-27307f9618ef"/>
+				<imageExpression><![CDATA[new java.io.ByteArrayInputStream(org.apache.commons.codec.binary.Base64.decodeBase64($F{Logo}.getBytes()))]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="350" y="40" width="203" height="15" uuid="daf71848-5b48-4670-91e2-32a69643c8e3">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{FolioInforme}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="" x="350" y="24" width="204" height="15" forecolor="#000000" backcolor="#E0DEDE" uuid="b6980955-f191-4e96-941d-d309fc850d10">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[CARTA DE PORTE - TRASLADO]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="350" y="75" width="204" height="15" uuid="29808aaf-9690-498d-90ec-7329b279f9cb">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FolioFiscalUUID}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="59" width="204" height="15" backcolor="#E0DEDE" uuid="66c7caa1-b6ee-47b4-950c-278cdddf937d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Folio Fiscal]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="350" y="110" width="203" height="15" uuid="c4c0bc44-888b-4b7a-bcb4-967454efcf87">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{NoSerieCertificado}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="94" width="204" height="15" backcolor="#E0DEDE" uuid="056e414a-e749-4208-8c9e-5768d8874f13">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[No. Serie Certificado del Emisor]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="350" y="178" width="203" height="15" uuid="2fa466e3-cb00-498d-8195-9255c6c8272e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA["Traslado"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="163" width="204" height="15" backcolor="#E0DEDE" uuid="787d4855-29fb-40bd-ab3c-1c9d587121a1">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Tipo de Comprobante]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="350" y="144" width="203" height="15" uuid="69b7cb3e-0b52-4b14-bf23-c6b443c1b21e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{FechaTimbrado}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="350" y="129" width="204" height="15" backcolor="#E0DEDE" uuid="4a918870-13f4-41d0-be89-1e6feb2b1305">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Fecha Hora Expedición]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="440" y="0" width="73" height="18" uuid="f5a4fbc1-7a0d-4481-9221-5568b92062ce"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="514" y="0" width="40" height="18" uuid="d66511c4-b230-4de8-b76d-f416893772c9"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="130" y="23" width="219" height="170" uuid="d83e737b-d7a3-409f-86da-476fa4bf1687">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<subreportParameter name="Id_Viaje">
+					<subreportParameterExpression><![CDATA[$P{Id_Viaje}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{BaseDir}+"ProFormatoTimbradoViaje/SubRptEmisorReceptor.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="185" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="0" y="2" width="554" height="65" uuid="b35f7200-321b-47b5-8b73-6ff58a4a1c3c">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<subreportParameter name="Id_Viaje">
+					<subreportParameterExpression><![CDATA[$P{Id_Viaje}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="IdInforme">
+					<subreportParameterExpression><![CDATA[$P{IdInforme}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{BaseDir}+"ProFormatoTimbradoViaje/SubRptGuiaOrigenDestino.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="0" y="108" width="555" height="20" backcolor="#DEDCDC" uuid="71a7d078-827e-4237-9c3a-d8f3b9e71677">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Conceptos Comprobante]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="209" y="128" width="140" height="20" backcolor="#DEDCDC" uuid="bb5dd0f9-7df0-4bc4-af7f-c80187b91734">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Total de la distancia recorrida:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="119" y="128" width="85" height="21" uuid="d8459843-1e90-4f75-91c1-c6f38fd6e4ce">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<paragraph leftIndent="2" rightIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA["NO"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="349" y="128" width="90" height="21" uuid="80d34c9e-247d-4460-8306-1546bf42e7c2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="2" rightIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Kilometros}+" Km"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="128" width="119" height="20" backcolor="#DEDCDC" uuid="036c568a-d804-42d7-98e7-d3859a01eb0a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Transporte Internacional:]]></text>
+			</staticText>
+			<subreport>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="150" width="554" height="28" isPrintWhenDetailOverflows="true" uuid="6004aae3-bc21-4170-8dc7-38ddf7d849b5">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<subreportParameter name="Id_Viaje">
+					<subreportParameterExpression><![CDATA[$P{IdInforme}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{BaseDir}+"ProFormatoTimbradoViaje/SubRptGuiaDetalleProductoSAT.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="0" y="68" width="119" height="20" backcolor="#DEDCDC" uuid="9b610cec-6979-439a-b3ec-f23a18672a9a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Folio Viaje:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="88" width="119" height="20" uuid="03960a84-3c86-408c-b2f0-1431936b7f42">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<paragraph leftIndent="2" rightIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FolioViaje}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="119" y="68" width="119" height="20" backcolor="#DEDCDC" uuid="6d180df2-49e1-4b7a-9c9a-64d5cbfe6d09">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Candado Oficial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="238" y="68" width="119" height="20" backcolor="#DEDCDC" uuid="cb3a8a2d-5109-44df-8d34-a520d5b19c3a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Identificador]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="119" y="88" width="119" height="20" uuid="38db9e1c-4aa1-4816-8550-959d35d2ed3e">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<paragraph leftIndent="2" rightIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CandadoOficial}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="238" y="88" width="119" height="20" uuid="c3cf4822-fd0d-442c-b2e7-10014267e98b">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<paragraph leftIndent="2" rightIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Identificador}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="32" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<subreport>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="1" width="554" height="30" isPrintWhenDetailOverflows="true" uuid="8b99d2b7-2cd2-40f7-b4fb-4aebed0ca510">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<subreportParameter name="Id_Viaje">
+					<subreportParameterExpression><![CDATA[$P{IdInforme}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{BaseDir}+"ProFormatoTimbradoViaje/SubRptGuiaDetalleMercancia.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="132" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<subreport overflowType="Stretch">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="2" width="554" height="65" isPrintWhenDetailOverflows="true" uuid="669a66d8-0b42-43ad-a219-d8d30e4ca7d4">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<subreportParameter name="Id_Viaje">
+					<subreportParameterExpression><![CDATA[$P{IdInforme}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{BaseDir}+"ProFormatoTimbradoViaje/SubRptGuiaUnidad.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport overflowType="Stretch">
+				<reportElement stretchType="RelativeToTallestObject" x="-1" y="71" width="554" height="55" isPrintWhenDetailOverflows="true" uuid="ff842716-7416-4de8-9c16-b8b426683a2c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<subreportParameter name="Id_Viaje">
+					<subreportParameterExpression><![CDATA[$P{IdInforme}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{BaseDir}+"ProFormatoTimbradoViaje/SubRptGuiaOperador.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="154">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="119" y="51" width="434" height="15" uuid="92edbfae-d284-405f-b3e4-5bb925e5b5e1">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+					<paragraph leftIndent="2" rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[Sello Digital del CFDI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="119" y="105" width="434" height="15" uuid="18a87197-4132-4ca3-8b4a-7bf06c9ad818">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+					<paragraph leftIndent="2" rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[Sello del SAT]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="119" y="15" width="434" height="30" isPrintWhenDetailOverflows="true" uuid="cc985c95-c788-45be-980c-e8a7eae228a2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="2" rightIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CadenaOriginalTimbrado}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="119" y="69" width="434" height="30" isPrintWhenDetailOverflows="true" uuid="10e72e4f-ad07-4558-9354-03ab1c7f7303">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="2" rightIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SelloDigital}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="119" y="122" width="435" height="30" isPrintWhenDetailOverflows="true" uuid="a1e51bdc-7e48-4de4-93c0-2678c4813ab1">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="8"/>
+					<paragraph leftIndent="2" rightIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SelloSAT}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="0" y="0" width="118" height="103" uuid="4f7e3990-b00a-4dec-bbb1-cc303b0b9c0e"/>
+				<jr:QRCode xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<jr:codeExpression><![CDATA[$F{SelloDigital}]]></jr:codeExpression>
+				</jr:QRCode>
+			</componentElement>
+			<staticText>
+				<reportElement x="119" y="0" width="434" height="15" uuid="b9f8d968-d5bd-478a-a363-d2f679167642">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+					<paragraph leftIndent="2" rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[Cadena Original del complemento de certificación digital SAT]]></text>
+			</staticText>
+		</band>
+		<band height="248">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="0" y="2" width="554" height="243" isPrintWhenDetailOverflows="true" uuid="40eaa98f-16c4-4e9a-9dd9-ebd56a098c3c"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[CONDICIONES DE PRESTACIÓN DE SERVICIOS QUE AMPARA EL COMPLEMENTO CARTA PORTE.
+PRIMERA.- Para los efectos del presente contrato de transporte se denomina "Transportista" al que realiza el servicio de transportación y "Expedidor", "Remitente" o "Usuario" al usuario que contrate el servicio o remite la mercancía.
+SEGUNDA.- El "Expedidor", "Remitente" o "Usuario" es responsable de que la información proporcionada al "Transportista" sea veraz y que la documentación que entregue para efectos del transporte sea la correcta. TERCERA.- El "Expedidor", "Remitente" o "Usuario" debe declarar al "Transportista" el tipo de mercancía o efectos de que se trate, peso, medidas y/o número de la carga que entrega para su transporte y, en su caso, el valor de la misma. La carga que se entregue a granel podrá ser aforada en metros cúbicos con la conformidad del "Expedidor", "Remitente" o "Usuario". CUARTA.- Para efectos del transporte, el "Expedidor", "Remitente" o "Usuario" deberá entregar al "Transportista" los documentos que las leyes y reglamentos exijan para llevar a cabo el servicio, en caso de no cumplirse con estos requisitos el "Transportista" está obligado a rehusar el transporte de las mercancías. QUINTA.- Si por sospecha de falsedad en la declaración del contenido de un bulto el "Transportista" deseare proceder a su reconocimiento, podrá hacerlo ante testigos y con asistencia del "Expedidor", "Remitente" o "Usuario" o del consignatario. Si este último no concurriere, se solicitará la presencia de un inspector de la Secretaría de Comunicaciones y Transportes, y se levantará
+el acta correspondiente. El "Transportista" tendrá en todo caso, la obligación de dejar los bultos en el estado en que se encontraban antes del reconocimiento.
+SEXTA.- El "Transportista" deberá recoger y entregar la carga precisamente en los domicilios que señale el "Expedidor", "Remitente" o "Usuario", ajustándose a los términos y condiciones convenidos. El "Transportista" sólo está obligado a llevar la
+carga al domicilio del consignatario para su entrega una sola vez. Si ésta no fuera recibida, se dejará aviso de que la mercancía queda a disposición del interesado en las bodegas que indique el "Transportista". SÉPTIMA.- Si la carga no fuere retirada dentro de los 30 días hábiles siguientes a aquél en que hubiere sido puesta a
+disposición del consignatario, el "Transportista" podrá solicitar la venta en subasta pública con arreglo a lo que dispone el Código de Comercio.
+OCTAVA.- El "Transportista" y el "Expedidor", "Remitente" o "Usuario" negociarán libremente el precio del servicio, tomando en cuenta su tipo, característica de los embarques, volumen, regularidad, clase de carga y sistema de pago. NOVENA.- Si el "Expedidor", "Remitente" o "Usuario" desea que el "Transportista" asuma la responsabilidad por el valor de las mercancías o efectos que él declare y que cubra toda clase de riesgos, inclusive los derivados de caso fortuito o de fuerza mayor,
+las partes deberán convenir un cargo adicional, equivalente al valor de la prima del seguro que se contrate, el cual se deberá expresar en un CFDI con Complemento Carta Porte. DÉCIMA.- Cuando el importe del flete no incluya el cargo adicional, la responsabilidad del "Transportista" queda expresamente limitada a la cantidad equivalente a 15 Unidades de Medida y Actualización (UMAS) por tonelada o cuando se trate de embarques cuyo peso sea mayor de 200 kg., pero menor de 1000 kg; y 4 UMAS por remesa cuando se trate de embarques con peso hasta
+de 200 kg. DÉCIMA PRIMERA.- El precio del transporte deberá pagarse en origen, salvo convenio entre las partes de pago en destino. Cuando el transporte se hubiere concertado "Flete por Cobrar", la entrega de las mercancías o efectos se hará contra el pago del flete y el "Transportista" tendrá derecho a retenerlos mientras no se le cubra el precio convenido. DÉCIMA SEGUNDA.- Si al momento de la entrega resultare algún faltante o avería, el consignatario podrá formular su reclamación por escrito al "Transportista", dentro de las 24 horas siguientes. DÉCIMA TERCERA.- El "Transportista" queda eximido de la obligación de recibir mercancías o efectos para su transporte, en los siguientes casos: a) Cuando se trate de carga que por su naturaleza, peso, volumen, embalaje defectuoso o cualquier otra circunstancia no
+pueda transportarse sin destruirse o sin causar daño a los demás artículos o al material rodante, salvo que la empresa de que se trate tenga el equipo adecuado.
+b) Las mercancías cuyo transporte haya sido prohibido por disposiciones legales o reglamentarias. Cuando tales disposiciones no prohíban precisamente el transporte de determinadas mercancías, pero sí ordenen la presentación de ciertos documentos para que puedan ser transportadas, el "Expedidor", "Remitente" o "Usuario" estará obligado a entregar al "Transportista" los documentos correspondientes. DÉCIMA CUARTA.- Los casos no previstos en las presentes condiciones y las quejas derivadas de su aplicación se someterán por la vía administrativa a la Secretaría de Comunicaciones y Transportes. DÉCIMA QUINTA.- Para el caso de que el "Expedidor", "Remitente" o "Usuario" contrate carro por entero, éste aceptará la responsabilidad solidaria para con el "Transportista" mediante la figura de la corresponsabilidad que contempla el artículo 10 del
+Reglamento Sobre el Peso, Dimensiones y Capacidad de los Vehículos de Autotransporte que Transitan en los Caminos y Puentes de Jurisdicción Federal, por lo que el "Expedidor", "Remitente" o "Usuario" queda obligado a verificar que la carga y el vehículo que la transporta, cumplan con el peso y dimensiones máximas establecidos en la NOM-012-SCT-2-2017, o la que la sustituya. Para el caso de incumplimiento e inobservancia a las disposiciones que regulan el peso y dimensiones, por parte del "Expedidor", "Remitente" o "Usuario", éste será corresponsable de las infracciones y multas que la Secretaría de Infraestructura, Comunicaciones y Transportes o la Guardia Nacional impongan al "Transportista", por cargar las unidades con exceso de peso.
+]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

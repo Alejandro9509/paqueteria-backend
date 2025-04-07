@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SubRptGuiaDetallePaquete" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0252d059-6237-459c-b33f-04bfc4056f2b">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GM-PQ-Certuit"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<parameter name="Id_Guia" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select CTE.Nombre,PED.Descripcion,PED.Peso,PED.Largo,PED.Ancho,PED.Alto,PED.ValorDeclarado,PED.ctd, PED.Observaciones
+from ProEmbarquePQ PE 
+inner join ProEmbarqueDetallePQ PED on PED.IdEmbarque=PE.IdEmbarque
+inner join CatEmbalajesPQ  CTE on CTE.IdEmbalaje=PED.IdTipoEmpaque
+inner join ProGuiaPQ PG on PG.IdEmbarque = PE.IdEmbarque
+where PG.IdGuia= $P{Id_Guia} ;]]>
+	</queryString>
+	<field name="Nombre" class="java.lang.String"/>
+	<field name="Descripcion" class="java.lang.String"/>
+	<field name="Peso" class="java.lang.Double"/>
+	<field name="Largo" class="java.lang.Double"/>
+	<field name="Ancho" class="java.lang.Double"/>
+	<field name="Alto" class="java.lang.Double"/>
+	<field name="ValorDeclarado" class="java.math.BigDecimal"/>
+	<field name="ctd" class="java.lang.Double"/>
+	<field name="Observaciones" class="java.lang.String"/>
+	<group name="Nombre">
+		<groupExpression><![CDATA[$F{Nombre}]]></groupExpression>
+	</group>
+	<group name="Descripcion">
+		<groupExpression><![CDATA[$F{Descripcion}]]></groupExpression>
+	</group>
+	<group name="Peso">
+		<groupExpression><![CDATA[$F{Peso}]]></groupExpression>
+	</group>
+	<group name="Largo">
+		<groupExpression><![CDATA[$F{Largo}]]></groupExpression>
+	</group>
+	<group name="Ancho">
+		<groupExpression><![CDATA[$F{Ancho}]]></groupExpression>
+	</group>
+	<group name="Alto">
+		<groupExpression><![CDATA[$F{Alto}]]></groupExpression>
+	</group>
+	<group name="ValorDeclarado">
+		<groupExpression><![CDATA[$F{ValorDeclarado}]]></groupExpression>
+	</group>
+	<group name="ctd">
+		<groupExpression><![CDATA[$F{ctd}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<staticText>
+				<reportElement x="50" y="0" width="70" height="15" uuid="3a2f9c88-ed5d-458d-8d27-f1d0d3a6de17">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Embalaje]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="0" width="230" height="15" uuid="62a5deba-04f9-469c-8831-968ac4c58078">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Contenido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="350" y="0" width="60" height="15" uuid="3cfb4575-38de-493b-91fc-6803286ad67b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Peso (Kg)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="0" width="50" height="15" uuid="ba4b0e5f-1167-484a-85c6-2d285496d40b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Largo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="0" width="50" height="15" uuid="8af1c97c-8e52-4c49-82e8-9c0f0db47de9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Ancho]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="510" y="0" width="50" height="15" uuid="1af6299d-4793-4021-8017-bfb3dd497589">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Alto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="50" height="15" uuid="245fc7a2-8ea0-418e-993d-232ccc0d7d7b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="15" width="560" height="15" uuid="d3cb2ff7-3f16-4325-9d44-44f15f386d2d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Observaciones]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="50" y="0" width="70" height="20" uuid="129732e0-440b-4290-8af1-08365ce3e6de"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="0" width="230" height="20" uuid="0d585d92-f917-49c9-ac09-0b1142c0652d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Descripcion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0##">
+				<reportElement x="350" y="0" width="60" height="20" uuid="31f36b64-7f5f-4232-8b54-2534fe27405c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Peso}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0##">
+				<reportElement x="410" y="0" width="50" height="20" uuid="32bc9d0b-ef8a-4702-9546-f66828b5ffd3">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Largo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0##">
+				<reportElement x="460" y="0" width="50" height="20" uuid="64096e61-d743-4801-bcea-c84c4007cdc2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Ancho}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0##">
+				<reportElement x="510" y="0" width="50" height="20" uuid="a44d7096-e6be-4e85-827c-46a0fb31ceeb">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Alto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,#00.###;(#,#00.###-)">
+				<reportElement x="0" y="0" width="50" height="20" uuid="5239d2af-a467-4416-b2cf-5a9522479b4a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ctd}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="20" width="560" height="20" uuid="6534ec03-ae2a-46bf-b5c8-d3642089c35a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Observaciones}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

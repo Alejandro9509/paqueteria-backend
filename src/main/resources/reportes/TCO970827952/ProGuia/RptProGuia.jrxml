@@ -1,0 +1,789 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.3.final using JasperReports Library version 6.20.3-415f9428cffdb6805c6f85bbb29ebaf18813a2ab  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptProGuia" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="30b344af-7992-4020-b608-f942210cb49e">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CALIDAD SOPO"/>
+	<parameter name="Id_Guia" class="java.lang.Integer"/>
+	<parameter name="BaseDir" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["C:\\Users\\CertuitLap58\\JaspersoftWorkspace\\MyReports\\GM-PQ-Reportes\\PTR170523BI6\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[exec usp_ObtenerDatosRptProGuiaPQ $P{Id_Guia}]]>
+	</queryString>
+	<field name="FolioEmbarque" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FolioEmbarque"/>
+		<property name="com.jaspersoft.studio.field.label" value="FolioEmbarque"/>
+	</field>
+	<field name="FolioGuia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FolioGuia"/>
+		<property name="com.jaspersoft.studio.field.label" value="FolioGuia"/>
+	</field>
+	<field name="Fecha" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Fecha"/>
+		<property name="com.jaspersoft.studio.field.label" value="Fecha"/>
+	</field>
+	<field name="NumeroCliente" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="NumeroCliente"/>
+		<property name="com.jaspersoft.studio.field.label" value="NumeroCliente"/>
+	</field>
+	<field name="RFC" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="RFC"/>
+		<property name="com.jaspersoft.studio.field.label" value="RFC"/>
+	</field>
+	<field name="NombreFiscal" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NombreFiscal"/>
+		<property name="com.jaspersoft.studio.field.label" value="NombreFiscal"/>
+	</field>
+	<field name="Calle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Calle"/>
+		<property name="com.jaspersoft.studio.field.label" value="Calle"/>
+	</field>
+	<field name="NoExterior" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NoExterior"/>
+		<property name="com.jaspersoft.studio.field.label" value="NoExterior"/>
+	</field>
+	<field name="Colonia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Colonia"/>
+		<property name="com.jaspersoft.studio.field.label" value="Colonia"/>
+	</field>
+	<field name="CodigoPostal" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="CodigoPostal"/>
+		<property name="com.jaspersoft.studio.field.label" value="CodigoPostal"/>
+	</field>
+	<field name="Municipio" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Municipio"/>
+		<property name="com.jaspersoft.studio.field.label" value="Municipio"/>
+	</field>
+	<field name="NombreRemitente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NombreRemitente"/>
+		<property name="com.jaspersoft.studio.field.label" value="NombreRemitente"/>
+	</field>
+	<field name="RFCRemitente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="RFCRemitente"/>
+		<property name="com.jaspersoft.studio.field.label" value="RFCRemitente"/>
+	</field>
+	<field name="ContactoRemitente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ContactoRemitente"/>
+		<property name="com.jaspersoft.studio.field.label" value="ContactoRemitente"/>
+	</field>
+	<field name="TelefonoRemitente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TelefonoRemitente"/>
+		<property name="com.jaspersoft.studio.field.label" value="TelefonoRemitente"/>
+	</field>
+	<field name="DomicilioRemitente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DomicilioRemitente"/>
+		<property name="com.jaspersoft.studio.field.label" value="DomicilioRemitente"/>
+	</field>
+	<field name="EstadoRemitente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="EstadoRemitente"/>
+		<property name="com.jaspersoft.studio.field.label" value="EstadoRemitente"/>
+	</field>
+	<field name="NombreDestinatario" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NombreDestinatario"/>
+		<property name="com.jaspersoft.studio.field.label" value="NombreDestinatario"/>
+	</field>
+	<field name="RFCDestinatario" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="RFCDestinatario"/>
+		<property name="com.jaspersoft.studio.field.label" value="RFCDestinatario"/>
+	</field>
+	<field name="ContactoDestinatario" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ContactoDestinatario"/>
+		<property name="com.jaspersoft.studio.field.label" value="ContactoDestinatario"/>
+	</field>
+	<field name="TelefonoDestinatario" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TelefonoDestinatario"/>
+		<property name="com.jaspersoft.studio.field.label" value="TelefonoDestinatario"/>
+	</field>
+	<field name="DomicilioDestinatario" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="DomicilioDestinatario"/>
+		<property name="com.jaspersoft.studio.field.label" value="DomicilioDestinatario"/>
+	</field>
+	<field name="EstadoDestinatario" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="EstadoDestinatario"/>
+		<property name="com.jaspersoft.studio.field.label" value="EstadoDestinatario"/>
+	</field>
+	<field name="RecoleccionDiferenteDomicilio" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="RecoleccionDiferenteDomicilio"/>
+		<property name="com.jaspersoft.studio.field.label" value="RecoleccionDiferenteDomicilio"/>
+	</field>
+	<field name="IdEmbarque" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="IdEmbarque"/>
+		<property name="com.jaspersoft.studio.field.label" value="IdEmbarque"/>
+	</field>
+	<field name="TipoCobro" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TipoCobro"/>
+		<property name="com.jaspersoft.studio.field.label" value="TipoCobro"/>
+	</field>
+	<field name="Tracking" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Tracking"/>
+		<property name="com.jaspersoft.studio.field.label" value="Tracking"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ProGuiaPQ"/>
+	</field>
+	<field name="Sucursal" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Sucursal"/>
+		<property name="com.jaspersoft.studio.field.label" value="Sucursal"/>
+	</field>
+	<field name="FolioFactura" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FolioFactura"/>
+		<property name="com.jaspersoft.studio.field.label" value="FolioFactura"/>
+	</field>
+	<field name="EmbarqueConCita" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="EmbarqueConCita"/>
+		<property name="com.jaspersoft.studio.field.label" value="EmbarqueConCita"/>
+	</field>
+	<field name="FechaCita" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FechaCita"/>
+		<property name="com.jaspersoft.studio.field.label" value="FechaCita"/>
+	</field>
+	<field name="HoraCitaMaxima" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="HoraCitaMaxima"/>
+		<property name="com.jaspersoft.studio.field.label" value="HoraCitaMaxima"/>
+	</field>
+	<field name="HoraCitaMinima" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="HoraCitaMinima"/>
+		<property name="com.jaspersoft.studio.field.label" value="HoraCitaMinima"/>
+	</field>
+	<field name="RecoleccionConCita" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="RecoleccionConCita"/>
+		<property name="com.jaspersoft.studio.field.label" value="RecoleccionConCita"/>
+	</field>
+	<field name="FechaRecoleccionCita" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FechaRecoleccionCita"/>
+		<property name="com.jaspersoft.studio.field.label" value="FechaRecoleccionCita"/>
+	</field>
+	<field name="HoraCitaMaximaRecoleccion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="HoraCitaMaximaRecoleccion"/>
+		<property name="com.jaspersoft.studio.field.label" value="HoraCitaMaximaRecoleccion"/>
+	</field>
+	<field name="HoraCitaMinimaRecoleccion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="HoraCitaMinimaRecoleccion"/>
+		<property name="com.jaspersoft.studio.field.label" value="HoraCitaMinimaRecoleccion"/>
+	</field>
+	<field name="EntregarMismoDomicilio" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="EntregarMismoDomicilio"/>
+		<property name="com.jaspersoft.studio.field.label" value="EntregarMismoDomicilio"/>
+	</field>
+	<field name="EntregaEnSucursal" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="EntregaEnSucursal"/>
+		<property name="com.jaspersoft.studio.field.label" value="EntregaEnSucursal"/>
+	</field>
+	<field name="Nombre_Parametros" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nombre_Parametros"/>
+		<property name="com.jaspersoft.studio.field.label" value="Nombre_Parametros"/>
+	</field>
+	<field name="RFC_Parametros" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="RFC_Parametros"/>
+		<property name="com.jaspersoft.studio.field.label" value="RFC_Parametros"/>
+	</field>
+	<field name="Direccion_Parametros" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Direccion_Parametros"/>
+		<property name="com.jaspersoft.studio.field.label" value="Direccion_Parametros"/>
+	</field>
+	<field name="Colonia_Parametros" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Colonia_Parametros"/>
+		<property name="com.jaspersoft.studio.field.label" value="Colonia_Parametros"/>
+	</field>
+	<field name="Pais_Parametros" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Pais_Parametros"/>
+		<property name="com.jaspersoft.studio.field.label" value="Pais_Parametros"/>
+	</field>
+	<field name="Logo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Logo"/>
+		<property name="com.jaspersoft.studio.field.label" value="Logo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="SisParametros"/>
+	</field>
+	<field name="IdTipoSeguro" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="IdTipoSeguro"/>
+		<property name="com.jaspersoft.studio.field.label" value="IdTipoSeguro"/>
+	</field>
+	<field name="Aseguradora" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Aseguradora"/>
+		<property name="com.jaspersoft.studio.field.label" value="Aseguradora"/>
+	</field>
+	<field name="Poliza" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Poliza"/>
+		<property name="com.jaspersoft.studio.field.label" value="Poliza"/>
+	</field>
+	<field name="ObservacionesEmbarque" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ObservacionesEmbarque"/>
+		<property name="com.jaspersoft.studio.field.label" value="ObservacionesEmbarque"/>
+	</field>
+	<field name="ValorDeclarado" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ValorDeclarado"/>
+		<property name="com.jaspersoft.studio.field.label" value="ValorDeclarado"/>
+	</field>
+	<field name="Referencia" class="java.lang.String"/>
+	<field name="noEquivalenciaRemitente" class="java.lang.String"/>
+	<field name="noEquivalenciaDestinatario" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="75" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="0" y="2" width="554" height="48" uuid="bec74f17-8ff3-4488-81eb-06f07073dccf">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+					<font size="26"/>
+				</textElement>
+				<text><![CDATA[Guía ]]></text>
+			</staticText>
+			<image scaleImage="RetainShape">
+				<reportElement x="0" y="2" width="160" height="53" uuid="88187d55-0895-4e10-8145-27307f9618ef"/>
+				<imageExpression><![CDATA[new java.io.ByteArrayInputStream(org.apache.commons.codec.binary.Base64.decodeBase64($F{Logo}.getBytes()))]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="473" y="60" width="81" height="15" uuid="7ed25b75-d556-4642-85d1-130a160c77e8">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{FolioFactura}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="473" y="20" width="81" height="15" uuid="daf71848-5b48-4670-91e2-32a69643c8e3">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{Fecha}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="473" y="37" width="81" height="15" uuid="d2eb41ab-b160-472e-bbac-03fa07ad3073">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{Sucursal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="427" y="60" width="46" height="15" uuid="93fc550b-05a9-4146-bfcd-92f0bc1ae56f">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Factura:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="20" width="80" height="15" uuid="b6980955-f191-4e96-941d-d309fc850d10">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Fecha ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="37" width="80" height="15" uuid="f1e74e4c-b0ee-492c-88af-7061c567acc1">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Sucursal]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="439" y="0" width="73" height="18" uuid="38504dd9-a205-42fa-8078-0b8901122112"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="513" y="0" width="40" height="18" uuid="3d927885-adcd-43b4-bc16-056a8b825fca"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="150" y="60" width="30" height="15" uuid="2e2d008b-ed05-466a-843f-77bb48865b34">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<paragraph leftIndent="2" rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[Guía:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="180" y="60" width="109" height="15" uuid="48d4a9e7-a7f4-4392-b4f4-67f02b85ad50">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<paragraph leftIndent="2" rightIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FolioGuia}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="277" y="60" width="52" height="15" uuid="c1d972db-58aa-4e85-8754-87b37c175dca">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<paragraph leftIndent="2" rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[Tracking:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="329" y="60" width="111" height="15" uuid="364a8d7b-d5fb-4c31-9923-743ed6653aea">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<paragraph leftIndent="2" rightIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Tracking}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="60" width="60" height="15" uuid="c0f846a5-ea41-4ecd-ab15-4b292fb48142">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<paragraph leftIndent="2" rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[Referencia:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="53" y="60" width="109" height="15" uuid="e05a41b0-5bef-4e80-ac1b-2158c67fae65">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<paragraph leftIndent="2" rightIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Referencia}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="322" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<rectangle>
+				<reportElement x="290" y="134" width="260" height="106" uuid="b2f7c4aa-8729-4888-a862-5767eaf2ace3">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="134" width="270" height="106" uuid="32b464a1-d911-44ec-b9d3-de4ee0cf1095">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="290" y="24" width="260" height="91" uuid="b90266e9-a9b8-445c-a390-327c13ea5dc9">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="24" width="270" height="91" uuid="735d4625-6961-42b5-933b-a9979515273a">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="8" width="100" height="15" uuid="814a7c4b-dd5d-446a-b236-b6bc1ba3fea0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[TRANSPORTISTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="8" width="100" height="15" uuid="de7c30b1-14a3-403b-93be-5e40e6d0e79d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[CLIENTE QUE PAGA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="119" width="130" height="15" uuid="e4f9eb0e-308e-4df2-b005-5de9f9b44dd9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[ORIGEN (REMITENTE)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="293" y="119" width="130" height="15" uuid="3201af82-2656-4b52-947f-4772312fe90f">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[DESTINO (DESTINATARIO)]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="298" y="27" width="242" height="15" uuid="5e53b436-2a50-4960-8000-91c2f9fc1f58">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NombreFiscal}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="298" y="42" width="242" height="15" uuid="8c302d91-7619-4883-b9d0-fb69a52d3392">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RFC}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="298" y="57" width="242" height="24" uuid="7568af8c-a2aa-46d4-8247-539ba30cdaf6">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Calle} +" "+$F{Colonia}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="298" y="81" width="242" height="15" uuid="9316735d-e176-4919-9e5a-a66a10c75add">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CodigoPostal}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="298" y="96" width="242" height="15" uuid="9ff76225-0c37-45f3-987a-30f4b4f7b2ac">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Municipio}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="6" y="165" width="255" height="15" uuid="242e9e64-32ec-447b-ac22-da4fede2ff9a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ContactoRemitente}+", Tel:"+$F{TelefonoRemitente}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="6" y="205" width="255" height="15" uuid="d644b830-ed9f-4163-9a1b-b1a977cc5f31">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EstadoRemitente}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="6" y="180" width="255" height="25" uuid="4fef8821-8c2f-4903-a295-fb6affd95dc3">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DomicilioRemitente}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="6" y="150" width="255" height="15" uuid="51a91558-fdd7-481b-8d45-488100673389">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RFCRemitente}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="6" y="135" width="255" height="15" uuid="74420c67-65b4-43f0-a5b2-d36684c59cc8">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NombreRemitente}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="299" y="135" width="241" height="15" uuid="cbd832b4-ba51-4963-928e-b2fa804dfa5b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NombreDestinatario}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="299" y="150" width="241" height="15" uuid="22ff2bbf-4d91-4554-ad9a-ddd6a3be845f">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RFCDestinatario}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="299" y="180" width="241" height="25" isPrintWhenDetailOverflows="true" uuid="90329c9a-aa4d-4a15-be11-ed5239e2e115">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DomicilioDestinatario}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="299" y="205" width="241" height="15" uuid="607f6057-bb04-4f58-ba25-6a56b5e6ce97">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EstadoDestinatario}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="299" y="165" width="241" height="15" uuid="09ab980f-aed4-4619-a0e1-ea5373d64fb7">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ContactoDestinatario}+" , Tel: "+$F{TelefonoDestinatario}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="1" width="553" height="1" uuid="0b9394a1-a8bf-494a-90ed-7f2f6c5f5667">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="6" y="96" width="254" height="15" uuid="93ded2d1-fd2d-4006-8bfc-407923f1cccc">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Pais_Parametros}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="6" y="72" width="254" height="23" uuid="4da42769-2688-492a-b8b3-cce1e7f5a53e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Colonia_Parametros}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="6" y="57" width="254" height="15" uuid="b4b79ed5-7927-498a-b23f-c89ae86d4203">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Direccion_Parametros}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="6" y="42" width="254" height="15" uuid="0f03db87-f777-4523-a363-5353105f045b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RFC_Parametros}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="6" y="27" width="254" height="15" uuid="2338b3ae-00ed-4882-bdb0-8a2e68e88178">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nombre_Parametros}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="244" width="120" height="15" uuid="71a7d078-827e-4237-9c3a-d8f3b9e71677">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[¿Requiere Recolección? ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="244" width="100" height="15" uuid="05ad837e-45f2-4765-9077-347bbe0541ca">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[¿Entrega Domicilio?]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="120" y="244" width="50" height="15" uuid="f651b5f0-974b-4c8a-90c0-c8306ea28e4f">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA["NO"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="244" width="50" height="15" uuid="cb4ce1ce-f1dc-4cad-960a-6d74cf30e050">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{EntregaEnSucursal} ? "NO" : "SÍ"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="259" width="108" height="15" uuid="522ab65c-6445-43ed-a5ad-d29dea61d9b9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Cita de Recolección:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="259" width="30" height="21" uuid="f8ae4b8f-ec64-4d84-984d-30482b5f7b3d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{RecoleccionConCita} ? ($F{FechaRecoleccionCita} != null) ? ($F{FechaRecoleccionCita}+ " " + $F{HoraCitaMinimaRecoleccion} + "-"+$F{HoraCitaMaximaRecoleccion} ) : "Cita Pendiente"  : "No"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="140" y="259" width="90" height="15" uuid="0973950d-6eff-4d9d-82ff-c96ee8a0f920">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Cita de Entrega:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="230" y="259" width="30" height="21" uuid="d1e7c7a9-c617-43ce-a461-0040e0f94f17">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{EmbarqueConCita} ? ($F{FechaCita}+ " " + $F{HoraCitaMinima} + "-"+$F{HoraCitaMaxima} )  : "No"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="284" width="100" height="15" uuid="8128ae8d-591f-496f-8b68-fb2558bc0c15">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Registro de servicio:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="284" width="80" height="15" uuid="0b8fc12e-6b89-4ad9-838a-c8af894d468e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{Fecha}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="290" y="284" width="60" height="15" uuid="7f9a9084-9fce-41d7-8305-362bc0e2fa9e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Tipo Cobro:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="350" y="284" width="90" height="15" uuid="6a915b9d-9056-4cca-9e8b-7e93fa7cff99">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{TipoCobro}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="300" width="80" height="18" uuid="91c131ce-e789-4c80-9b8a-bec3b231b9dc"/>
+				<text><![CDATA[Observaciones:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="70" y="300" width="480" height="18" uuid="2820dcb6-5c1d-4a81-9883-80deceefe567"/>
+				<textFieldExpression><![CDATA[$F{ObservacionesEmbarque} == null ? "" : $F{ObservacionesEmbarque}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="290" y="259" width="92" height="25" uuid="39a7e960-4b5b-4bcb-bb5c-da705d1cd112">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Valor declarado:]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00#;$(#,##0.00#)">
+				<reportElement x="383" y="259" width="166" height="15" uuid="a746bf44-bf5f-411d-b074-6ba061ca7b96">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ValorDeclarado}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="30" y="220" width="231" height="15" uuid="c266ec67-7aae-4480-8201-747895197603">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{noEquivalenciaRemitente}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="323" y="220" width="217" height="15" uuid="9a74dfc0-2c8e-4765-b7c9-9bf6528ebf5e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{noEquivalenciaDestinatario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="6" y="220" width="24" height="15" uuid="028e19a9-2f8f-41cb-9580-59e22342b9c9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[NC:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="299" y="220" width="24" height="15" uuid="08601723-c525-41d5-b56f-f6a8dc85b0be">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[NC:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<subreport>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="553" height="15" uuid="0a90ddcf-a284-4e59-b244-2c192d3d67a6">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<subreportParameter name="Id_Guia">
+					<subreportParameterExpression><![CDATA[$P{Id_Guia}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{BaseDir}+"ProGuia/SubRptGuiaDetallePaquete.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="30">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<subreport>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="2" width="551" height="15" uuid="d5d0e86e-7563-41f5-89f7-a565c5fa70ab">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<subreportParameter name="IdEmbarque">
+					<subreportParameterExpression><![CDATA[$F{IdEmbarque}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{BaseDir}+"ProGuia/SubRptGuiaConceptosFacturacion.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band height="190">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="0" y="0" width="551" height="168" uuid="a9de9e2e-d1b8-4946-b64f-75514ff4ec94"/>
+				<textElement>
+					<font size="5"/>
+				</textElement>
+				<text><![CDATA[Condiciones de prestación de servicios que ampara la CARTA DE PORTE O COMPROBANTE PARA EL TRANSPORTE DE MERCANCÍAS., PRIMERA.- Para los efectos del presente contrato de transporte se denomina "Transportista" al que realiza el servicio de transportación y "Remitente" o "Expedidor" al usuario que contrate el servicio o remite la mercancía., SEGUNDA.- El "Remitente" o "Expedidor" es responsable de que la información proporcionada al "Transportista" sea veraz y que la documentación que entregue para efectos del transporte sea la correcta., TERCERA.- El "Remitente" o "Expedidor" debe declarar al "Transportista" el tipo de mercancía o efectos de que se trate, peso, medidas y/o número de la carga que entrega para su transporte y, en su caso, el valor de la misma. La carga que se entregue a granel será pesada por el "Transportista" en el primer punto donde haya báscula apropiada o, en su defecto, aforada en metros cúbicos con la conformidad del "Remitente" o "Expedidor"., CUARTA.- Para efectos del transporte, el "Remitente" o "Expedidor" deberá entregar al "Transportista" los documentos que las leyes y reglamentos exijan para llevar a cabo el servicio, en caso de no cumplirse con estos requisitos el "Transportista" está obligado a rehusar el transporte de las mercancías., QUINTA.- Si por sospecha de falsedad en la declaración del contenido de un bulto el "Transportista" deseare proceder a su reconocimiento, podrá hacerlo ante testigos y con asistencia del "Remitente" o "Expedidor" o del consignatario. Si este último no concurriere, se solicitará la presencia de un inspector de la Secretaría de Comunicaciones y Transportes, y se levantará el acta correspondiente. El "Transportista" tendrá en todo caso, la obligación de dejar los bultos en el estado en que se encontraban antes del reconocimiento., SEXTA.- El "Transportista" deberá recoger y entregar la carga precisamente en los domicilios que señale el "Remitente" o "Expedidor", ajustándose a los términos y condiciones convenidos. El "Transportista" sólo está obligado a llevar la carga al domicilio del consignatario para su entrega una sola vez. Si ésta no fuera recibida, se dejará aviso de que la mercancía queda a disposición del interesado en las bodegas que indique el "Transportista"., SÉPTIMA.- Si la carga no fuere retirada dentro de los 30 días hábiles siguientes a aquél en que hubiere sido puesta a disposición del consignatario, el "Transportista" podrá solicitar la venta en subasta pública con arreglo a lo que dispone el Código de Comercio. OCTAVA.- El "Transportista" y el "Remitente" o "Expedidor" negociarán libremente el precio del servicio, tomando en cuenta su tipo, característica de los embarques, volumen, regularidad, clase de carga y sistema de pago.  NOVENA.- Si el "Remitente" o "Expedidor" desea que el "Transportista" asuma la responsabilidad por el valor de las mercancías o efectos que él declare y que cubra toda clase de riesgos, inclusive los derivados de caso fortuito o de fuerza mayor, las partes deberán convenir un cargo adicional, equivalente al valor de la prima del seguro que se contrate, el cual se deberá expresar en la Carta de Porte. DÉCIMA.- Cuando el importe del flete no incluya el cargo adicional, la responsabilidad del "Transportista" queda expresamente limitada a la cantidad equivalente a 15 días del salario mínimo vigente en el Distrito Federal por tonelada o cuando se trate de embarques cuyo peso sea mayor de 200 kg., pero menor de 1000 kg; y a 4 días de salario mínimo por remesa cuando se trate de embarques con peso hasta de 200 kg. DÉCIMA PRIMERA.- El precio del transporte deberá pagarse en origen, salvo convenio entre las partes de pago en destino. Cuando el transporte se hubiere concertado "Flete por Cobrar", la entrega de las mercancías o efectos se hará contra el pago del flete y el "Transportista" tendrá derecho a retenerlos mientras no se le cubra el precio convenido. DÉCIMA SEGUNDA.- Si al momento de la entrega resultare algún faltante o avería, el consignatario deberá hacerla constar en ese acto en la Carta de Porte y formular su reclamación por escrito al "Transportista", dentro de las 24 horas siguientes. DÉCIMA TERCERA.- El "Transportista" queda eximido de la obligación de recibir mercancías o efectos para su transporte, en los siguientes casos: a)    Cuando se trate de carga que por su naturaleza, peso, volumen, embalaje defectuoso o cualquier otra circunstancia no pueda transportarse sin destruirse o sin causar daño a los demás artículos o al material rodante, salvo que la empresa de que se trate tenga el equipo adecuado. b)    Las mercancías cuyo transporte haya sido prohibido por disposiciones legales o reglamentarias. Cuando tales disposiciones no prohíban precisamente el transporte de determinadas mercancías, pero sí ordenen la presentación de ciertos documentos para que puedan ser transportadas, el "Remitente" o "Expedidor" estará obligado a entregar al "Transportista" los documentos correspondientes. DÉCIMA CUARTA.- Los casos no previstos en las presentes condiciones y las quejas derivadas de su aplicación se someterán por la vía administrativa a la Secretaría de Comunicaciones y Transportes. DÉCIMA QUINTA.- Para el caso de que el "Remitente" o "Expedidor" contrate carro por entero, este aceptará la responsabilidad solidaria para con el "Transportista" mediante la figura de la corresponsabilidad que contempla el artículo 10 del Reglamento Sobre el Peso, Dimensiones y Capacidad de los Vehículos de Autotransporte que Transitan en los Caminos y Puentes de Jurisdicción Federal, por lo que el "Remitente" o "Expedidor" queda obligado a verificar que la carga y el vehículo que la transporta, cumplan con el peso y dimensiones máximas establecidos en la NOM-012-SCT-2-2014. Para el caso de incumplimiento e inobservancia a las disposiciones que regulan el peso y dimensiones, por parte del "Remitente" o "Expedidor", este será corresponsable de las infracciones y multas que la Secretaría de Comunicaciones y Transportes y la Policía Federal impongan al "Transportista", por cargar las unidades con exceso de peso.]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+</jasperReport>

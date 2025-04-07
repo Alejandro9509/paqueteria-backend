@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2022-01-09T20:33:42 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SubRptGuiaOrigenDestino" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0252d059-6237-459c-b33f-04bfc4056f2b">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GM-PQ-Certuit"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<style name="Style1" isDefault="true" mode="Opaque" isBlankWhenNull="false"/>
+	<parameter name="Id_Guia" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select pe.RFCDestinatario,pe.NombreDestinatario,pe.NoExtDestinatario DestinoNoExterior,pe.CalleDestinatario DestinoCalle, pe.ColoniaDestinatario DestinoColonia, ccp.Municipio DestinoMunicipio, 
+ccp.CodigoPostal DestinoCP,est.Estado DestinoEstado,pais2.Pais DestinoPais, 
+suc.NoExterior OrigenNoExterior,suc.Calle OrigenCalle,suc.Colonia OrigenColonia,suc.Municipio OrigenMunicipio,suc.CodigoPostal OrigenCP,edo.Estado OrigenEstado,pais.Pais OrigenPais 
+from ProGuiaPQ pg 
+inner join ProEmbarquePQ pe on pe.IdEmbarque=pg.IdEmbarque 
+inner join CatCodigosPostales ccp on ccp.IdCodigoPostal = pe.IdCodigoPostalDestinatario
+left join CatSucursales as suc on suc.IdSucursal = pg.IdSucursal 
+left join CatEstados as edo on edo.IdEstado = suc.IdEstado 
+left join CatPaises as pais on pais.IdPais = edo.IdPais
+left join CatEstados as est on est.IdEstado = ccp.IdEstado
+left join CatPaises as pais2 on pais2.IdPais = est.IdPais
+where pg.IdGuia=$P{Id_Guia}]]>
+	</queryString>
+	<field name="RFCDestinatario" class="java.lang.String"/>
+	<field name="NombreDestinatario" class="java.lang.String"/>
+	<field name="DestinoNoExterior" class="java.lang.String"/>
+	<field name="DestinoCalle" class="java.lang.String"/>
+	<field name="DestinoColonia" class="java.lang.String"/>
+	<field name="DestinoMunicipio" class="java.lang.String"/>
+	<field name="DestinoCP" class="java.lang.String"/>
+	<field name="DestinoEstado" class="java.lang.String"/>
+	<field name="DestinoPais" class="java.lang.String"/>
+	<field name="OrigenNoExterior" class="java.lang.String"/>
+	<field name="OrigenCalle" class="java.lang.String"/>
+	<field name="OrigenColonia" class="java.lang.String"/>
+	<field name="OrigenMunicipio" class="java.lang.String"/>
+	<field name="OrigenCP" class="java.lang.String"/>
+	<field name="OrigenEstado" class="java.lang.String"/>
+	<field name="OrigenPais" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="0" y="0" width="277" height="15" backcolor="#E0DEDE" uuid="3a2f9c88-ed5d-458d-8d27-f1d0d3a6de17">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="false"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Origen]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="277" y="0" width="278" height="15" backcolor="#E0DEDE" uuid="6a2a8430-ee87-4832-848a-566145f0be40">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font isBold="false"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Destino:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="52" splitType="Stretch">
+			<textField pattern="#,##0.0##" isBlankWhenNull="true">
+				<reportElement x="277" y="0" width="278" height="50" uuid="32bc9d0b-ef8a-4702-9546-f66828b5ffd3">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="9"/>
+					<paragraph leftIndent="4" spacingBefore="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DestinoCalle}+" "+$F{DestinoNoExterior} +", "+$F{DestinoColonia}+", "+$F{DestinoMunicipio}+","+$F{DestinoEstado}+", C.P. "+$F{DestinoCP}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0##" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="277" height="50" uuid="05044180-d53b-4fc3-bbc3-30c3e1f2f98c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="9"/>
+					<paragraph leftIndent="4" spacingBefore="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OrigenCalle}+" "+$F{OrigenNoExterior} +", "+$F{OrigenColonia}+", "+$F{OrigenMunicipio}+","+$F{OrigenEstado}+", C.P. "+$F{OrigenCP}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

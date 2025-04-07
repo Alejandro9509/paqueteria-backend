@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SubRptTotalesTipoCobro" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="0252d059-6237-459c-b33f-04bfc4056f2b">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PLATEROS CALIDAD"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<parameter name="Id_Guia" class="java.lang.String"/>
+	<parameter name="IdUltimaMilla" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[$P{IdUltimaMilla}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="BaseDir" class="java.lang.String">
+		<defaultValueExpression><![CDATA["C:\\Users\\CertuitLap58\\JaspersoftWorkspace\\MyReports\\GM-PQ-Reportes\\ADI880815DA7\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[EXEC usp_ObtenerTotalesRutaUltimaMillaPorTipoCobroPQ  $P{IdUltimaMilla}]]>
+	</queryString>
+	<field name="TipoCobro" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TipoCobro"/>
+		<property name="com.jaspersoft.studio.field.label" value="TipoCobro"/>
+	</field>
+	<field name="total" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="total"/>
+		<property name="com.jaspersoft.studio.field.label" value="total"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="33" y="0" width="80" height="15" isPrintWhenDetailOverflows="true" uuid="129732e0-440b-4290-8af1-08365ce3e6de">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TipoCobro}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" pattern="¤#,##0.###;¤(-#,##0.###)" isBlankWhenNull="true">
+				<reportElement x="113" y="0" width="70" height="15" isPrintWhenDetailOverflows="true" uuid="a8e3462d-d6dc-4108-ae7b-f2e4689f1e2f">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="0" rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

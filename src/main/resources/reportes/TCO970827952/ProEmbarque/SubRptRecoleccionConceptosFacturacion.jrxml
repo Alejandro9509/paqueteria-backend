@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2021-11-24T12:15:33 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SubRptGuiaDetallePaquete" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0252d059-6237-459c-b33f-04bfc4056f2b">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GM-PQ-Certuit"/>
+	<parameter name="IdEmbarque" class="java.lang.Integer"/>
+	<parameter name="IMPORTE_TOTAL" class="java.lang.Double">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[select pgpq.FolioGuia,ctcf.ConceptoFacturacion,pgcpq.Importe,pgcpq.ImporteIva,pgcpq.ImporteRetiene 
+,concat(cto.OrigenDestino,'-',ctd.OrigenDestino) OrigenDestino
+from ProEmbarquePQ pepq
+inner join ProGuiaPQ pgpq on pgpq.IdEmbarque=pepq.IdEmbarque 
+inner join ProGuiaConceptoPQ pgcpq on pgcpq.IdGuia=pgpq.IdGuia
+inner join CatConceptosFacturacion ctcf on ctcf.IdConceptoFacturacion=pgcpq.IdConceptoFacturacion
+left join CatOrigenesDestinos cto on cto.IdOrigenDestino=pepq.IdCiudadOrigen
+left join CatOrigenesDestinos ctd on ctd.IdOrigenDestino=pepq.IdCiudadDestino
+where pepq.IdEmbarque in (select IdEmbarque from ProEmbarquePQ pe
+where pe.IdEmbarque= $P{IdEmbarque}  or pe.IdEmbarqueRelacionado=$P{IdEmbarque} ) 
+or 
+pepq.IdEmbarqueRelacionado in  (select IdEmbarque from ProEmbarquePQ pe
+where pe.IdEmbarque=$P{IdEmbarque}  or pe.IdEmbarqueRelacionado=$P{IdEmbarque} )
+or 
+pepq.IdEmbarque in (select IdEmbarqueRelacionado from ProEmbarquePQ pe
+where pe.IdEmbarque=$P{IdEmbarque}  or pe.IdEmbarqueRelacionado=$P{IdEmbarque} )]]>
+	</queryString>
+	<field name="FolioGuia" class="java.lang.String"/>
+	<field name="ConceptoFacturacion" class="java.lang.String"/>
+	<field name="Importe" class="java.math.BigDecimal"/>
+	<field name="ImporteIva" class="java.math.BigDecimal"/>
+	<field name="ImporteRetiene" class="java.math.BigDecimal"/>
+	<field name="OrigenDestino" class="java.lang.String"/>
+	<variable name="v_subtotal" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{Importe}]]></variableExpression>
+	</variable>
+	<variable name="v_iva" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{ImporteIva}]]></variableExpression>
+	</variable>
+	<variable name="v_retension" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{ImporteRetiene}]]></variableExpression>
+	</variable>
+	<group name="GroupOrigenDestino">
+		<groupExpression><![CDATA[$F{FolioGuia}]]></groupExpression>
+		<groupHeader>
+			<band height="15">
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement x="0" y="0" width="80" height="15" uuid="9bd53384-5fb6-44b0-a5e9-78748baa27fe"/>
+					<box>
+						<topPen lineWidth="0.4"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.4"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="9"/>
+						<paragraph leftIndent="4" rightIndent="2"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{FolioGuia}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="80" y="0" width="470" height="15" uuid="ba2b5966-6422-4d18-a794-1e910f74752e">
+						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="0.4"/>
+						<leftPen lineWidth="0.0"/>
+						<bottomPen lineWidth="0.4"/>
+						<rightPen lineWidth="0.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+						<paragraph leftIndent="4"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{OrigenDestino}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement x="280" y="0" width="190" height="15" uuid="9151bfe8-34f0-4911-820f-333477fdc1f4">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Conceptos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="470" y="0" width="80" height="15" uuid="245fc7a2-8ea0-418e-993d-232ccc0d7d7b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Importe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="80" height="15" uuid="7aa10a04-7998-4cd3-9342-296ab77211c8">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Guía ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="0" width="200" height="15" uuid="9c795b1f-7783-4f3b-8f77-56a213ca251e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Origen-Destino]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="280" y="0" width="190" height="15" uuid="51de555b-861e-4047-97a9-167a7c4b18a6">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.4"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.4"/>
+					<rightPen lineWidth="0.4"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ConceptoFacturacion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00#;$(#,##0.00#)" isBlankWhenNull="true">
+				<reportElement x="470" y="0" width="80" height="15" uuid="5239d2af-a467-4416-b2cf-5a9522479b4a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.4"/>
+					<leftPen lineWidth="0.4"/>
+					<bottomPen lineWidth="0.4"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4" rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Importe}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="70" splitType="Immediate">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="370" y="5" width="100" height="15" uuid="d303f2e7-680b-464e-b845-65f43df42ede">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[SUB TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="20" width="100" height="15" uuid="bdb5f3e9-3b93-4c2e-a5b3-723cbf6d22f2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[IVA 16%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="53" width="100" height="15" uuid="eeb337b0-9c17-4d1a-9d26-3e0fdaab5d62">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[TOTAL A PAGAR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="35" width="100" height="15" uuid="5079ac3d-3a6d-4a0d-8fc6-e7e520a739ba">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="9"/>
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[RETENCIÓN 4%]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="$#,##0.00#;$(#,##0.00#)" isBlankWhenNull="true">
+				<reportElement x="470" y="5" width="80" height="15" uuid="b8daca63-54b8-43e5-b45c-61a998005eff">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_subtotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00#;$(#,##0.00#)">
+				<reportElement x="470" y="20" width="80" height="15" uuid="a248b004-6c6c-4f03-b2c4-259411463156">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_iva}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00#;$(#,##0.00#)">
+				<reportElement x="470" y="35" width="80" height="15" uuid="a76b7b52-ed5c-434e-84c5-5d5366c16199">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_retension}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00#;$(#,##0.00#)">
+				<reportElement x="470" y="53" width="80" height="15" uuid="ef0bdbd8-6e59-47ca-8a6e-9530b0acec6d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<paragraph rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{v_subtotal}+$V{v_iva}-$V{v_retension}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

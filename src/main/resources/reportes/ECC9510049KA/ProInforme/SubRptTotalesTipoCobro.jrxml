@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SubRptTotalesTipoCobro" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="12d4d52d-5096-4488-8d69-c0492c9ff6d1">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PAQUETERIA DESARROLLO"/>
+	<parameter name="IdInforme" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT ccf.ConceptoFacturacion, SUM(concepto.Importe) as "TotalImporte",
+        SUM(concepto.ImporteIva) as "TotalIVA",  SUM(concepto.ImporteRetiene) as "TotalRetencion",  SUM(concepto.Total) as "Total"
+from ProGuiaPQ guia
+         inner join ProEmbarquePQ embarque on embarque.IdEmbarque = guia.IdEmbarque
+         left join CatTipoCobroPQ cobro on cobro.IdTipoCobro = embarque.IdTipoCobro
+         inner join ProGuiaConceptoPQ concepto on concepto.IdGuia = guia.IdGuia
+         inner join CatConceptosFacturacion ccf on ccf.IdConceptoFacturacion = concepto.IdConceptoFacturacion
+         inner join CatImpuestos ci1 on ci1.IdImpuesto = concepto.IdImpuestoTraslada
+         inner join CatImpuestos ci2 on ci2.IdImpuesto = concepto.IdImpuestoRetiene
+         inner join ProInformeGuiaPQ informeG on guia.IdGuia = informeG.IdGuia
+         inner join ProInformePQ informe on informe.IdInforme = informeG.IdInforme
+where informeG.IdInforme = $P{IdInforme} 
+group by  ccf.ConceptoFacturacion]]>
+	</queryString>
+	<field name="ConceptoFacturacion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ConceptoFacturacion"/>
+		<property name="com.jaspersoft.studio.field.label" value="ConceptoFacturacion"/>
+	</field>
+	<field name="TotalImporte" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="TotalImporte"/>
+		<property name="com.jaspersoft.studio.field.label" value="TotalImporte"/>
+	</field>
+	<field name="TotalIVA" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="TotalIVA"/>
+		<property name="com.jaspersoft.studio.field.label" value="TotalIVA"/>
+	</field>
+	<field name="TotalRetencion" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="TotalRetencion"/>
+		<property name="com.jaspersoft.studio.field.label" value="TotalRetencion"/>
+	</field>
+	<field name="Total" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="Total"/>
+		<property name="com.jaspersoft.studio.field.label" value="Total"/>
+	</field>
+	<variable name="sumTotal" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{Total}]]></variableExpression>
+	</variable>
+	<variable name="Variable_1" class="java.lang.String"/>
+	<variable name="ivaTotal" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{TotalIVA}]]></variableExpression>
+	</variable>
+	<variable name="importeTotal" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{TotalImporte}]]></variableExpression>
+	</variable>
+	<variable name="retieneTotal" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[$F{TotalRetencion}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="15">
+			<staticText>
+				<reportElement x="700" y="0" width="92" height="15" uuid="54d2702c-5a4c-479e-a1a8-b6eb85746eb1">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+					<paragraph leftIndent="0" rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="311" y="0" width="99" height="15" uuid="a6457d43-ceb0-4bad-a2a5-1ed055c51ca6">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+					<paragraph leftIndent="0" rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[Importe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="0" width="130" height="15" uuid="0e22f1c9-abb4-460e-ad0c-6451cf42cd9a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+					<paragraph leftIndent="0" rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[IVA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="540" y="0" width="160" height="15" uuid="1046b19d-8b1d-4418-9711-ce6a8a550f93">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+					<paragraph leftIndent="0" rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[Retención]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="121" y="0" width="190" height="15" uuid="35159cf8-ad72-4161-a163-972b16fd6f0c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+					<paragraph leftIndent="0" rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[Concepto]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField pattern="$#,##0.00#;$(#,##0.00#)">
+				<reportElement x="311" y="0" width="99" height="15" uuid="30068be6-dd19-4669-9944-2f15dbd97aed">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TotalImporte}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00#;$(#,##0.00#)">
+				<reportElement x="700" y="0" width="92" height="15" uuid="6cee72a1-7854-4186-9127-2f8980eb886c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Total}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00#;$(#,##0.00#)">
+				<reportElement x="410" y="0" width="130" height="15" uuid="2119eb79-1e96-4679-a2b7-0f45af61b480">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TotalIVA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00#;$(#,##0.00#)">
+				<reportElement x="540" y="0" width="160" height="15" uuid="6f4a2326-625c-4884-b55b-2f7711b99351">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TotalRetencion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="121" y="0" width="190" height="15" uuid="08361b03-df21-49af-92ff-41ec916181b6">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ConceptoFacturacion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="19">
+			<textField pattern="$#,##0.00#;$(#,##0.00#)">
+				<reportElement x="700" y="0" width="92" height="17" uuid="2693e818-6570-42aa-a004-9af3119b84a1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumTotal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="210" y="0" width="101" height="17" uuid="c4e844e5-af38-49c0-a138-6d0e3260e9f3"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00#;$(#,##0.00#)">
+				<reportElement x="410" y="0" width="130" height="17" uuid="906e62b5-4142-44c1-8775-2042303a0c8f"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{ivaTotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00#;$(#,##0.00#)">
+				<reportElement x="311" y="0" width="99" height="17" uuid="7e9b3df1-0afb-4216-a7e2-c2f4c85c25b6"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{importeTotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00#;$(#,##0.00#)">
+				<reportElement x="540" y="0" width="160" height="17" uuid="ed0c99d9-b7ec-4838-ad7e-189551166998"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{retieneTotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

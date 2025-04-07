@@ -1,0 +1,41 @@
+{
+  "encriptacion": "MGM6L04H150pzWf",
+  "clientes": [
+    {
+      "name": "BD Unificado",
+      "rfc": "TST090909000",
+      "bdName": "GMTERP_WEB_TST090909000",
+      "server": "jdbc:jtds:sqlserver://gmterp3.database.windows.net/",
+      "version": "",
+      "username": "Desarrollo",
+      "password": "dRu@5CHaxE3sQL"
+    },
+    {
+      "name":  "Soporte PQ",
+      "rfc": "SOPO110101PQ1",
+      "bdName": "GMTERP_WEB_PQ_SOPO110101PQ1",
+      "server": "jdbc:jtds:sqlserver://190.9.53.4:53999/",
+      "version": "",
+      "username": "sa",
+      "password": "GTpE003*"
+    },
+    {
+      "name":  "Soporte 2 PQ",
+      "rfc": "SOPO110101PQ2",
+      "bdName": "GMTERP_WEB_PQ_SOPO110101PQ2",
+      "server": "jdbc:jtds:sqlserver://190.9.53.4:53999/",
+      "version": "",
+      "username": "sa",
+      "password": "GTpE003*"
+    },
+    {
+      "name":  "Soporte Almacenes",
+      "rfc": "SOPO110101AM1",
+      "bdName": "GMTERP_WEB_PQ_SOPO110101AM1",
+      "server": "jdbc:jtds:sqlserver://190.9.53.4:53999/",
+      "version": "",
+      "username": "sa",
+      "password": "GTpE003*"
+    }
+  ]
+}

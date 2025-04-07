@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SubRptGuiaDetalleMercancia" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0252d059-6237-459c-b33f-04bfc4056f2b">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PAQUETERIA DESARROLLO"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<style name="Style1" isDefault="true" mode="Opaque"/>
+	<parameter name="Id_Guia" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select coperador.NumeroOperador,coperador.RFC,coperador.Nombre,coperador.Domicilio,coperador.Licencia 
+from ParadaUltimaMillaPQ pump 
+inner join CatOperadores coperador on coperador.IdOperador=pump.m_nIdOperador
+inner join CatUnidades cunidad on cunidad.IdUnidad=pump.m_nIdUnidad
+inner join ProParadaUltimaMillaGuiasPQ ppumg on ppumg.m_nIdParadaUltimaMilla=pump.m_nIdProParadaUltimaMilla 
+where ppumg.m_nIdGuia= $P{Id_Guia}  and ppumg.EsRecoleccion=1 and pump.Activa=1]]>
+	</queryString>
+	<field name="NumeroOperador" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="NumeroOperador"/>
+		<property name="com.jaspersoft.studio.field.label" value="NumeroOperador"/>
+	</field>
+	<field name="RFC" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="RFC"/>
+		<property name="com.jaspersoft.studio.field.label" value="RFC"/>
+	</field>
+	<field name="Nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="Nombre"/>
+	</field>
+	<field name="Domicilio" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Domicilio"/>
+		<property name="com.jaspersoft.studio.field.label" value="Domicilio"/>
+	</field>
+	<field name="Licencia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Licencia"/>
+		<property name="com.jaspersoft.studio.field.label" value="Licencia"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="15" width="80" height="15" backcolor="#E0DEDE" uuid="3a2f9c88-ed5d-458d-8d27-f1d0d3a6de17">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[RFC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="15" width="100" height="15" backcolor="#E0DEDE" uuid="62a5deba-04f9-469c-8831-968ac4c58078">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Licencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="15" width="215" height="15" backcolor="#E0DEDE" uuid="3cfb4575-38de-493b-91fc-6803286ad67b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Domicilio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="15" width="160" height="15" backcolor="#E0DEDE" uuid="231b19a9-42fb-4ea8-a3f9-b03b0c1bc923">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="15" backcolor="#E0DEDE" uuid="bf7a01c5-d54a-4d70-971f-31f93ada6748">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Operadores]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="1" width="80" height="20" uuid="129732e0-440b-4290-8af1-08365ce3e6de"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RFC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0##" isBlankWhenNull="true">
+				<reportElement x="240" y="1" width="100" height="20" uuid="31f36b64-7f5f-4232-8b54-2534fe27405c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Licencia}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0##" isBlankWhenNull="true">
+				<reportElement x="340" y="1" width="215" height="20" uuid="32bc9d0b-ef8a-4702-9546-f66828b5ffd3">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Domicilio}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="80" y="1" width="160" height="20" uuid="271047b7-b1c1-44b2-8371-04e4f03808a6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

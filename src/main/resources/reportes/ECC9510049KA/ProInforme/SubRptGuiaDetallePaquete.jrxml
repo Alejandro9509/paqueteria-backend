@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SubRptGuiaDetallePaquete" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0252d059-6237-459c-b33f-04bfc4056f2b">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PAQUETERIA DESARROLLO"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="IdGuia" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select CTE.Nombre,PED.Descripcion,PED.Peso,PED.Largo,PED.Ancho,PED.Alto,PE.ValorDeclarado,
+PED.ctd,case when PE.EntregaEnSucursal=1 then 'Ocurre' else 'Última milla' end TipoEntrega,
+ctcp.Descripcion TipoCobro
+from ProEmbarquePQ PE 
+inner join ProEmbarqueDetallePQ PED on PED.IdEmbarque=PE.IdEmbarque
+inner join CatEmbalajesPQ  CTE on CTE.IdEmbalaje=PED.IdTipoEmpaque
+inner join ProGuiaPQ PG on PG.IdEmbarque = PE.IdEmbarque
+inner join CatTipoCobroPQ ctcp on ctcp.IdTipoCobro=PE.IdTipoCobro
+
+where PG.IdGuia= $P{IdGuia} ;]]>
+	</queryString>
+	<field name="Nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="Nombre"/>
+	</field>
+	<field name="Descripcion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="Descripcion"/>
+		<property name="com.jaspersoft.studio.field.label" value="Descripcion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ProEmbarqueDetallePQ"/>
+	</field>
+	<field name="Peso" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="Peso"/>
+		<property name="com.jaspersoft.studio.field.label" value="Peso"/>
+	</field>
+	<field name="Largo" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="Largo"/>
+		<property name="com.jaspersoft.studio.field.label" value="Largo"/>
+	</field>
+	<field name="Ancho" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="Ancho"/>
+		<property name="com.jaspersoft.studio.field.label" value="Ancho"/>
+	</field>
+	<field name="Alto" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="Alto"/>
+		<property name="com.jaspersoft.studio.field.label" value="Alto"/>
+	</field>
+	<field name="ValorDeclarado" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="ValorDeclarado"/>
+		<property name="com.jaspersoft.studio.field.label" value="ValorDeclarado"/>
+	</field>
+	<field name="ctd" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="ctd"/>
+		<property name="com.jaspersoft.studio.field.label" value="ctd"/>
+	</field>
+	<field name="TipoEntrega" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TipoEntrega"/>
+		<property name="com.jaspersoft.studio.field.label" value="TipoEntrega"/>
+	</field>
+	<field name="TipoCobro" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="TipoCobro"/>
+		<property name="com.jaspersoft.studio.field.label" value="TipoCobro"/>
+	</field>
+	<group name="Nombre">
+		<groupExpression><![CDATA[$F{Nombre}]]></groupExpression>
+	</group>
+	<group name="Descripcion">
+		<groupExpression><![CDATA[$F{Descripcion}]]></groupExpression>
+	</group>
+	<group name="Peso">
+		<groupExpression><![CDATA[$F{Peso}]]></groupExpression>
+	</group>
+	<group name="Largo">
+		<groupExpression><![CDATA[$F{Largo}]]></groupExpression>
+	</group>
+	<group name="Ancho">
+		<groupExpression><![CDATA[$F{Ancho}]]></groupExpression>
+	</group>
+	<group name="Alto">
+		<groupExpression><![CDATA[$F{Alto}]]></groupExpression>
+	</group>
+	<group name="ValorDeclarado">
+		<groupExpression><![CDATA[$F{ValorDeclarado}]]></groupExpression>
+	</group>
+	<group name="ctd">
+		<groupExpression><![CDATA[$F{ctd}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="60" y="0" width="80" height="15" isPrintWhenDetailOverflows="true" uuid="129732e0-440b-4290-8af1-08365ce3e6de">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="140" y="0" width="170" height="15" isPrintWhenDetailOverflows="true" uuid="0d585d92-f917-49c9-ac09-0b1142c0652d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Descripcion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0##">
+				<reportElement stretchType="RelativeToTallestObject" x="310" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="31f36b64-7f5f-4232-8b54-2534fe27405c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Peso}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0##">
+				<reportElement stretchType="RelativeToTallestObject" x="370" y="0" width="61" height="15" isPrintWhenDetailOverflows="true" uuid="32bc9d0b-ef8a-4702-9546-f66828b5ffd3">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Largo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0##">
+				<reportElement stretchType="RelativeToTallestObject" x="431" y="0" width="59" height="15" isPrintWhenDetailOverflows="true" uuid="64096e61-d743-4801-bcea-c84c4007cdc2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Ancho}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0##">
+				<reportElement stretchType="RelativeToTallestObject" x="490" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="a44d7096-e6be-4e85-827c-46a0fb31ceeb">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Alto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00#;$(#,##0.00#)">
+				<reportElement stretchType="RelativeToTallestObject" x="550" y="0" width="70" height="15" isPrintWhenDetailOverflows="true" uuid="89d1f252-f00a-4683-a249-4d84b1089808">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ValorDeclarado}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,#00.###;(#,#00.###-)">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="60" height="15" isPrintWhenDetailOverflows="true" uuid="5239d2af-a467-4416-b2cf-5a9522479b4a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ctd}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="620" y="0" width="90" height="15" isPrintWhenDetailOverflows="true" uuid="917a73e8-e16b-4b12-bfe9-d78d5ff196e4">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TipoCobro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="710" y="0" width="90" height="15" isPrintWhenDetailOverflows="true" uuid="779b4896-8c1b-4879-a68c-997879400e99">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TipoEntrega}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

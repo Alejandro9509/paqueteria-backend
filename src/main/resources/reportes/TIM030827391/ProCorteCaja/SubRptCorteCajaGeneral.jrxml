@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.3.final using JasperReports Library version 6.20.3-415f9428cffdb6805c6f85bbb29ebaf18813a2ab  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptCorteCaja" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="30b344af-7992-4020-b608-f942210cb49e">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CALIDAD SOPO"/>
+	<parameter name="FechaCorte" class="java.lang.String"/>
+	<parameter name="BaseDir" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT IdCorte AS IdCorte, Total AS total,
+FolioCorte as folioCorte
+FROM ProCorteCajaPQ
+WHERE CAST(FechaHora AS DATE) = $P{FechaCorte}]]>
+	</queryString>
+	<field name="IdCorte" class="java.lang.Integer"/>
+	<field name="total" class="java.math.BigDecimal"/>
+	<field name="folioCorte" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="17" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="12" uuid="b6980955-f191-4e96-941d-d309fc850d10">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FOLIO CORTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="12" uuid="2f3b2231-95bc-4a98-8183-50ea677a3fd2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GUIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="100" height="12" uuid="1d969d7c-0fbd-4a95-bdd9-e1eee14996e0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA ENTREGA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="160" height="12" uuid="6546b3fd-a2b3-49de-83d8-96d0233a5183">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OPERADOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="0" width="100" height="12" uuid="0e4355a6-b823-4941-bf05-8787b02636a0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FORMA PAGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="560" y="0" width="100" height="12" uuid="d96b18aa-1f0f-4dc6-8127-f746fcc0de45">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MONTO TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="660" y="0" width="100" height="12" uuid="cd27aec1-c4c3-4183-a535-1b9012a9fb2f">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL CORTE]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="100" height="15" uuid="0ac27067-e325-4ca6-bf39-e34c356f3eea">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{folioCorte}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="15">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<subreport>
+				<reportElement x="100" y="0" width="560" height="15" uuid="291d7920-8b89-44ad-8f08-e0e68a111efb">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<subreportParameter name="IdCorte">
+					<subreportParameterExpression><![CDATA[$F{IdCorte}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{BaseDir}+"ProCorteCaja/SubRptGuiaCorteCajaGeneral.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="16">
+			<textField textAdjust="StretchHeight" pattern="$#,##0.###;$(-#,##0.###)" isBlankWhenNull="true">
+				<reportElement x="660" y="0" width="100" height="15" isPrintWhenDetailOverflows="true" uuid="a3f59b5a-1160-4e1d-860b-5dad1d9f6a32">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="0" rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

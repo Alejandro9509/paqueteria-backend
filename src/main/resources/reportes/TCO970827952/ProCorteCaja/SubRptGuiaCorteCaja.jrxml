@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.3.final using JasperReports Library version 6.20.3-415f9428cffdb6805c6f85bbb29ebaf18813a2ab  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptCorteCaja" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="30b344af-7992-4020-b608-f942210cb49e">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CALIDAD SOPO"/>
+	<parameter name="IdCorte" class="java.lang.Integer"/>
+	<parameter name="BaseDir" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+    pgpq.FolioGuia as folio,
+    IIF((select top 1
+             guiaUM.IdEstatusUltimaMilla
+         from ProParadaUltimaMillaGuiasPQ guiaUM
+         where guiaUM.m_nIdGuia = pccg.IdGuia
+         order by guiaUM.IdParadaGuia desc) = 3, 'ENTREGADA', 'NO ENTREGADA') as estatus,
+    UPPER(cobro.Descripcion) as tipoCobro,
+    ROUND(pccg.Total,2) as total,
+    IIF(factura.Estatus = 1, 'PAGADA', 'NO PAGADA') as estatusPago
+from ProCorteCajaGuiasPQ pccg
+         inner join ProGuiaPQ pgpq on pgpq.IdGuia=pccg.IdGuia
+         inner join ProEmbarquePQ pepq on pepq.IdEmbarque=pgpq.IdEmbarque
+         left join CatTipoCobroPQ cobro on cobro.IdTipoCobro = pepq.IdTipoCobro
+         left join ProViajes viaje on viaje.IdGuia = pgpq.IdGuia
+         left join ProViajesFacturas viajeFac on viajeFac.IdViaje = viaje.IdViaje
+         left join ProFacturas factura on factura.IdFactura = viajeFac.IdFactura
+where pccg.IdCorte = $P{IdCorte}]]>
+	</queryString>
+	<field name="folio" class="java.lang.String"/>
+	<field name="total" class="java.math.BigDecimal"/>
+	<field name="estatus" class="java.lang.String"/>
+	<field name="tipoCobro" class="java.lang.String"/>
+	<field name="estatusPago" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="17" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<staticText>
+				<reportElement x="0" y="0" width="128" height="12" uuid="b6980955-f191-4e96-941d-d309fc850d10">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[# Guía ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="128" y="0" width="91" height="12" uuid="2f3b2231-95bc-4a98-8183-50ea677a3fd2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTATUS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="219" y="0" width="100" height="12" uuid="1d969d7c-0fbd-4a95-bdd9-e1eee14996e0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIPO DE COBRO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="319" y="0" width="102" height="12" uuid="6546b3fd-a2b3-49de-83d8-96d0233a5183">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[IMPORTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="421" y="0" width="160" height="12" uuid="0e4355a6-b823-4941-bf05-8787b02636a0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTATUS PAGO FACTURA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="128" height="12" uuid="0ac27067-e325-4ca6-bf39-e34c356f3eea">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{folio}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="128" y="0" width="91" height="12" uuid="de7636ba-5218-44be-b390-883ac70c2cf1">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estatus}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="219" y="0" width="100" height="12" uuid="8688b931-090d-45d6-9afe-218d2035a0bb">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipoCobro}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="421" y="0" width="160" height="12" uuid="182d60a1-6bb1-4bec-88de-c48d20d3436c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estatusPago}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" pattern="$#,##0.###;$(-#,##0.###)" isBlankWhenNull="true">
+				<reportElement x="319" y="0" width="102" height="12" isPrintWhenDetailOverflows="true" uuid="a3f59b5a-1160-4e1d-860b-5dad1d9f6a32">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="0" rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

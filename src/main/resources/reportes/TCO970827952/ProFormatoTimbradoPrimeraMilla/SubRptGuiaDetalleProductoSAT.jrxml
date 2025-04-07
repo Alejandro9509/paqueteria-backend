@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SubRptGuiaDetalleProductoSAT" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0252d059-6237-459c-b33f-04bfc4056f2b">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GM-PQ-Certuit"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<style name="Style1"/>
+	<parameter name="Id_Guia" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT pvcf.ClaveProductoServicio,pvcf.ClaveUnidad,pvcf.Cantidad,cgsat.Descripcion as ConceptoFacturacion
+FROM ProRecoleccionComplementosSATPQ as pvcf
+left join ProRecoleccionPQ as cf on cf.IdRecoleccion=pvcf.IdRecoleccion
+inner join CatGeneralesSAT cgsat on cgsat.ClaveSAT=pvcf.ClaveProductoServicio
+where cgsat.CatalogoSAT='c_ClaveProdServCP' and  cf.IdRecoleccion=$P{Id_Guia}]]>
+	</queryString>
+	<field name="ClaveProductoServicio" class="java.lang.String"/>
+	<field name="ClaveUnidad" class="java.lang.String"/>
+	<field name="Cantidad" class="java.lang.Integer"/>
+	<field name="ConceptoFacturacion" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="80" height="15" backcolor="#E0DEDE" uuid="3a2f9c88-ed5d-458d-8d27-f1d0d3a6de17">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Clave Producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="80" y="0" width="90" height="15" backcolor="#E0DEDE" uuid="62a5deba-04f9-469c-8831-968ac4c58078">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Clave Unidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="170" y="0" width="60" height="15" backcolor="#E0DEDE" uuid="3cfb4575-38de-493b-91fc-6803286ad67b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="230" y="0" width="170" height="15" backcolor="#E0DEDE" uuid="ba4b0e5f-1167-484a-85c6-2d285496d40b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField>
+				<reportElement x="0" y="0" width="80" height="13" uuid="129732e0-440b-4290-8af1-08365ce3e6de">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ClaveProductoServicio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="0" width="90" height="13" uuid="0d585d92-f917-49c9-ac09-0b1142c0652d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ClaveUnidad}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0##">
+				<reportElement x="170" y="0" width="60" height="13" uuid="31f36b64-7f5f-4232-8b54-2534fe27405c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Cantidad}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" pattern="#,##0.0##">
+				<reportElement x="230" y="0" width="170" height="13" uuid="32bc9d0b-ef8a-4702-9546-f66828b5ffd3">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ConceptoFacturacion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

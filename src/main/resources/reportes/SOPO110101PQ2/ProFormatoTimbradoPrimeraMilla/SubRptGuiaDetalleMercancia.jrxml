@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SubRptGuiaDetalleMercancia" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0252d059-6237-459c-b33f-04bfc4056f2b">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PAQUETERIA DESARROLLO"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<parameter name="Id_Guia" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT pvcf.ClaveProductoServicio,pvcf.ClaveUnidad,pvcf.Cantidad,cgsat.Descripcion as ConceptoFacturacion,cf.FolioRecoleccion,pvcf.Peso 
+,pvcf.EsMaterialPeligroso,pvcf.ClaveMaterialPeligroso
+FROM ProRecoleccionComplementosSATPQ as pvcf
+left join ProRecoleccionPQ as cf on cf.IdRecoleccion=pvcf.IdRecoleccion
+inner join CatGeneralesSAT cgsat on cgsat.ClaveSAT=pvcf.ClaveProductoServicio
+where cgsat.CatalogoSAT='c_ClaveProdServCP' and  cf.IdRecoleccion=$P{Id_Guia}]]>
+	</queryString>
+	<field name="ClaveProductoServicio" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ClaveProductoServicio"/>
+		<property name="com.jaspersoft.studio.field.label" value="ClaveProductoServicio"/>
+	</field>
+	<field name="ClaveUnidad" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ClaveUnidad"/>
+		<property name="com.jaspersoft.studio.field.label" value="ClaveUnidad"/>
+	</field>
+	<field name="Cantidad" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="Cantidad"/>
+		<property name="com.jaspersoft.studio.field.label" value="Cantidad"/>
+	</field>
+	<field name="ConceptoFacturacion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ConceptoFacturacion"/>
+		<property name="com.jaspersoft.studio.field.label" value="ConceptoFacturacion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="CatGeneralesSAT"/>
+	</field>
+	<field name="FolioRecoleccion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="FolioRecoleccion"/>
+		<property name="com.jaspersoft.studio.field.label" value="FolioRecoleccion"/>
+	</field>
+	<field name="Peso" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="Peso"/>
+		<property name="com.jaspersoft.studio.field.label" value="Peso"/>
+	</field>
+	<field name="EsMaterialPeligroso" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.name" value="EsMaterialPeligroso"/>
+		<property name="com.jaspersoft.studio.field.label" value="EsMaterialPeligroso"/>
+	</field>
+	<field name="ClaveMaterialPeligroso" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ClaveMaterialPeligroso"/>
+		<property name="com.jaspersoft.studio.field.label" value="ClaveMaterialPeligroso"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="70" y="0" width="110" height="15" backcolor="#E0DEDE" uuid="467cc877-e339-4345-acf5-d6af07498653">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Bienes Transportados]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="500" y="0" width="50" height="15" backcolor="#E0DEDE" uuid="695e7b6e-293f-45a0-9bf3-bbb01becdb1d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Moneda]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="430" y="0" width="40" height="15" backcolor="#E0DEDE" uuid="2870da27-a47b-4d18-bd04-b9ea57e8d7d7">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Peso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="470" y="0" width="30" height="15" backcolor="#E0DEDE" uuid="12fe39bb-b0ac-46da-af09-55c771699171">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="70" height="15" backcolor="#E0DEDE" uuid="edbd0053-3087-4a1c-b51f-ca179b89967b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Folio Guía]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="250" y="0" width="50" height="15" backcolor="#E0DEDE" uuid="5f954b61-738f-44c0-b23a-586b461b57ce">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="180" y="0" width="70" height="15" backcolor="#E0DEDE" uuid="b0618e9b-78eb-4068-8a5d-4f385ccb0f72">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Clave Unidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="300" y="0" width="130" height="15" backcolor="#E0DEDE" uuid="dc1d646d-b23a-4d65-93cf-662f3fc944b0">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<text><![CDATA[Tipo Material Peligroso]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField textAdjust="StretchHeight" pattern="#,##0.0##" isBlankWhenNull="true">
+				<reportElement x="470" y="1" width="30" height="13" uuid="2c30ff2a-9f08-46a8-b5e2-dfa0e21a361b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA["0"]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" pattern="#,##0.0##" isBlankWhenNull="true">
+				<reportElement x="430" y="1" width="40" height="13" uuid="fb667555-9ec2-4b65-bcc5-b8e689d53134">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Peso} + " Kg"]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" pattern="#,##0.0##" isBlankWhenNull="true">
+				<reportElement x="250" y="1" width="50" height="13" uuid="e889eae1-92d2-4ba5-a56d-330d1f113ab2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Cantidad}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" pattern="#,##0.0##" isBlankWhenNull="true">
+				<reportElement x="300" y="1" width="130" height="13" uuid="dfd1c7f0-d2ef-41be-aa41-02db23b3b28a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EsMaterialPeligroso} ?  $F{ClaveMaterialPeligroso} : "No"]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="70" y="1" width="110" height="13" uuid="a21fb57f-33d6-419b-9734-827cdd758c3c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ClaveProductoServicio} + "-" + $F{ConceptoFacturacion}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" pattern="#,##0.0##" isBlankWhenNull="true">
+				<reportElement x="500" y="1" width="50" height="13" uuid="7fefed86-c3f9-4ef6-ad6b-8c7191d02bc4">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA["MXN"]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="180" y="1" width="70" height="13" uuid="ddc40524-c976-4ab1-a7e0-0d45d51d315a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ClaveUnidad}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="0" y="1" width="70" height="13" uuid="669ddf34-b716-45cf-a415-703828b13ea7">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FolioRecoleccion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

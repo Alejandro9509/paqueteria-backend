@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2021-12-10T16:45:51 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SubRptGuiaDetallePaquete" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0252d059-6237-459c-b33f-04bfc4056f2b">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GM-PQ-Certuit"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<parameter name="IdGuia" class="java.lang.String"/>
+	<parameter name="EsRecoleccion" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select CTE.Nombre,PED.Descripcion,PED.Peso,PED.Largo,PED.Ancho,PED.Alto,isnull(PE.ValorDeclarado,0) ValorDeclarado,PED.ctd
+from ProEmbarquePQ PE 
+inner join ProEmbarqueDetallePQ PED on PED.IdEmbarque=PE.IdEmbarque
+inner join CatEmbalajesPQ  CTE on CTE.IdEmbalaje=PED.IdTipoEmpaque
+inner join ProGuiaPQ PG on PG.IdEmbarque = PE.IdEmbarque
+where PG.IdGuia= $P{IdGuia} and  $P{EsRecoleccion} =0
+union all
+select CTE.Nombre,PRP.Descripcion,PRP.Peso,PRP.Largo,PRP.Ancho,PRP.Alto,isnull(PR.ValorDeclarado,0) ValorDeclarado,PRP.Cantidad as ctd
+from ProRecoleccionPQ PR 
+inner join ProRecoleccionPaquetePQ PRP on PRP.IdRecoleccion=PR.IdRecoleccion
+inner join CatEmbalajesPQ  CTE on CTE.IdEmbalaje=PRP.IdTipoEmbalaje
+where PR.IdRecoleccion=  $P{IdGuia} and  $P{EsRecoleccion} =1]]>
+	</queryString>
+	<field name="Nombre" class="java.lang.String"/>
+	<field name="Descripcion" class="java.lang.String"/>
+	<field name="Peso" class="java.lang.Double"/>
+	<field name="Largo" class="java.lang.Double"/>
+	<field name="Ancho" class="java.lang.Double"/>
+	<field name="Alto" class="java.lang.Double"/>
+	<field name="ValorDeclarado" class="java.lang.Double"/>
+	<field name="ctd" class="java.lang.Double"/>
+	<group name="Nombre">
+		<groupExpression><![CDATA[$F{Nombre}]]></groupExpression>
+	</group>
+	<group name="Descripcion">
+		<groupExpression><![CDATA[$F{Descripcion}]]></groupExpression>
+	</group>
+	<group name="Peso">
+		<groupExpression><![CDATA[$F{Peso}]]></groupExpression>
+	</group>
+	<group name="Largo">
+		<groupExpression><![CDATA[$F{Largo}]]></groupExpression>
+	</group>
+	<group name="Ancho">
+		<groupExpression><![CDATA[$F{Ancho}]]></groupExpression>
+	</group>
+	<group name="Alto">
+		<groupExpression><![CDATA[$F{Alto}]]></groupExpression>
+	</group>
+	<group name="ValorDeclarado">
+		<groupExpression><![CDATA[$F{ValorDeclarado}]]></groupExpression>
+	</group>
+	<group name="ctd">
+		<groupExpression><![CDATA[$F{ctd}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField pattern="#,##0.###">
+				<reportElement x="0" y="0" width="45" height="15" isPrintWhenDetailOverflows="true" uuid="129732e0-440b-4290-8af1-08365ce3e6de">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ctd}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="45" y="0" width="90" height="15" isPrintWhenDetailOverflows="true" uuid="0d585d92-f917-49c9-ac09-0b1142c0652d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nombre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="135" y="0" width="145" height="15" isPrintWhenDetailOverflows="true" uuid="31f36b64-7f5f-4232-8b54-2534fe27405c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Descripcion}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0##">
+				<reportElement x="280" y="0" width="45" height="15" isPrintWhenDetailOverflows="true" uuid="32bc9d0b-ef8a-4702-9546-f66828b5ffd3">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Peso}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0##">
+				<reportElement x="325" y="0" width="55" height="15" isPrintWhenDetailOverflows="true" uuid="64096e61-d743-4801-bcea-c84c4007cdc2">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Largo}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0##">
+				<reportElement x="380" y="0" width="55" height="15" isPrintWhenDetailOverflows="true" uuid="a44d7096-e6be-4e85-827c-46a0fb31ceeb">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Ancho}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.0##">
+				<reportElement x="435" y="0" width="45" height="15" isPrintWhenDetailOverflows="true" uuid="89d1f252-f00a-4683-a249-4d84b1089808">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Alto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

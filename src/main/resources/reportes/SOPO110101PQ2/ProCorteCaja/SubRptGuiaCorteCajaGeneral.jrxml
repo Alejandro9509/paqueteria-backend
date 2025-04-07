@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.3.final using JasperReports Library version 6.20.3-415f9428cffdb6805c6f85bbb29ebaf18813a2ab  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RptCorteCaja" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="842" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="30b344af-7992-4020-b608-f942210cb49e">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="CALIDAD SOPO"/>
+	<parameter name="IdCorte" class="java.lang.Integer"/>
+	<parameter name="BaseDir" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+    pgpq.FolioGuia as folioGuia,
+    FORMAT(IIF(corte.IdOperador > 0, ISNULL(pgpq.FechaEntrega, '1999-01-01'), ISNULL(pgpq.FechaOcurre, '1999-01-01')), 'dd/MM/yyyy') as fechaEntrega,
+    IIF(corte.IdOperador > 0, UPPER(op.Nombre), UPPER(us.Nombre)) as nombrePersona,
+    ISNULL(pago.MetodoPago, 'NO ESPECIFICADO') as metodoPago,
+    pccg.Total as total
+from ProCorteCajaGuiasPQ pccg
+         inner join ProGuiaPQ pgpq on pgpq.IdGuia=pccg.IdGuia
+         inner join ProEmbarquePQ pepq on pepq.IdEmbarque=pgpq.IdEmbarque
+         inner join ProCorteCajaPQ corte on corte.IdCorte = pccg.IdCorte
+         left join CatOperadores op on op.IdOperador = corte.IdOperador
+         left join CatUsuarios us on us.IdUsuario = corte.IdUsuario
+         left join CatMetodosPagos pago on pago.Clave = pgpq.TipoPago
+where pccg.IdCorte = $P{IdCorte}]]>
+	</queryString>
+	<field name="folioGuia" class="java.lang.String"/>
+	<field name="total" class="java.math.BigDecimal"/>
+	<field name="fechaEntrega" class="java.lang.String"/>
+	<field name="nombrePersona" class="java.lang.String"/>
+	<field name="metodoPago" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="100" height="15" uuid="0ac27067-e325-4ca6-bf39-e34c356f3eea">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{folioGuia}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="100" y="0" width="100" height="15" uuid="de7636ba-5218-44be-b390-883ac70c2cf1">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fechaEntrega}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="200" y="0" width="160" height="15" uuid="8688b931-090d-45d6-9afe-218d2035a0bb">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombrePersona}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement x="360" y="0" width="100" height="15" uuid="182d60a1-6bb1-4bec-88de-c48d20d3436c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{metodoPago}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight" pattern="$#,##0.###;$(-#,##0.###)" isBlankWhenNull="true">
+				<reportElement x="460" y="0" width="100" height="15" isPrintWhenDetailOverflows="true" uuid="a3f59b5a-1160-4e1d-860b-5dad1d9f6a32">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="8"/>
+					<paragraph leftIndent="0" rightIndent="2"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

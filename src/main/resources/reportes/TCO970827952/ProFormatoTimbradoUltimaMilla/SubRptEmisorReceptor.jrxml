@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2022-01-13T09:56:39 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SubRptGuiaDetalleMercancia" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="0252d059-6237-459c-b33f-04bfc4056f2b">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="GM-PQ-Certuit"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<style name="Style1" isDefault="true" mode="Opaque" isBlankWhenNull="false"/>
+	<parameter name="Id_Viaje" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select RFC,NombreFiscal,RegimenFiscal,ClaveRegimenFiscal from SisParametros]]>
+	</queryString>
+	<field name="RFC" class="java.lang.String"/>
+	<field name="NombreFiscal" class="java.lang.String"/>
+	<field name="RegimenFiscal" class="java.lang.String"/>
+	<field name="ClaveRegimenFiscal" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="143">
+			<staticText>
+				<reportElement x="6" y="85" width="144" height="15" uuid="e23fae40-e56d-4381-b0dc-35831fe1d2c3">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+					<paragraph leftIndent="2" rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[Datos del Receptor:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="126" width="74" height="15" uuid="3ad4d7c8-f573-40f6-8c8d-3cd05ee4d114">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<paragraph leftIndent="2" rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[Uso de CFDI:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="80" y="126" width="111" height="15" uuid="4b3376cf-4dca-4680-803d-57ceb651ea8b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="9"/>
+					<paragraph leftIndent="2" rightIndent="0"/>
+				</textElement>
+				<textFieldExpression><![CDATA["P01"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="6" y="4" width="144" height="15" uuid="3e7d034d-0473-40f8-a1e4-674f589fb2a9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+					<paragraph leftIndent="2" rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[Datos del Emisor:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="44" width="30" height="15" uuid="01518d3f-6358-47eb-a6f4-253c44806e26">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<paragraph leftIndent="2" rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[RFC:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="60" width="104" height="15" uuid="58e8e08b-a4da-4544-ae97-e5cf7ed3940b">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<paragraph leftIndent="2" rightIndent="2"/>
+				</textElement>
+				<text><![CDATA[Regimen Fiscal:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="39" y="45" width="167" height="12" uuid="5905836d-ea18-464f-a4d6-2c0893e7c02b"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RFC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="7" y="20" width="214" height="22" uuid="890c4c32-c505-4ccf-adf7-f9d73ffbad6a"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NombreFiscal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="7" y="100" width="214" height="23" uuid="6ce4c536-7eca-45ba-bc91-4b589b126a1d"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NombreFiscal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="61" width="133" height="12" uuid="1057d47e-21f4-4cef-83ee-42710cd0ac86"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ClaveRegimenFiscal}+"-"+$F{RegimenFiscal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+</jasperReport>
