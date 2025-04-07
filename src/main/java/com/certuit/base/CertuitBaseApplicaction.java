@@ -19,4 +19,6 @@ public class CertuitBaseApplicaction extends SpringBootServletInitializer{
 		cron.async();
 	}
 
+	//Cambios
+
 }
