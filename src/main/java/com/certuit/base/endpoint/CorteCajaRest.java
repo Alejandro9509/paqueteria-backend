@@ -17,10 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 import static com.certuit.base.util.UtilFuctions.*;
@@ -255,42 +252,60 @@ public class CorteCajaRest {
     }
 
     @GetMapping("/CorteCaja/Parametros")
-    public ResponseEntity<?> getListadoFacturas(@RequestHeader("RFC") String rfc) throws Exception {
+    public ResponseEntity<?> getListadoFacturas(@RequestHeader("RFC") String rfc) {
+        String parametrosQuery = """
+            SELECT Parametro, Valor
+            FROM SisParametrosValores
+            WHERE Parametro IN (
+                'HabilitarGeneraciónComprobantesCFDI33',
+                'HabilitarGeneraciónComplementosDePagoCFDI33',
+                'FacturarConMasDeUnaRazonSocial'
+            )
+        """;
+
+        String certificadosQuery = """
+            SELECT DISTINCT
+                RFC,
+                IdCertificado,
+                VigenteHasta
+            FROM CatCertificados
+            WHERE EstatusActivo = 1
+                AND VigenteHasta > GETDATE()
+                AND VigenteDesde <= GETDATE()
+            ORDER BY IdCertificado ASC, VigenteHasta DESC
+        """;
+
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
-            String query = "SELECT Parametro, Valor\n" +
-                    "FROM SisParametrosValores\n" +
-                    "WHERE (Parametro LIKE 'HabilitarGeneraciónComprobantesCFDI33')\n" +
-                    "   OR (Parametro LIKE 'HabilitarGeneraciónComplementosDePagoCFDI33')\n" +
-                    "   OR (Parametro LIKE 'FacturarConMasDeUnaRazonSocial')";
-            Statement statement = jdbcConnection.createStatement();
-            ResultSet rs = statement.executeQuery(query);
-            JSONArray parametros = convertArray(rs);
+            JSONArray parametros;
             boolean habilitado = true;
-            try {
+
+            try (PreparedStatement ps = jdbcConnection.prepareStatement(parametrosQuery);
+                 ResultSet rs = ps.executeQuery()) {
+
+                parametros = convertArray(rs);
+
                 for (int i = 0; i < parametros.length(); i++) {
-                    JSONObject objeto = parametros.getJSONObject(i);
-                    if(objeto.getInt("Valor") == 0){
+                    JSONObject obj = parametros.getJSONObject(i);
+                    if (obj.optInt("Valor", 0) == 0) {
                         habilitado = false;
+                        break;
                     }
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
 
-            if(habilitado){
-                query = "SELECT DISTINCT\n" +
-                        "    RFC,\n" +
-                        "    IdCertificado,\n" +
-                        "    VigenteHasta\n" +
-                        "FROM CatCertificados\n" +
-                        "WHERE EstatusActivo = 1 AND VigenteHasta > GETDATE() AND VigenteDesde <= GETDATE()\n" +
-                        "ORDER BY IdCertificado ASC,VigenteHasta DESC";
-                rs = statement.executeQuery(query);
-                return ResponseEntity.ok(convertArray(rs).toString());
-            }else {
-                return ResponseEntity.ok(new ArrayList<>());
+            if (!habilitado) {
+                return ResponseEntity.ok(new JSONArray().toString());
             }
+
+            try (PreparedStatement ps = jdbcConnection.prepareStatement(certificadosQuery);
+                 ResultSet rs = ps.executeQuery()) {
+
+                JSONArray certificados = convertArray(rs);
+                return ResponseEntity.ok(certificados.toString());
+            }
+
         } catch (Exception e) {
+            // Usa un logger si tienes
             e.printStackTrace();
             return ResponseEntity.status(500).body("Hubo un problema al consultar la información. Intente más tarde.");
         }

@@ -7,48 +7,52 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import java.sql.*;
 
 @Service
 public class EmbarqueService {
     @Autowired
     SeguimientoService seguimientoService;
 
-    public JSONArray getPaquetesEmbarque(int id, int tipo, Connection jdbcConnection) throws Exception {
-        String query = "SELECT " +
-                "    e.IdEmbarqueDetalle AS m_nIdEmbarqueDetalle " +
-                "     , e.IdEmbarque AS m_nIdEmbarque " +
-                "     , e.ValorDeclarado as m_cValorDeclarado " +
-                "     , e.Tipo as m_nTipo " +
-                "     , e.Descripcion as m_sDescripcion " +
-                "     , e.Peso as m_xPeso " +
-                "     , e.Largo as m_xLargo " +
-                "     , e.Ancho as m_xAncho " +
-                "     , e.Alto as m_xAlto " +
-                "     , e.Volumen as m_xVolumen " +
-                "     , e.IdTipoEmpaque as m_nIdTIpoEmpaque " +
-                "     ,e.Observaciones as m_sObservaciones " +
-                "     , e.ctd as ctd " +
-                "     ,e.IdProducto AS m_nIdProducto " +
-                "     ,e.ClaveSATProducto as m_nClaveSATProducto " +
-                "     , e.ClaveSATUnidad as m_nClaveSATUnidad " +
-                "     , e.ClaveEmbalaje as m_sClaveEmbalaje " +
-                "     ,(select Nombre from CatEmbalajesPQ where IdEmbalaje = e.IdTipoEmpaque) as TipoEmbalaje " +
-                "     ,(select Descripcion from CatProductosPQ p WHERE p.IdProducto = e.IdProducto ) as m_sProducto " +
-                "     ,(select gs.Descripcion from CatGeneralesSAT gs where ClaveSAT = " +
-                "CAST(e.ClaveSATProducto as varchar) and CatalogoSAT = 'c_ClaveProdServ') as m_sProductoSAT " +
-                "     ,(select gs.Descripcion from CatGeneralesSAT gs where ClaveSAT = " +
-                "CAST(e.ClaveSATUnidad as varchar) and CatalogoSAT = 'c_ClaveUnidad') as m_sUnidadSAT " +
-                "     ,(select gs.Descripcion from CatGeneralesSAT gs where ClaveSAT = " +
-                "CAST(e.ClaveEmbalaje as varchar) and CatalogoSAT = 'c_TipoEmbalaje') as m_sEmbalajeSAT " +
-                "FROM ProEmbarqueDetallePQ e " +
-                "WHERE IdEmbarque = " + id + " and Tipo = " + tipo;
-        Statement statement = jdbcConnection.createStatement();
-        ResultSet rs = statement.executeQuery(query);
-        return UtilFuctions.convertArray(rs);
+    public JSONArray getPaquetesEmbarque(int id, int tipo, Connection jdbcConnection) throws SQLException {
+        String query = """
+            SELECT 
+                e.IdEmbarqueDetalle AS m_nIdEmbarqueDetalle,
+                e.IdEmbarque AS m_nIdEmbarque,
+                e.ValorDeclarado AS m_cValorDeclarado,
+                e.Tipo AS m_nTipo,
+                e.Descripcion AS m_sDescripcion,
+                e.Peso AS m_xPeso,
+                e.Largo AS m_xLargo,
+                e.Ancho AS m_xAncho,
+                e.Alto AS m_xAlto,
+                e.Volumen AS m_xVolumen,
+                e.IdTipoEmpaque AS m_nIdTIpoEmpaque,
+                e.Observaciones AS m_sObservaciones,
+                e.ctd AS ctd,
+                e.IdProducto AS m_nIdProducto,
+                e.ClaveSATProducto AS m_nClaveSATProducto,
+                e.ClaveSATUnidad AS m_nClaveSATUnidad,
+                e.ClaveEmbalaje AS m_sClaveEmbalaje,
+                (SELECT Nombre FROM CatEmbalajesPQ WHERE IdEmbalaje = e.IdTipoEmpaque) AS TipoEmbalaje,
+                (SELECT Descripcion FROM CatProductosPQ p WHERE p.IdProducto = e.IdProducto) AS m_sProducto,
+                (SELECT gs.Descripcion FROM CatGeneralesSAT gs WHERE gs.ClaveSAT = CAST(e.ClaveSATProducto AS VARCHAR) AND CatalogoSAT = 'c_ClaveProdServ') AS m_sProductoSAT,
+                (SELECT gs.Descripcion FROM CatGeneralesSAT gs WHERE gs.ClaveSAT = CAST(e.ClaveSATUnidad AS VARCHAR) AND CatalogoSAT = 'c_ClaveUnidad') AS m_sUnidadSAT,
+                (SELECT gs.Descripcion FROM CatGeneralesSAT gs WHERE gs.ClaveSAT = CAST(e.ClaveEmbalaje AS VARCHAR) AND CatalogoSAT = 'c_TipoEmbalaje') AS m_sEmbalajeSAT
+            FROM ProEmbarqueDetallePQ e
+            WHERE IdEmbarque = ? AND Tipo = ?
+            """;
+
+        try (PreparedStatement ps = jdbcConnection.prepareStatement(query)) {
+            ps.setInt(1, id);
+            ps.setInt(2, tipo);
+            try (ResultSet rs = ps.executeQuery()) {
+                return UtilFuctions.convertArray(rs);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public JSONArray getConceptosSATEmbarque(int id, Connection jdbcConnection) throws Exception {
