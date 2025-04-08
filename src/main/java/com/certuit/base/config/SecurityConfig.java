@@ -45,14 +45,13 @@ public class SecurityConfig {
                         new AntPathRequestMatcher("/**/*.scss"),
                         new AntPathRequestMatcher("/**/*.css"),
                         new AntPathRequestMatcher("/**/*.js"),
-                        new AntPathRequestMatcher("/**/*.html")
+                        new AntPathRequestMatcher("/**/*.html"),
+                        new AntPathRequestMatcher(API_ROOT_URL),
+                        new AntPathRequestMatcher(AUTHENTICATION_URL),
+                        new AntPathRequestMatcher(REFRESH_TOKEN_URL),
+                        new AntPathRequestMatcher(SIGNUP_URL),
+                        new AntPathRequestMatcher("/file/**")
                 ).permitAll()
-                // Permitir el acceso a las URLs específicas
-                .requestMatchers(API_ROOT_URL).permitAll()
-                .requestMatchers("/file/**").permitAll()
-                // Permitir el acceso a los endpoints de autenticación
-                .requestMatchers(AUTHENTICATION_URL, REFRESH_TOKEN_URL, SIGNUP_URL).permitAll()
-                // Cualquier otra solicitud necesita autenticación
                 .anyRequest().authenticated();
 
         return http.build();
