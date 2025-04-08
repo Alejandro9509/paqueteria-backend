@@ -8,14 +8,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import java.util.Arrays;
-import java.util.List;
-
 @Configuration
 
 public class SecurityConfig {
 
-    public static final String AUTHENTICATION_HEADER_NAME = "Authorization";
     public static final String AUTHENTICATION_URL = "/auth/login";
     public static final String REFRESH_TOKEN_URL = "/auth/token";
     public static final String SIGNUP_URL = "/auth/signup";
