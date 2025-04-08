@@ -16,12 +16,14 @@ import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 public class DBConection {
     public static HikariDataSource ds;
     private final Map<String, HikariDataSource> conecctions = new HashMap<>();
-
+    private static final Logger log = LoggerFactory.getLogger(DBConection.class);
 
     public static String getEnviromentURL(){
         return "http://paqueteria.desarrollo.gmtransport.co:8081/";
@@ -76,7 +78,7 @@ public class DBConection {
             }
 
         } catch (IOException | ParseException e) {
-            e.printStackTrace(); // Idealmente usa logger: log.error("Error leyendo rfc.json", e);
+            log.error("Error leyendo rfc.json", e);
         }
 
         if (!actualizado) {
