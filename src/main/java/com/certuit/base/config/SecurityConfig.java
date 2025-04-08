@@ -6,6 +6,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,9 +33,20 @@ public class SecurityConfig {
                 .httpBasic().disable().exceptionHandling().and()
                 .authorizeRequests()
                 // Permitir el acceso a rutas estáticas
-                .requestMatchers("/", "/error", "/favicon.ico", "/**/*.png", "/**/*.gif", "/**/*.svg",
-                        "/**/*.pdf", "/**/*.jpg", "/**/*.scss", "/**/*.html", "/**/*.css", "/**/*.js")
-                .permitAll()
+                .requestMatchers(
+                        new AntPathRequestMatcher("/"),
+                        new AntPathRequestMatcher("/error"),
+                        new AntPathRequestMatcher("/favicon.ico"),
+                        new AntPathRequestMatcher("/**/*.png"),
+                        new AntPathRequestMatcher("/**/*.gif"),
+                        new AntPathRequestMatcher("/**/*.svg"),
+                        new AntPathRequestMatcher("/**/*.pdf"),
+                        new AntPathRequestMatcher("/**/*.jpg"),
+                        new AntPathRequestMatcher("/**/*.scss"),
+                        new AntPathRequestMatcher("/**/*.css"),
+                        new AntPathRequestMatcher("/**/*.js"),
+                        new AntPathRequestMatcher("/**/*.html")
+                ).permitAll()
                 // Permitir el acceso a las URLs específicas
                 .requestMatchers(API_ROOT_URL).permitAll()
                 .requestMatchers("/file/**").permitAll()

@@ -78,6 +78,7 @@ public class UltimaMillaAppRest {
             }
             return ResponseEntity.ok(jsonObject.toString());
         } catch (Exception e) {
+
             e.printStackTrace();
             return ResponseEntity.status(500).body("Hubo un problema al consultar la información. Intente más tarde.");
         }

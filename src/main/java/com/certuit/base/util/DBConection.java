@@ -78,7 +78,7 @@ public class DBConection {
             }
 
         } catch (IOException | ParseException e) {
-            log.error("Error leyendo rfc.json", e);
+            log.error("Error leyendo rfc.json");
         }
 
         if (!actualizado) {
