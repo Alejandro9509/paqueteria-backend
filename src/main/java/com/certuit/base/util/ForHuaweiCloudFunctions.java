@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 public class ForHuaweiCloudFunctions {
-    public static String CARPETA="GMTERPV8PQ/";
     public static String PREFIJO_KEY = "AWS4";
     public static String SECRET_ACCESS_KEY = "oaLMImmaTrq4FqTevwD5A3k5C90IM6v6Wo8Qw1WT";
     public static String ACCESS_KEY_ID = "6ROWJGWMNFPXA19YOETK";
@@ -29,7 +28,7 @@ public class ForHuaweiCloudFunctions {
     public static ByteArrayOutputStream readFully(InputStream inputStream) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         byte[] buffer = new byte[1024];
-        int length = 0;
+        int length;
         while ((length = inputStream.read(buffer)) != -1) {
             baos.write(buffer, 0, length);
         }
@@ -52,7 +51,6 @@ public class ForHuaweiCloudFunctions {
         String algorithm="HmacSHA256";
         Mac mac=Mac.getInstance(algorithm);
         mac.init(new SecretKeySpec(key,algorithm));
-        String p= org.apache.commons.codec.binary.Hex.encodeHexString(mac.doFinal(data.getBytes(StandardCharsets.UTF_8)));
         return mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
     }
 }

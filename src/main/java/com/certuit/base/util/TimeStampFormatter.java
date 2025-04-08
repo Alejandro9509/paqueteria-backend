@@ -76,9 +76,9 @@ public class TimeStampFormatter {
     }
 
     public static Integer getHoursFromDate (Date timestamp) {
-        Long millisFromNow = getMillisFromNow(timestamp);
-        Long hoursFromNow = TimeUnit.MILLISECONDS.toHours(millisFromNow);
+        long millisFromNow = getMillisFromNow(timestamp);
+        long hoursFromNow = TimeUnit.MILLISECONDS.toHours(millisFromNow);
 
-        return hoursFromNow.intValue();
+        return (int) hoursFromNow;
     }
 }
