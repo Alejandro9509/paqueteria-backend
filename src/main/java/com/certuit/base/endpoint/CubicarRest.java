@@ -31,7 +31,6 @@ public class CubicarRest {
             throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
-                String query = "";
                 XFLP xflp = new XFLP();
                 if (request.getIdRemolque2() == 0) {
                     xflp.setTypeOfOptimization(XFLPOptType.SINGLE_CONTAINER_OPTIMIZER);
@@ -65,7 +64,7 @@ public class CubicarRest {
                                 + " no cuenta con las dimensiones registradas. Favor de ingresar al catálogo de " +
                                 "unidades y agregar la información para poder realizar el cúbicaje.");
                     }
-                    //xflp.setTypeOfOptimization(XFLPOptType.BEST_FIXED_CONTAINER_PACKER);
+
                     xflp.addContainer()
                             .setLength(jsonRemolque2.getInt("largo"))
                             .setWidth(jsonRemolque2.getInt("ancho"))
