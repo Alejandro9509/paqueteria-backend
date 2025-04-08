@@ -135,6 +135,7 @@ public class InformesService {
         Statement statement = jdbcConnection.createStatement();
         ResultSet rs = statement.executeQuery(query);
         JSONObject jsonObject = UtilFuctions.convertObject(rs);
+        assert jsonObject != null;
         jsonObject.put("m_arrClsProGuia", getGuiasInforme(id, jdbcConnection));
         return jsonObject;
     }
@@ -251,23 +252,6 @@ public class InformesService {
         return jsonObject;
     }
 
-    public  JSONArray convertParada(ResultSet resultSet, Connection jdbcConnection) throws Exception {
-
-        JSONArray jsonArray = new JSONArray();
-
-        while (resultSet.next()) {
-            int columns = resultSet.getMetaData().getColumnCount();
-            JSONObject obj = new JSONObject();
-
-            for (int i = 0; i < columns; i++)
-                obj.put(resultSet.getMetaData().getColumnLabel(i + 1), resultSet.getObject(i + 1));
-
-            obj.put("m_clsInforme",getInformeId(obj.getInt("m_nIdInforme"), jdbcConnection) );
-            jsonArray.put(obj);
-        }
-        return jsonArray;
-    }
-
     public  JSONArray convertInformes(ResultSet resultSet, Connection jdbcConnection) throws Exception {
 
         JSONArray jsonArray = new JSONArray();
@@ -298,6 +282,7 @@ public class InformesService {
             ResultSet rs = statement.executeQuery(query);
             List<File> fileList = new ArrayList<>();
             JSONObject jsonObject = UtilFuctions.convertObject(rs);
+            assert jsonObject != null;
             String emailFormat = UtilFuctions.converTemplate(jsonObject, emailTemplate);
             fileList.add(reportServices.generateReporCFDIViaje(1,idViaje, id,rfc,
                     jsonObject.getString("FolioFiscalUUID")));
@@ -390,15 +375,10 @@ public class InformesService {
         int idEmbarque,idGuia;
         Date fecha;
         String hora;
-        Time horaSalida;
         java.util.Date horaFormateada;
         while(rs.next()) {
             json = new JSONObject();
-            idEmbarque = 0;
-            idGuia = 0;
-            fecha = null;
-            hora = null;
-            horaSalida = rs.getTime("horaSalida");
+
             idEmbarque = rs.getInt("IdEmbarque");
             json.put("m_nIdEmbarque", idEmbarque);
             json.put("m_nTracking", rs.getString("Tracking"));
