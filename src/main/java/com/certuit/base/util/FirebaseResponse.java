@@ -2,10 +2,12 @@ package com.certuit.base.util;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
 public class FirebaseResponse implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @JsonProperty("multicast_id")

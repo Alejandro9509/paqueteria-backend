@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 public class ForHuaweiCloudFunctions {
-    public static String CARPETA="GMTERPV8PQ/";
     public static String PREFIJO_KEY = "AWS4";
     public static String SECRET_ACCESS_KEY = "oaLMImmaTrq4FqTevwD5A3k5C90IM6v6Wo8Qw1WT";
     public static String ACCESS_KEY_ID = "6ROWJGWMNFPXA19YOETK";
