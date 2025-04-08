@@ -30,7 +30,7 @@ public class SATRest {
     GuiaService guiaService;
 
     @GetMapping("/SAT/ObtenerClavesCancelacion")
-    public ResponseEntity<?> getFechaInicial(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getFechaInicial(@RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "exec usp_CatMotivosCancelacionSATPQ";
@@ -89,10 +89,10 @@ public class SATRest {
     public ResponseEntity<?> getListadoPaginado(@PathVariable("nRegistros") int nRegistros,
                                                 @PathVariable("nPagina") int nPagina,
                                                 @RequestBody satPaginadoRequest sat,
-                                                @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "exec usp_CatCatalogoSATPaginadoPQ '" + sat.getBusqueda() + "', '"
-                    + sat.getCatalogo() + "', " + nPagina + " , " + nRegistros + "";
+                    + sat.getCatalogo() + "', " + nPagina + " , " + nRegistros;
             Statement statement = jdbcConnection.createStatement();
             ResultSet rs = statement.executeQuery(query);
             JSONArray array = new JSONArray();
@@ -117,7 +117,7 @@ public class SATRest {
     @GetMapping("/SAT/GetListado/{catalogo}/{busqueda}")
     public ResponseEntity<?> getListado(@PathVariable("catalogo") String catalogo,
                                         @PathVariable("busqueda") String busqueda,
-                                        @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                        @RequestHeader("RFC") String rfc) throws Exception {
         JSONObject jsonAux = new JSONObject();
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
@@ -155,7 +155,7 @@ public class SATRest {
     @GetMapping("/SAT/Busqueda/{catalogo}/{busqueda}")
     public ResponseEntity<?> getListadoBusqueda(@PathVariable("catalogo") String catalogo,
                                                 @PathVariable("busqueda") String busqueda,
-                                                @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                @RequestHeader("RFC") String rfc) throws Exception {
         JSONObject jsonAux = new JSONObject();
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
@@ -190,7 +190,7 @@ public class SATRest {
 
     @GetMapping("/SAT/ObtenerClavesByInforme/{idInforme}")
     public ResponseEntity<?> getFechaInicial(@RequestHeader("RFC") String rfc,
-                                             @PathVariable("idInforme") int idInforme) throws SQLException, Exception {
+                                             @PathVariable("idInforme") int idInforme) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "select guia.FolioGuia as [Folio guia], " +
                     "complemento.ClaveProductoServicio AS [Clave SAT Producto o Servicio], " +
@@ -230,7 +230,7 @@ public class SATRest {
     @GetMapping("/SAT/ValidarComplemento/{catalogoSat}/{claveSat}")
     public ResponseEntity<?> validarComplementos(@RequestHeader("RFC") String rfc,
                                                  @PathVariable("catalogoSat") String catalogoSat,
-                                                 @PathVariable("claveSat") String claveSat) throws SQLException, Exception {
+                                                 @PathVariable("claveSat") String claveSat) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 String query = " SELECT ClaveSAT FROM CatGeneralesSAT " +

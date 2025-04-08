@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -52,7 +53,7 @@ public class UltimaMillaRest {
 
     @PostMapping("/UltimaMilla/ValidarUnidades")
     public ResponseEntity<?> getUnidadesValidacion(@RequestBody Integer[] unidades, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         StringBuilder sbf = new StringBuilder();
         sbf.append(Arrays.toString(unidades).replace("[", "")  //remove the right bracket
                 .replace("]", ""));
@@ -80,7 +81,7 @@ public class UltimaMillaRest {
     public ResponseEntity<?> validarUnidadDisponible(@PathVariable("idUnidad") int idUnidad,
                                                      @PathVariable("fecha") String fecha,
                                                      @PathVariable("idSucursal") int idSucursal,
-                                                     @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                     @RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             fecha = "'" + fecha + "'";
@@ -108,7 +109,7 @@ public class UltimaMillaRest {
 
     @PostMapping("/UltimaMilla/Chat")
     public ResponseEntity<?> agregarChat(@RequestHeader("RFC") String rfc, @RequestBody ChatRequest request)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String pattern = "yyyy-MM-dd hh:mm:ss";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
@@ -152,7 +153,7 @@ public class UltimaMillaRest {
     @GetMapping("/UltimaMilla/Chat/Operador")
     public ResponseEntity<?> obtenerChat(@RequestHeader("RFC") String rfc,
                                          @RequestParam("fecha") String fecha,
-                                         @RequestParam("idOperador") int idOperador) throws SQLException, Exception {
+                                         @RequestParam("idOperador") int idOperador) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String fechaInicial = fecha + " 01:00:00";
@@ -186,7 +187,7 @@ public class UltimaMillaRest {
     @GetMapping("/Informes/GetListadoEstatus/{estatus}")
     public ResponseEntity<?> obtenerListadoEstatusInformes(@PathVariable("estatus") int estatus,
                                                            @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT cin.IdInforme,\n" +
                     "           cin.FolioInforme,\n" +
@@ -314,12 +315,12 @@ public class UltimaMillaRest {
 
     @PostMapping("/UltimaMilla/EliminarParadaOperador")
     public ResponseEntity<?> eliminarParadas(@RequestBody EliminarParadaRequest request,
-                                             @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                             @RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
 
             String query = "exec usp_ProUltimaMillaParadaEliminarPQ "+request.getIdParada()+","+request.getIdGuia()+","
-                +(request.getEsRecoleccion()?1:0)+"";
+                +(request.getEsRecoleccion()?1:0);
             try {
                 Statement statement = jdbcConnection.createStatement();
                 int rs = statement.executeUpdate(query);
@@ -340,7 +341,7 @@ public class UltimaMillaRest {
 
     @PostMapping("/GuardarUltimaMilla")
     public ResponseEntity<?> guardarUltimaMilla(@RequestBody UltimaMillaRequest request,
-                                                @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();
@@ -424,7 +425,7 @@ public class UltimaMillaRest {
 
     @PutMapping("/UltimaMilla/OrdenarParada")
     public ResponseEntity<?> ordenarParadas(@RequestBody RutaRequest ruta,
-                                            @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                            @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();
@@ -445,7 +446,7 @@ public class UltimaMillaRest {
     public ResponseEntity<?> getUltimaMillaFecha(@PathVariable("fecha") String fecha,
                                                  @PathVariable("idSucursal") int idSucursal,
                                                  @RequestBody UltimaMillaRequest request,
-                                                 @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                 @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();
@@ -501,7 +502,7 @@ public class UltimaMillaRest {
     @PostMapping("/UltimaMilla/GetListadoPaquetesByInforme/{idInforme}")
     public ResponseEntity<?> getPaquetesByInforme(@PathVariable("idInforme") int idInforme,
                                                   @RequestBody UltimaMillaRequest request,
-                                                  @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                  @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();
@@ -534,7 +535,7 @@ public class UltimaMillaRest {
     @PostMapping("/UltimaMilla/GetListadoPaquetesByViaje/{idViaje}")
     public ResponseEntity<?> getPaquetesByViaje(@PathVariable("idViaje") int idViaje,
                                                 @RequestBody UltimaMillaRequest request,
-                                                @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();
@@ -568,7 +569,7 @@ public class UltimaMillaRest {
     public ResponseEntity<?> getPaquetesByViaje(@PathVariable("idUnidad") int idUnidad,
                                                 @PathVariable("idOperador") int idOperador,
                                                 @RequestBody UltimaMillaRequest request,
-                                                @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();
@@ -601,7 +602,7 @@ public class UltimaMillaRest {
     public ResponseEntity<?> remplazarParada(@PathVariable("idParada") int idParada,
                                              @PathVariable("idPaqueteViejo") int idPaqueteViejo,
                                              @RequestBody GuiaUltimaMilla request,
-                                             @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                             @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();
@@ -623,7 +624,7 @@ public class UltimaMillaRest {
 
     @DeleteMapping("/UltimaMilla/EliminarRuta/{idParada}")
     public ResponseEntity<?> eliminarRuta(@PathVariable("idParada") int idParada, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();
@@ -647,12 +648,11 @@ public class UltimaMillaRest {
     @GetMapping("/UltimaMilla/GetParadasEsRecoleccion/{esRecoleccion}/{tracking}")
     public ResponseEntity<?> getParadasRecoleccion(@PathVariable("esRecoleccion") boolean esRecoleccion,
                                                    @PathVariable("tracking") String tracking,
-                                                   @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                   @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
 
-                String query = "EXEC usp_ProIdUltimaMillaGetPaquetesEsRecoleccionPQ " + (esRecoleccion ? 1 : 0) + ""
-                        + UtilFuctions.addString(tracking);
+                String query = "EXEC usp_ProIdUltimaMillaGetPaquetesEsRecoleccionPQ " + (esRecoleccion ? 1 : 0) + UtilFuctions.addString(tracking);
                 Statement statement = jdbcConnection.createStatement();
                 ResultSet rs = statement.executeQuery(query);
                 String pattern = "yyyy-MM-dd";
@@ -799,7 +799,7 @@ public class UltimaMillaRest {
             @PathVariable("idParadaUltimaMilla") int idParadaUltimaMilla,
             @PathVariable("idGuia") int idGuia,
             @RequestBody PaqueteParcial[] paquetes,
-            @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+            @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 String query = "";
@@ -848,7 +848,7 @@ public class UltimaMillaRest {
     @GetMapping("/UltimaMilla/paquetes-parciales/consultar/{idParadaUltimaMilla}/{idGuia}")
     public ResponseEntity<?> obtenerPaquetesParcialesUM(@PathVariable("idParadaUltimaMilla") int idParadaUltimaMilla,
                                                         @PathVariable("idGuia") int idGuia,
-                                                        @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                        @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();
@@ -877,7 +877,7 @@ public class UltimaMillaRest {
      */
     @GetMapping("/UltimaMilla/paquetes-por-parada/consultar/{idGuia}")
     public ResponseEntity<?> obtenerPaquetesPorParadaUM(@PathVariable("idGuia") int idGuia,
-                                                        @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                        @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 JSONArray jsonArrayParadas = paquetesService.getPaquetesDisponiblesPorParada(idGuia, jdbcConnection);
@@ -956,7 +956,7 @@ public class UltimaMillaRest {
     @GetMapping("/UltimaMilla/GetImagenEvidencia/{idGuia}/{esRecoleccion}")
     public ResponseEntity<?> getImagenEvidencia(@PathVariable("idGuia") int idGuia,
                                                 @PathVariable("esRecoleccion") boolean esRecoleccion,
-                                                @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 int idImagen = 0;
@@ -992,7 +992,7 @@ public class UltimaMillaRest {
                     String sCanonicalHeader = "content-type" + ":" + CONTENT_TYPE + "\n" + "host" + ":"
                             + BUCKET_AND_ENDPOINT + "\n" + "x-amz-content-sha256" + ":" + CONTENT_SHA256 + "\n"
                             + "x-amz-date" + ":" + sFechaHoraISO + "\n";
-                    String sCanonicalRequest = "GET" + "\n" + sFileName + "\n" + "" + "\n" + sCanonicalHeader + "\n"
+                    String sCanonicalRequest = "GET" + "\n" + sFileName + "\n" + "\n" + sCanonicalHeader + "\n"
                             + SIGNED_HEADERS + "\n" + CONTENT_SHA256;
 
                     String stringCanonical = org.apache.commons.codec.digest.DigestUtils.sha256Hex(sCanonicalRequest);
@@ -1051,7 +1051,7 @@ public class UltimaMillaRest {
                     //OBTENCIÓN DEL CONTENIDO DEL REQUEST
                     String stringSinCodificar = readFullyAsString(con.getInputStream(), "ISO-8859-1");
                     String stringBase64 = Base64.getEncoder().encodeToString(
-                            stringSinCodificar.getBytes("ISO-8859-1"));
+                            stringSinCodificar.getBytes(StandardCharsets.ISO_8859_1));
                     String imagenBase64 = stringBase64.replaceAll("(.{80})", "$1\n");
                     con.disconnect();
                     //SE VA CONSTRUYENDO EL JSON DE RETURN

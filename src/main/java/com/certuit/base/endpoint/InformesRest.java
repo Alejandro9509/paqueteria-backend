@@ -32,7 +32,7 @@ public class InformesRest {
                                                @PathVariable("folio") String folio,
                                                @PathVariable("sSucursalEmisora") int origen,
                                                @PathVariable("sSucursalReceptora") int destino,
-                                               @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                               @RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             fechaInicial = !fechaInicial.equalsIgnoreCase("0") ? "'" + fechaInicial + "'" : null;
@@ -116,7 +116,7 @@ public class InformesRest {
 
     @GetMapping("/Informes/GetListadoEscaner")
     public ResponseEntity<?> getInformesEscaner(
-            @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+            @RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT " +
@@ -182,7 +182,7 @@ public class InformesRest {
     @GetMapping("/Informes/GetListadoEscaner/ByOperador/{idOperador}")
     public ResponseEntity<?> getInformesEscanerByOperador(@RequestHeader("RFC") String rfc,
                                                           @PathVariable("idOperador") int idOperador)
-            throws SQLException, Exception
+            throws Exception
     {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT  cin.IdInforme AS m_nIdInforme,\n" +
@@ -245,7 +245,7 @@ public class InformesRest {
 
     @GetMapping("/Informes/GetListadoSinViajes")
     public ResponseEntity<?> getInformesFiltro(
-            @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+            @RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT " +
@@ -308,7 +308,7 @@ public class InformesRest {
 
     @PostMapping("/Informes/GetListadoDisponiblesViaje")
     public ResponseEntity<?> getInformesViajes(
-            @RequestHeader("RFC") String rfc, @RequestBody @Valid InformesRequets requets) throws SQLException, Exception {
+            @RequestHeader("RFC") String rfc, @RequestBody @Valid InformesRequets requets) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT\n" +
@@ -379,7 +379,7 @@ public class InformesRest {
 
     @GetMapping("/Informes/GetById/{id}")
     public ResponseEntity<?> getInformesId(@PathVariable("id") int id,
-                                           @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                           @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             try {
                 JSONObject jsonObject = informesService.getInformeId(id, jdbcConnection);
@@ -396,7 +396,7 @@ public class InformesRest {
 
     @GetMapping("/Informes/GetById/Escaner/{id}")
     public ResponseEntity<?> getInformesIdEscaner(@PathVariable("id") int id,
-                                                  @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                  @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             JSONObject jsonObject = informesService.getInformeIdEscaner(id, jdbcConnection);
             if (jsonObject != null) {
@@ -412,7 +412,7 @@ public class InformesRest {
 
     @PutMapping("/Informes/AgregarLlegada/{id}")
     public ResponseEntity<?> agregarLlegada(@PathVariable("id") int id, @RequestBody ViajeLlegadaRequest llegada,
-                                            @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                            @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 String query = "UPDATE ProInformePQ SET FechaLLegada = '" + llegada.getM_dFechaLlegada()
@@ -448,7 +448,7 @@ public class InformesRest {
 
     @GetMapping("/Informes/GetById/EscanerValidar/{id}")
     public ResponseEntity<?> getInformesIdEscanerValidar(@PathVariable("id") int id,
-                                                         @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                         @RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             JSONObject jsonObject = informesService.getInformeIdEscanerValidar(id, jdbcConnection);
@@ -467,7 +467,7 @@ public class InformesRest {
 
     @GetMapping("/Informes/GetPardasIdViaje/{id}")
     public ResponseEntity<?> getInformesParadasViaje(@PathVariable("id") int id,
-                                                     @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                     @RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "select i.IdInforme                                                                                         as m_nIdInforme,\n" +
@@ -527,7 +527,7 @@ public class InformesRest {
 
     @PostMapping("/Informes/ValidarQR/{id}")
     public ResponseEntity<?> ValidarQR(@PathVariable("id") int id,
-                                       @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                       @RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "update ProInformePQ \n" +
@@ -546,7 +546,7 @@ public class InformesRest {
 
     @PostMapping("/Informes/Agregar")
     public ResponseEntity<?> agregarInforme(@RequestBody InformeRequest informe,
-                                            @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                            @RequestHeader("RFC") String rfc) throws Exception {
 
         if (informe.getM_dFecha().isEmpty()) {
             return ResponseEntity.status(500).body("La fecha  es un campo requerido");
@@ -560,15 +560,10 @@ public class InformesRest {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 String query = "EXEC usp_ProInformeAgregarPQ 0,'" + informe.getM_dFecha() + "','"
-                        + informe.getM_tHora() + "'," +
-                        "" + informe.getM_nIdEstatusInforme() + "," + informe.getM_nIdViaje() + ","
-                        + informe.getM_nIdSucursalEmisora() + "," +
-                        "" + informe.getM_nIdSucursalReceptora() + "," + informe.getM_nIdOperador() + ","
-                        + informe.getM_nIdDolly() + "," + informe.getM_nIdRemolque1() + "," +
-                        "" + informe.getM_nIdRemolque2() + ",'" + informe.getM_sPlacasRemolque1() + "','"
-                        + informe.getM_sPlacasRemolque2() + "','" + informe.getM_sPlacasDolly() + "'," +
-                        "" + informe.getM_nIdCiudadOrigen() + "," + informe.getM_nIdCiudadDestino() + "," +
-                        "" + informe.getM_nIdRuta() + ",''," + informe.getM_nTotalxCDestinatario() + ","
+                        + informe.getM_tHora() + "'," + informe.getM_nIdEstatusInforme() + "," + informe.getM_nIdViaje() + ","
+                        + informe.getM_nIdSucursalEmisora() + "," + informe.getM_nIdSucursalReceptora() + "," + informe.getM_nIdOperador() + ","
+                        + informe.getM_nIdDolly() + "," + informe.getM_nIdRemolque1() + "," + informe.getM_nIdRemolque2() + ",'" + informe.getM_sPlacasRemolque1() + "','"
+                        + informe.getM_sPlacasRemolque2() + "','" + informe.getM_sPlacasDolly() + "'," + informe.getM_nIdCiudadOrigen() + "," + informe.getM_nIdCiudadDestino() + "," + informe.getM_nIdRuta() + ",''," + informe.getM_nTotalxCDestinatario() + ","
                         + informe.getM_nTotalxCCobrarRemitente() + "," + informe.getM_nTotalPagoMostrador() + ","
                         + informe.getM_nTotalUnidadCompleta() + "," + informe.getM_nTotalGeneral() + ","
                         + informe.getM_nIdUnidad() + "," + informe.getM_nTipoTimbrado();
@@ -584,7 +579,7 @@ public class InformesRest {
                     id = rs.getInt("id");
                 }
 
-                String query3 = "select FolioInforme from ProInformePQ where IdInforme = " + id + "";
+                String query3 = "select FolioInforme from ProInformePQ where IdInforme = " + id;
                 Statement statement3 = jdbcConnection.createStatement();
                 ResultSet rs3 = statement3.executeQuery(query3);
                 while (rs3.next()) {
@@ -609,7 +604,7 @@ public class InformesRest {
 
     @GetMapping("/Informes/GetByIdViaje/{id}")
     public ResponseEntity<?> getInformesIdViaje(@PathVariable("id") int id,
-                                                @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
 
             String query = "SELECT\n" +
@@ -659,7 +654,7 @@ public class InformesRest {
                     "\t\tcin.UsuarioCancelacion, \n" +
                     "\t\tcus.Nombre\n" +
                     "\t\tFROM ProInformePQ cin left JOIN CatUsuarios cus on cin.UsuarioCancelacion= cus.IdUsuario " +
-                    "where cin.IdViaje= " + id + "";
+                    "where cin.IdViaje= " + id;
 
             JSONArray array = new JSONArray();
             try {
@@ -744,7 +739,7 @@ public class InformesRest {
 
     @DeleteMapping("/Informes/Eliminar/{idInforme}/{idUsuario}")
     public ResponseEntity<?> eliminarInforme(@PathVariable("idInforme") int idInforme,
-                                             @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                             @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();
@@ -755,7 +750,7 @@ public class InformesRest {
                 if (!jsonObject.getBoolean("sePuedeEliminar")) {
                     return ResponseEntity.status(500).body("Debe cancelar el informe para poder eliminarlo");
                 }
-                query = "EXEC usp_ProInformeEliminarPQ " + idInforme + "";
+                query = "EXEC usp_ProInformeEliminarPQ " + idInforme;
                 statement.executeUpdate(query);
 
                 return ResponseEntity.ok("Registro Eliminado");
@@ -773,7 +768,7 @@ public class InformesRest {
     @PutMapping("/Informes/Cancelar/{idInforme}")
     public ResponseEntity<?> cancelarInforme(@RequestBody InformesCancelarRequest icr,
                                              @PathVariable("idInforme") int idInforme,
-                                             @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                             @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 String query = "EXEC usp_ProInformeCancelarPQ  " + idInforme + ", " + icr.getUsuarioCancelacion()
@@ -793,7 +788,7 @@ public class InformesRest {
 
     @PutMapping("/Informes/Modificar")
     public ResponseEntity<?> modificarInforme(@RequestBody InformesModificarRequest imr,
-                                              @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                              @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 String query = "EXEC usp_ProInformeModificarPQ '" + imr.getM_dFecha() + "','" + imr.getM_tHora() + "',"
@@ -801,10 +796,10 @@ public class InformesRest {
                         + imr.getM_nIdSucursalReceptora() + "," + imr.getM_nIdDolly() + ","
                         + imr.getM_nIdRemolque1() + "," + imr.getM_nIdRemolque2() + ","
                         + imr.getM_nIdCiudadOrigen() + "," + imr.getM_nIdCiudadDestino() + ","
-                        + imr.getM_nIdRuta() + ",''," + imr.getM_nIdInforme() + "";
+                        + imr.getM_nIdRuta() + ",''," + imr.getM_nIdInforme();
                 Statement statement = jdbcConnection.createStatement();
                 statement.executeUpdate(query);
-                String query2 = "EXEC usp_ProInformesEliminarGuiasPQ " + imr.getM_nIdInforme() + "";
+                String query2 = "EXEC usp_ProInformesEliminarGuiasPQ " + imr.getM_nIdInforme();
                 Statement statement2 = jdbcConnection.createStatement();
                 statement2.executeUpdate(query2);
                 for (InformeGuiaRequest i : imr.getM_arrClsProInformeGuia()) {
@@ -824,11 +819,11 @@ public class InformesRest {
 
     @PutMapping("/Informes/ModificarEscaner")
     public ResponseEntity<?> modificarInformeEscaner(@RequestBody InformesModificarRequest imr,
-                                                     @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                     @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
 
-                String query2 = "EXEC usp_ProInformesEliminarGuiasPQ " + imr.getM_nIdInforme() + "";
+                String query2 = "EXEC usp_ProInformesEliminarGuiasPQ " + imr.getM_nIdInforme();
                 Statement statement2 = jdbcConnection.createStatement();
                 statement2.executeUpdate(query2);
                 for (InformeGuiaRequest i : imr.getM_arrClsProInformeGuia()) {
@@ -850,7 +845,7 @@ public class InformesRest {
     @PostMapping("/Informes/cargaAgregarListadoBorrador/{idInforme}")
     public ResponseEntity<?> cargaAgregarListadoBorrador(
             @PathVariable("idInforme") int idInforme, @RequestBody List<String> listaIgr,
-            @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+            @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 //SE ELIMINAN LOS REGISTROS EN CASO DE TENER UN BORRADOR ANTERIOR, ASI NO SE SOBREESCRIBEN LOS DATOS
@@ -931,7 +926,7 @@ public class InformesRest {
     public ResponseEntity<?> descargaAgregarListadoBorrador(
             @PathVariable("idInforme") int idInforme,
             @RequestBody List<InformeDescargaBorradorRequest> borrador,
-            @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+            @RequestHeader("RFC") String rfc) throws Exception {
 
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
@@ -1011,7 +1006,7 @@ public class InformesRest {
 
     @GetMapping("/SisEstatus/getEstatusDefaultInformes")
     public ResponseEntity<?> obtenerEstatusInformes(@RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT IdEstatusInforme as m_nIdEstatusInforme\n" +
                     "     , Abreviacion as m_sAbreviacion\n" +

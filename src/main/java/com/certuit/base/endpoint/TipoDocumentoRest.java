@@ -19,7 +19,7 @@ public class TipoDocumentoRest {
 
     @GetMapping("/TipoDocumento/GetListado/{id}")
     public ResponseEntity<?> getOrigenDestino(@PathVariable("id") int id, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "select CTDVT.IdTipoDocumentoConfiguracionTimbrado as IdDocumento, " +
                     "CTDVT.IdSucursal, (CTD.Documento + '-' + ISNULL(CTDVT.Serie,'') + '('+ " +
@@ -39,7 +39,7 @@ public class TipoDocumentoRest {
     }
 
     @GetMapping("/TipoDocumento/GetListado")
-    public ResponseEntity<?> getTiposDocumento(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getTiposDocumento(@RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "select CTDVT.IdTipoDocumentoConfiguracionTimbrado as idDocumento, " +

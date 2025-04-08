@@ -23,7 +23,7 @@ public class TarifasRangosRest {
     TarifasRangosService tarifasRangosService;
 
     @GetMapping("/Tarifas/Rangos/GetListado")
-    public ResponseEntity<?> getListadoTarifas(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getListadoTarifas(@RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT IdTarifa, tarifa.IdCliente, CONCAT(CC.NumeroCliente, '. ', CC.NombreFiscal) AS Cliente, Vigencia, CuotaMensual, tarifa.Activo\n" +
                     "FROM CatTarifasRangosPQ tarifa\n" +
@@ -43,7 +43,7 @@ public class TarifasRangosRest {
     @GetMapping("/Tarifas/Rangos/GetByFiltro/{nombreCliente}")
     public ResponseEntity<?> getListadoEmbarquesFiltro(
             @PathVariable("nombreCliente") String nombreCliente,
-            @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+            @RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
 
@@ -70,7 +70,7 @@ public class TarifasRangosRest {
     }
 
     @GetMapping("/Tarifas/Rangos/GetGeneral")
-    public ResponseEntity<?> getTarifaClienteGeneral(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getTarifaClienteGeneral(@RequestHeader("RFC") String rfc) throws Exception {
         Connection jdbcConnection = dbConection.getconnection(rfc);
         String query = "SELECT t.IdTarifa, t.IdCliente, t.Vigencia, t.CuotaMensual, c.NombreFiscal as Cliente\n" +
                 "                FROM CatTarifasRangosPQ t\n" +
@@ -93,7 +93,7 @@ public class TarifasRangosRest {
 
     @GetMapping("/Tarifas/Rangos/GetById/{id}")
     public ResponseEntity<?> getTarifaById(@PathVariable("id") int id, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT t.IdTarifa, t.IdCliente, t.Vigencia, t.CuotaMensual, c.NombreFiscal as Cliente\n" +
@@ -119,7 +119,7 @@ public class TarifasRangosRest {
 
     @PostMapping("/Tarifas/Rangos/Agregar")
     public ResponseEntity<?> postTarifa(@RequestBody TarifaRangosRequest request,
-                                        @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                        @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
 
             JSONObject jsonValidacion = new JSONObject();
@@ -151,7 +151,7 @@ public class TarifasRangosRest {
 
     @DeleteMapping("/Tarifas/Rangos/Eliminar/{id}")
     public ResponseEntity<?> deleteTarifa(@PathVariable("id") int id, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "EXEC usp_CatTarifasRangosEliminarPQ " + id;
             Statement statement = jdbcConnection.createStatement();
@@ -169,7 +169,7 @@ public class TarifasRangosRest {
     @PutMapping("/Tarifas/Rangos/Modificar/{id}")
     public ResponseEntity<?> updateTarifa(@PathVariable("id") int id,
                                           @RequestHeader("RFC") String rfc,
-                                          @RequestBody TarifaRangosRequest request) throws SQLException, Exception {
+                                          @RequestBody TarifaRangosRequest request) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             JSONObject jsonFin = new JSONObject();
             JSONObject respuestaValidacion=tarifasRangosService.validarTarifaRango(request.getViajesForaneos(),
@@ -194,7 +194,7 @@ public class TarifasRangosRest {
     }
 
     public void agregarHijosTarifa(TarifaRangosRequest request, int idTarifa, String query, Statement statement)
-            throws SQLException, Exception {
+            throws Exception {
         JSONObject jsonViajeLocal;
         JSONObject jsonViajeForaneo;
         JSONObject jsonViajeForaneoGrupo;

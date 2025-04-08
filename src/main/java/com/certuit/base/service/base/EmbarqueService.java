@@ -17,7 +17,7 @@ public class EmbarqueService {
     @Autowired
     SeguimientoService seguimientoService;
 
-    public JSONArray getPaquetesEmbarque(int id, int tipo, Connection jdbcConnection) throws SQLException, Exception {
+    public JSONArray getPaquetesEmbarque(int id, int tipo, Connection jdbcConnection) throws Exception {
         String query = "SELECT " +
                 "    e.IdEmbarqueDetalle AS m_nIdEmbarqueDetalle " +
                 "     , e.IdEmbarque AS m_nIdEmbarque " +
@@ -51,7 +51,7 @@ public class EmbarqueService {
         return UtilFuctions.convertArray(rs);
     }
 
-    public JSONArray getConceptosSATEmbarque(int id, Connection jdbcConnection) throws SQLException, Exception {
+    public JSONArray getConceptosSATEmbarque(int id, Connection jdbcConnection) throws Exception {
         String query = "SELECT IdEmbarqueComplementoSAT as m_nIdComplementoSAT, " +
                 "       IdEmbarque as m_nIdEmbarque, " +
                 "       Cantidad as m_nCantidad, " +
@@ -99,7 +99,7 @@ public class EmbarqueService {
         return UtilFuctions.convertArray(rs);
     }
 
-    public JSONArray getConceptosCotizacionEmbarque(int id, Connection jdbcConnection) throws SQLException, Exception {
+    public JSONArray getConceptosCotizacionEmbarque(int id, Connection jdbcConnection) throws Exception {
         String query = "SELECT IdCotizadorConcepto as m_nIdCotizadorConcepto, " +
                 "       IdCotizador as m_nIdCotizador, " +
                 "       IdConceptoFacturacion as m_nIdConceptoFacturacion, " +
@@ -122,7 +122,7 @@ public class EmbarqueService {
 
     }
 
-    public JSONArray getListadoByIdEmabrque(int id, Connection jdbcConnection) throws SQLException,Exception{
+    public JSONArray getListadoByIdEmabrque(int id, Connection jdbcConnection) throws Exception{
         String query = "SELECT\n" +
                 " pe.IdEmbarqueDetalle " +
                 "      ,pe.IdEmbarque,\n" +
@@ -142,7 +142,7 @@ public class EmbarqueService {
                 "      ,IdProducto\n" +
                 "      ,(select Descripcion from CatProductosPQ p WHERE p.IdProducto = pe.IdProducto ) as Producto\n" +
                 "    FROM ProEmbarqueDetallePQ pe\n" +
-                "\tWHERE IdEmbarque = "+id+"";
+                "\tWHERE IdEmbarque = "+id;
         Statement statement = jdbcConnection.createStatement();
         ResultSet rs = statement.executeQuery(query);
         JSONArray array = new JSONArray();

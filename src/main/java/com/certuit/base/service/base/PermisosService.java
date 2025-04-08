@@ -11,7 +11,7 @@ import java.sql.Statement;
 @Service
 public class PermisosService {
 
-    public JSONArray getPermisosUsuario(int id, Connection jdbcConnection) throws SQLException,Exception{
+    public JSONArray getPermisosUsuario(int id, Connection jdbcConnection) throws Exception{
         String query = "select IdProceso from CatUsuariosDerechos where IdUsuario ="+id;
         Statement statement = jdbcConnection.createStatement();
         ResultSet rs = statement.executeQuery(query);

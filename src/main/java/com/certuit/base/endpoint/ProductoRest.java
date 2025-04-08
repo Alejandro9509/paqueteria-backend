@@ -22,7 +22,7 @@ public class ProductoRest {
     DBConection dbConection;
 
     @GetMapping("/Productos/GetListado")
-    public ResponseEntity<?> getProducto(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getProducto(@RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT " +
@@ -52,7 +52,7 @@ public class ProductoRest {
 
     @GetMapping("/Productos/GetById/{id}")
     public ResponseEntity<?> getProductosById(@RequestHeader("RFC") String rfc, @PathVariable("id") int id)
-            throws SQLException, Exception {
+            throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT " +
@@ -83,7 +83,7 @@ public class ProductoRest {
     @GetMapping("/Productos/GetByConvenioCliente/{idCliente}")
     public ResponseEntity<?> getProductosByConvenioCliente(@RequestHeader("RFC") String rfc,
                                                            @PathVariable("idCliente") int idCliente)
-            throws SQLException, Exception {
+            throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT IdProducto  as m_nIdProducto," +
@@ -127,7 +127,7 @@ public class ProductoRest {
     @PutMapping("/Productos/Eliminar/{idProducto}")
     public ResponseEntity<?> eliminarProducto(@PathVariable("idProducto") int idProducto,
                                               @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = " select RegistroDeSistema from CatProductosPQ where IdProducto = " + idProducto;
             Statement statement = jdbcConnection.createStatement();
@@ -139,7 +139,7 @@ public class ProductoRest {
             if (jsonObject.getBoolean("RegistroDeSistema")) {
                 return ResponseEntity.ok("No se puede eliminar el producto, porque es registro del sistema.");
             } else {
-                query = "EXEC usp_CatProductosEliminarPQ " + idProducto + "";
+                query = "EXEC usp_CatProductosEliminarPQ " + idProducto;
                 statement.executeUpdate(query);
                 int resultado = statement.executeUpdate(query);
                 return ResponseEntity.ok("Producto Eliminado");
@@ -152,7 +152,7 @@ public class ProductoRest {
 
     @PostMapping("/Productos/Agregar")
     public ResponseEntity<?> agregarProdutos(@RequestBody ProductoAgregarRequest p,
-                                             @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                             @RequestHeader("RFC") String rfc) throws Exception {
 
         if (p.getM_sDescripcion() == "") {
             return ResponseEntity.status(500).body("La descripción del Producto es un campo requerido");
@@ -165,7 +165,7 @@ public class ProductoRest {
                         + p.getM_sEmbalaje() + "'," + p.getM_nIdEmbalaje() + "," + p.getM_xLargo() + ","
                         + p.getM_xAncho() + "," + p.getM_xAlto() + "," + p.getM_xPeso() + ","
                         + (p.isM_bActivo() ? 1 : 0) + "," + p.getM_nNoProducto() + ", "
-                        + (p.isM_bPredeterminado() ? 1 : 0) + "";
+                        + (p.isM_bPredeterminado() ? 1 : 0);
                 statement.executeUpdate(query);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -181,7 +181,7 @@ public class ProductoRest {
     @PutMapping("/Productos/Modificar/{idProducto}")
     public ResponseEntity<?> modificarProducto(@RequestBody ProductoAgregarRequest p,
                                                @PathVariable("idProducto") int idProducto,
-                                               @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                               @RequestHeader("RFC") String rfc) throws Exception {
         if (p.getM_sDescripcion() == "") {
             return ResponseEntity.status(500).body("La descripción del Producto es un campo requerido");
         }
@@ -192,7 +192,7 @@ public class ProductoRest {
                         + p.getM_sEmbalaje() + "'," + p.getM_nIdEmbalaje() + "," + p.getM_xLargo() + ","
                         + p.getM_xAncho() + "," + p.getM_xAlto() + "," + p.getM_xPeso() + ","
                         + (p.isM_bActivo() ? 1 : 0) + "," + p.getM_nNoProducto() + ", "
-                        + (p.isM_bPredeterminado() ? 1 : 0) + "";
+                        + (p.isM_bPredeterminado() ? 1 : 0);
                 Statement statement = jdbcConnection.createStatement();
                 statement.executeUpdate(query);
             } catch (Exception e) {

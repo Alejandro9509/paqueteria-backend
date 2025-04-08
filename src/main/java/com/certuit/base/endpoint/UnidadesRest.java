@@ -25,7 +25,7 @@ public class UnidadesRest {
     CubicarService cubicarService;
 
     @GetMapping("/InventarioUnidades/GetListado")
-    public ResponseEntity<?> getInventarioUnidades(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getInventarioUnidades(@RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT pih.IdInventarioUnidad as m_nIdInventarioUnidad, ctu.TipoUnidad as m_sTipoUnidad," +
@@ -55,7 +55,7 @@ public class UnidadesRest {
     @PostMapping("/Unidades/GetListadoUltimaMilla/{id}")
     public ResponseEntity<?> getUnidadesUltimaMilla(@PathVariable("id") String id,
                                                     @RequestBody CubicarRequest request,
-                                                    @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                    @RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "select  \n" +
@@ -112,7 +112,7 @@ public class UnidadesRest {
     }
     @GetMapping("/Unidades/GetListadoUltimaMilla/{id}")
     public ResponseEntity<?> getUnidadesUltimaMilla(@PathVariable("id") String id,
-                                                    @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                    @RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "select  \n" +
@@ -147,7 +147,7 @@ public class UnidadesRest {
         }
     }
     @GetMapping("/Unidades/GetListadoInformes")
-    public ResponseEntity<?> getUnidadesInforme(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getUnidadesInforme(@RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "select " +
                     "cu.IdUnidad as m_nIdUnidad, " +
@@ -170,7 +170,7 @@ public class UnidadesRest {
     }
 
     @GetMapping("/Unidades/GetListado")
-    public ResponseEntity<?> obtenerUnidades(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> obtenerUnidades(@RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "select cu.IdUnidad                  as m_nIdUnidad,\n" +
                     "                       cu.Placas                    as m_sPlacas,\n" +
@@ -210,7 +210,7 @@ public class UnidadesRest {
     }
 
     @GetMapping("/Unidades/GetListadoRemolques")
-    public ResponseEntity<?> obtenerRemolques(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> obtenerRemolques(@RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "select cu.IdUnidad                  as m_nIdUnidad,\n" +
                     "       cu.Placas                    as m_sPlacas,\n" +
@@ -249,7 +249,7 @@ public class UnidadesRest {
 
     @GetMapping("/InventarioUnidades/GetByIdUnidad/{idUnidad}")
     public ResponseEntity<?> obtenerUnidadById(@PathVariable("idUnidad") int idUnidad, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT pih.IdInventarioUnidad as m_nIdInventarioUnidad, " +
                     "       ctu.TipoUnidad as m_sTipoUnidad,\n" +
@@ -284,7 +284,7 @@ public class UnidadesRest {
     @GetMapping("/Unidades/ByTipoUnidad/{idTipoUnidad}")
     public ResponseEntity<?> obtenerUnidadesByTipoUnidad(@PathVariable("idTipoUnidad") int idTipoUnidad,
                                                          @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         ResultSet rs;
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
@@ -301,7 +301,7 @@ public class UnidadesRest {
                         "cu.Capacidad as m_nCapacidad," +
                         " cu.Placas as m_sPlacas\n" +
                         "\t from CatUnidades cu inner join CatTiposUnidades ctu on cu.IdTipoUnidad =ctu.IdTipoUnidad " +
-                        "where cu.IdTipoUnidad= " + idTipoUnidad + "";
+                        "where cu.IdTipoUnidad= " + idTipoUnidad;
                 Statement statement = jdbcConnection.createStatement();
                 rs = statement.executeQuery(query);
             String jsonArray = UtilFuctions.convertArray(rs).toString();
@@ -319,7 +319,7 @@ public class UnidadesRest {
     @GetMapping("/Unidades/ByOperador/{idOperador}")
     public ResponseEntity<?> obtenerUnidadesByOperador(@PathVariable("idOperador") int idOperador,
                                                        @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "select cu.IdUnidad                  as m_nIdUnidad,\n" +
                     "                       cu.Placas                    as m_sPlacas,\n" +
@@ -351,7 +351,7 @@ public class UnidadesRest {
                     "                         left join CatOperadores co on cu.IdOperador = co.IdOperador\n" +
                     "                         inner join ProInventarioUnidades pih on pih.IdUnidad = cu.IdUnidad\n" +
                     "                         INNER JOIN CatEstatusUnidades AS ceu ON pih.IdEstatuUnidad = ceu.IdEstatuUnidad" +
-                    " WHERE cu.IdOperador = " + idOperador + " AND cu.Activa = 1 AND ceu.IdEstatuUnidad = 1 " + "";
+                    " WHERE cu.IdOperador = " + idOperador + " AND cu.Activa = 1 AND ceu.IdEstatuUnidad = 1 ";
             Statement statement = jdbcConnection.createStatement();
             ResultSet rs = statement.executeQuery(query);
             String jsonArray = UtilFuctions.convertArray(rs).toString();
@@ -369,7 +369,7 @@ public class UnidadesRest {
     @GetMapping("/Unidades/ByConvoy/{idConvoy}")
     public ResponseEntity<?> obtenerRemolquesByConvoy(@PathVariable("idConvoy") String idConvoy,
                                                       @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "select cu.IdUnidad                  as m_nIdUnidad,\n" +
                     "       cu.Placas                    as m_sPlacas,\n" +
@@ -413,7 +413,7 @@ public class UnidadesRest {
     @PutMapping("/Unidades/AsignarOperador/{idUnidad}/{idOperador}")
     public ResponseEntity<?> asignarOperador(@PathVariable("idUnidad") int idUnidad,
                                              @PathVariable("idOperador") int idOperador,
-                                             @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                             @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "EXEC usp_CatAsignarOperadorUnidadPQ " + idUnidad + ", " + idOperador;
             Statement statement = jdbcConnection.createStatement();

@@ -10,7 +10,7 @@ import java.sql.Statement;
 
 @Service
 public class CotizadorService {
-    public int agregarCotizacionEmbarque(CotizacionRequest cotRequest, Statement statement) throws SQLException, Exception {
+    public int agregarCotizacionEmbarque(CotizacionRequest cotRequest, Statement statement) throws Exception {
         int esEntregaSucursal;
         if (  cotRequest.getEntregaEnSucursal()){
             esEntregaSucursal = 1;

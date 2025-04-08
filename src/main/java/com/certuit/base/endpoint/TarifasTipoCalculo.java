@@ -19,7 +19,7 @@ public class TarifasTipoCalculo {
     DBConection dbConection;
 
     @GetMapping("/TipoCalculo/GetListado")
-    public ResponseEntity<?> getListado(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getListado(@RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT\n" +

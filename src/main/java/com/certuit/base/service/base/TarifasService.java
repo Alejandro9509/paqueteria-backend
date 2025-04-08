@@ -12,7 +12,7 @@ import java.sql.Statement;
 @Service
 public class TarifasService {
 
-    public JSONArray getDestinosByIdTarifa(int id, Connection jdbcConnection) throws SQLException, Exception {
+    public JSONArray getDestinosByIdTarifa(int id, Connection jdbcConnection) throws Exception {
         String query = "SELECT\n" +
                 "       IdTarifaDestino, \n" +
                 "       IdTarifa, \n" +
@@ -30,7 +30,7 @@ public class TarifasService {
         return UtilFuctions.convertArray(rs);
     }
 
-    public JSONArray getProductosByIdTarifa(int id, Connection jdbcConnection) throws SQLException, Exception {
+    public JSONArray getProductosByIdTarifa(int id, Connection jdbcConnection) throws Exception {
         String query = "Select \n" +
                 "  pc.IdProductoTarifa as m_nIdTarifaProducto\n" +
                 "  ,pc.IdTarifa as m_nIdTarifa\n" +
@@ -59,7 +59,7 @@ public class TarifasService {
         return UtilFuctions.convertArray(rs);
     }
 
-    public JSONArray getViajesByIdTarifa(int id, Connection jdbcConnection) throws SQLException, Exception {
+    public JSONArray getViajesByIdTarifa(int id, Connection jdbcConnection) throws Exception {
         String query = "SELECT \n" +
                 "       IdTarifaViaje, IdTarifa, IdOrigen, FleteMinimo, orides.OrigenDestino as Origen \n" +
                 "FROM CatTarifaViajesPQ viaje " +
@@ -71,7 +71,7 @@ public class TarifasService {
         return UtilFuctions.convertArray(rs);
     }
 
-    public void validarVigenciaTarifas(Connection jdbcConnection) throws SQLException, Exception {
+    public void validarVigenciaTarifas(Connection jdbcConnection) throws Exception {
         String query = "UPDATE CatTarifasRangosPQ SET Activo = IIF(Vigencia < (convert(DATE,GETDATE()))," +
                 "CAST(0 AS BIT), CAST(1 AS BIT))";
         Statement statement = jdbcConnection.createStatement();

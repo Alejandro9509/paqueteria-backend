@@ -17,11 +17,11 @@ public enum Months {
     private int id;
     private String name;
 
-    private Months(int id) {
+    Months(int id) {
         this.id = id;
     }
 
-    private Months(int id, String name) {
+    Months(int id, String name) {
         this.id = id;
         this.name = name;
 

@@ -24,7 +24,7 @@ public class EstatusViajeRest {
     DBConection dbConection;
 
     @PostMapping("/EstatusViajes/Agregar")
-    public ResponseEntity<?> agregarEstatusViaje(@RequestBody EstatusViajeRequest params, @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> agregarEstatusViaje(@RequestBody EstatusViajeRequest params, @RequestHeader("RFC") String rfc) throws Exception {
         try {
             String pattern = "yyyy-MM-dd HH:mm:ss";
             DateFormat df = new SimpleDateFormat(pattern);
@@ -54,7 +54,7 @@ public class EstatusViajeRest {
     }
 
     @GetMapping("/SisEstatus/getListadoViajes")
-    public ResponseEntity<?> sisEstatusViaje(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> sisEstatusViaje(@RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT\n" +
                     "\tIdEstatusViaje,\n" +

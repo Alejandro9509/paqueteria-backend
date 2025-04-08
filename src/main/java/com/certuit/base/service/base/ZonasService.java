@@ -12,7 +12,7 @@ import java.sql.Statement;
 
 @Service
 public class ZonasService {
-    public JSONArray getCodigoPostalZonaTarifa(int id,  Connection jdbcConnection) throws SQLException, Exception {
+    public JSONArray getCodigoPostalZonaTarifa(int id,  Connection jdbcConnection) throws Exception {
         String query = "SELECT  " +
                 "  cz.IdCPZona as m_nIdCPZona " +
                 "  , cz.IdZona AS m_nIdZona " +
@@ -27,7 +27,7 @@ public class ZonasService {
                 "  , c.ClaveLocalidad as m_sClaveLocalidad " +
                 "  FROM CatZonasTarifasCPPQ cz " +
                 "  JOIN CatCodigosPostales c on cz.IdCP = c.IdCodigoPostal " +
-                "  WHERE IdZona = "+id+"";
+                "  WHERE IdZona = "+id;
         Statement statement = jdbcConnection.createStatement();
         ResultSet rs = statement.executeQuery(query);
 
@@ -35,7 +35,7 @@ public class ZonasService {
     }
 
     public JSONArray getConceptoZonaTarifa(int id,  Connection jdbcConnection)
-            throws SQLException, Exception {
+            throws Exception {
         String query = "SELECT " +
                 "    IdZonaConceptos as m_nIdZonaConceptos " +
                 "     ,IdZona as m_nIdZona " +
@@ -61,8 +61,8 @@ public class ZonasService {
     }
 
     public JSONArray getCPsByIdZonaOperativa(int id,  Connection jdbcConnection)
-            throws SQLException, Exception {
-        String query = "EXEC usp_CatZonasOperativasCPGetByIdZonaPQ "+id+"";
+            throws Exception {
+        String query = "EXEC usp_CatZonasOperativasCPGetByIdZonaPQ "+id;
         Statement statement = jdbcConnection.createStatement();
         ResultSet rs = statement.executeQuery(query);
         JSONArray array = new JSONArray();

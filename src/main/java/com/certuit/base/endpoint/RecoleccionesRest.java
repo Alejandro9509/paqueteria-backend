@@ -40,7 +40,7 @@ public class RecoleccionesRest {
                                                        @PathVariable("origen") int origen,
                                                        @PathVariable("destino") int destino,
                                                        @PathVariable("cliente") int cliente,
-                                                       @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                       @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             fechaInicial = !fechaInicial.equalsIgnoreCase("0") ? "'" + fechaInicial + "'" : null;
             fechaFinal = !fechaFinal.equalsIgnoreCase("0") ? "'" + fechaFinal + "'" : null;
@@ -106,7 +106,7 @@ public class RecoleccionesRest {
     }
 
     @GetMapping("/SisEstatus/getListadoRecoleccion")
-    public ResponseEntity<?> getOrigenDestino(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getOrigenDestino(@RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT IdEstatusRecoleccion as m_nIdEstatusRecoleccion," +
                     "Abreviacion as m_sAbreviacion, " +
@@ -130,7 +130,7 @@ public class RecoleccionesRest {
     public ResponseEntity<?> enviarNotificacion(@RequestHeader("RFC") String rfc,
                                                 @PathVariable("id") int id,
                                                 @RequestBody EnvioCorreosRequest request)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "select  CCC.CorreoElectronico AS 'Correos' from ProRecoleccionPQ PIP " +
                     "inner join CatClientes CC on PIP.IdCliente = CC.IdCliente " +
@@ -173,7 +173,7 @@ public class RecoleccionesRest {
 
     @GetMapping("/Recoleccion/GetById/{id}")
     public ResponseEntity<?> getRecoleccionId(@PathVariable("id") int id, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             if (jdbcConnection == null) {
                 return ResponseEntity.status(500).body("No se pudo conectar con el servidor. Intente de nuevo.");
@@ -358,7 +358,7 @@ public class RecoleccionesRest {
     @PostMapping("/Recoleccion/Agregar")
     public ResponseEntity<?> postRecoleccion(@RequestBody RecoleccionRequest recoRequest,
                                              @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
 
         int esRecoleccionDiferenteDomicilio;
         if (recoRequest.isM_bRecoleccionDiferenteDomicilio()) {
@@ -535,7 +535,7 @@ public class RecoleccionesRest {
     @PutMapping("/Recoleccion/Modificar/{idRecoleccion}")
     public ResponseEntity<?> putRecoleccion(@RequestBody RecoleccionRequest recoRequest,
                                             @PathVariable("idRecoleccion") int idRecoleccion,
-                                            @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                            @RequestHeader("RFC") String rfc) throws Exception {
 
         int esRecoleccionDiferenteDomicilio;
         if (recoRequest.isM_bRecoleccionDiferenteDomicilio()) {
@@ -712,7 +712,7 @@ public class RecoleccionesRest {
     @PutMapping("/Recoleccion/Cancelar/{idRec}")
     public ResponseEntity<?> cancelarRecoleccion(@RequestBody RecoleccionCancelarRequest cancelado,
                                                  @PathVariable("idRec") int idRec,
-                                                 @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                 @RequestHeader("RFC") String rfc) throws Exception {
 
         if (idRec <= 0) {
             return ResponseEntity.status(500).body("Identificador de recoleccion es un campo requerido");
@@ -731,7 +731,7 @@ public class RecoleccionesRest {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 String query = "EXEC usp_ProRecoleccionCancelarPQ  " + idRec + ", '"
                         + cancelado.getMotivoCancelacion() + "', '" + cancelado.getFechaCancelacion() + "', "
-                        + cancelado.getUsuarioCancelacion() + "";
+                        + cancelado.getUsuarioCancelacion();
                 Statement statement = jdbcConnection.createStatement();
                 statement.executeUpdate(query);
             } catch (Exception e) {
@@ -751,7 +751,7 @@ public class RecoleccionesRest {
     public ResponseEntity<?> actualizarCoordenadas(@PathVariable("idRec") int idRec,
                                                    @PathVariable("lat") String lat,
                                                    @PathVariable("lon") String lon,
-                                                   @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                   @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 String query = "update ProRecoleccionPQ SET Latitud = " + lat + ", Longitud = " + lon
@@ -771,11 +771,11 @@ public class RecoleccionesRest {
 
     @DeleteMapping("/Recoleccion/Eliminar/{idRec}/{idUsuario}")
     public ResponseEntity<?> eliminarRecoleccion(@PathVariable("idRec") int idRec,
-                                                 @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                 @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
-                String query = "EXEC usp_ProRecoleccionEliminarPQ " + idRec + "";
-                String query2 = "select IdEstatusRecoleccion from ProRecoleccionPQ where IdRecoleccion = " + idRec + "";
+                String query = "EXEC usp_ProRecoleccionEliminarPQ " + idRec;
+                String query2 = "select IdEstatusRecoleccion from ProRecoleccionPQ where IdRecoleccion = " + idRec;
                 Statement statement2 = jdbcConnection.createStatement();
                 ResultSet rs = statement2.executeQuery(query2);
 
@@ -799,12 +799,12 @@ public class RecoleccionesRest {
 
     @GetMapping("/Recoleccion/GetCancelarById/{idRec}")
     public ResponseEntity<?> cancelarPorIdRecoleccion(@PathVariable("idRec") int idRec,
-                                                      @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                      @RequestHeader("RFC") String rfc) throws Exception {
         JSONObject jsonObject1 = new JSONObject();
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 String query = "select IdEstatusRecoleccion,ISNULL(IdEmbarque,0) AS IdEmbarque " +
-                        "from ProRecoleccionPQ where IdRecoleccion = " + idRec + "";
+                        "from ProRecoleccionPQ where IdRecoleccion = " + idRec;
                 Statement statement = jdbcConnection.createStatement();
                 ResultSet rs = statement.executeQuery(query);
                 JSONObject jsonObject = convertObject(rs);
@@ -812,11 +812,7 @@ public class RecoleccionesRest {
                 int idEstatus = jsonObject.getInt("IdEstatusRecoleccion");
                 boolean sePuedeCancelar = false;
                 if (idRec != 0) {
-                    if (idEmbarque == 0 && (idEstatus == 1) || idEstatus == 2) {
-                        sePuedeCancelar = true;
-                    } else {
-                        sePuedeCancelar = false;
-                    }
+                    sePuedeCancelar = idEmbarque == 0 && (idEstatus == 1) || idEstatus == 2;
                     jsonObject1.put("sePuedeCancelar", sePuedeCancelar);
                 } else {
                     return ResponseEntity.status(500).body("Recoleccion no encontrada");
@@ -835,7 +831,7 @@ public class RecoleccionesRest {
 
     @PutMapping("/Recoleccion/ModificarSAT")
     public ResponseEntity<?> modificarRecoleccionSAT(@RequestBody RecoleccionRequest recoRequest,
-                                                     @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                     @RequestHeader("RFC") String rfc) throws Exception {
 
         int esRecoleccionDiferenteDomicilio;
         if (recoRequest.isM_bRecoleccionDiferenteDomicilio()) {

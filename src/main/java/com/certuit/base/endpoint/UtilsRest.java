@@ -24,7 +24,7 @@ public class UtilsRest {
     DBConection dbConection;
 
     @GetMapping("/Utilerias/GetFechaInicio")
-    public ResponseEntity<?> getFechaInicial(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getFechaInicial(@RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT FORMAT(SWITCHOFFSET(SYSDATETIMEOFFSET(),'-06:00'),'yyyy-MM-dd') as Fecha";
@@ -40,7 +40,7 @@ public class UtilsRest {
     }
 
     @GetMapping("/Utilerias/GetFechaFinal")
-    public ResponseEntity<?> getFechaFinal(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getFechaFinal(@RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT FORMAT(SWITCHOFFSET(SYSDATETIMEOFFSET(),'-06:00'),'yyyy-MM-dd') as Fecha";
@@ -59,11 +59,11 @@ public class UtilsRest {
     public ResponseEntity<?> validaDerechos(@PathVariable("idUsuario") int idUsuario,
                                             @PathVariable("idPrivilegio") int idPrivilegio,
                                             @PathVariable("idTipo") int idTipo,
-                                            @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                            @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String sConsulta = "SELECT 1 as existe\n" +
                     "FROM CatUsuariosDerechos cud Inner JOIN SisProcesos sp on cud.IdProceso = sp.IdProceso\n" +
-                    " WHERE cud.IdUsuario= " + idUsuario + "";
+                    " WHERE cud.IdUsuario= " + idUsuario;
             switch (idTipo) {
                 case 1:
                     sConsulta += " and sp.IdModuloPaqueteria = " + idPrivilegio + " and sp.TipoPaqueteria = 1 ";

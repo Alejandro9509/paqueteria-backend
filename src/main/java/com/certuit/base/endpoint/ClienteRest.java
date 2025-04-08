@@ -35,7 +35,7 @@ public class ClienteRest {
     PermisosService permisosService;
 
     @GetMapping("/Clientes/GetListado")
-    public ResponseEntity<?> getClientesListado(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getClientesListado(@RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "select " +
                     "    cl.IdCliente as m_nIdCliente, " +
@@ -89,7 +89,7 @@ public class ClienteRest {
     @PutMapping("/Client/GetListadoPaginado/{pagina}/{resgistros}")
     public ResponseEntity<?> getClient(@PathVariable("pagina") int pagina, @PathVariable("resgistros") int resgistros,
                                        @RequestHeader("RFC") String rfc, @RequestBody SearchRequest request)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "EXEC usp_CatClientesPaginado_762 " + pagina + "," + resgistros + ",'" + request.getBusqueda() + "'";
             Statement statement = jdbcConnection.createStatement();
@@ -111,7 +111,7 @@ public class ClienteRest {
     @PutMapping("/Remitentes/GetListadoPaginado/{pagina}/{resgistros}")
     public ResponseEntity<?> getRemitentesDestinatarios(@PathVariable("pagina") int pagina, @PathVariable("resgistros")
     int resgistros, @RequestHeader("RFC") String rfc, @RequestBody SearchRequest request)
-            throws SQLException, Exception {
+            throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "EXEC usp_CatRemitentesDestinatariosPaginadoPQ " + pagina + "," + resgistros + ",'"
@@ -133,7 +133,7 @@ public class ClienteRest {
                                                         @PathVariable("idCliente") int idCliente,
                                                         @RequestHeader("RFC") String rfc,
                                                         @RequestBody SearchRequest request)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "EXEC usp_CatRemitentesDestinatariosPaginadoClientePQ " + pagina + "," + resgistros + ",'"
                     + request.getBusqueda() + "'," + idCliente;
@@ -165,7 +165,7 @@ public class ClienteRest {
 
     @GetMapping("/Clientes/GetById/{id}")
     public ResponseEntity<?> getClienteId(@PathVariable("id") int id, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT IdCliente,\n" +
                     "\tNumeroCliente,\n" +
@@ -258,7 +258,7 @@ public class ClienteRest {
                     "\t(case when IdTipoSeguro is null then 0 else IdTipoSeguro end) as m_nIdTipoSeguro,\n" +
                     "\t(case when PorcentajeSeguro is null then 0 else PorcentajeSeguro end) as m_cPorcentajeSeguro\n" +
                     "\tFROM CatClientes\n" +
-                    "\tWHERE IdCliente =" + id + "";
+                    "\tWHERE IdCliente =" + id;
             Statement statement = jdbcConnection.createStatement();
             ResultSet rs = statement.executeQuery(query);
             JSONObject json = new JSONObject();
@@ -357,7 +357,7 @@ public class ClienteRest {
 
     @GetMapping("/Clientes/GetPublicoGeneral")
     public ResponseEntity<?> getClienteGenerico(@RequestHeader("RFC") String rfc) throws
-            SQLException, Exception {
+            Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT TOP 1 IdCliente,\n" +
                     "\tNumeroCliente,\n" +
@@ -549,7 +549,7 @@ public class ClienteRest {
     }
 
     @GetMapping("/GetLogo")
-    public ResponseEntity<?> getLogo(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getLogo(@RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 String query = "SELECT Logo from SisParametros";
@@ -583,7 +583,7 @@ public class ClienteRest {
         int nLongitud = sCadena.length(); //nLongitud is int = Length(sCadena)
         //FOR nPosicion = 1 TO nLongitud
         for(int nPosicion = 0; nPosicion<nLongitud; nPosicion++){
-            nValAsc = (int) sCadena.charAt(nPosicion); //Asc(sCadena[[nPosicion]]);
+            nValAsc = sCadena.charAt(nPosicion); //Asc(sCadena[[nPosicion]]);
             nLlaveLong = nLlaveLong * nValAsc; //nLlave * nValAsc
             nLlaveLong = abs(nLlaveLong ^ 0xAAAAAAAAL); //abs(nLlaveLong^xor); //abs(BinaryXOR(nLlave,2863311530));
             nLlaveLong =  floorMod(nLlaveLong, nLimite) ;//nLlave % nLimite ; //modulo(nLlave,nLimite);
@@ -594,7 +594,7 @@ public class ClienteRest {
     public static String getHash2(String input, int limit){
         int key = 1;
         for (int position = 0; position < input.length(); position++) {
-            int ascValue = (int) input.charAt(position);
+            int ascValue = input.charAt(position);
             key = key * ascValue;
             key = Math.abs(key ^ 0xAAAAAAAA);
             key = floorMod(key, limit); // Using floorMod for consistent negative number handling
@@ -639,7 +639,7 @@ public class ClienteRest {
 
     @PostMapping("/ValidarLogin/V2/{Usuario}/{Password}")
     public ResponseEntity<?> validarLoginV2(@RequestBody LoginRequest request, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         Connection jdbcConnection = null;
         try  {
             jdbcConnection = dbConection.getconnection(rfc);
@@ -800,7 +800,7 @@ public class ClienteRest {
     public ResponseEntity<?> validarLogin(@PathVariable("Usuario") String Usuario,
                                           @PathVariable("Password") String Password,
                                           @RequestHeader("RFC") String rfc) throws
-            SQLException, Exception
+            Exception
     {
         Connection jdbcConnection = null;
         try  {
@@ -954,7 +954,7 @@ public class ClienteRest {
     @GetMapping("/Clientes/ValidarTieneConvenio/{idCliente}/{idTipoTarifa}")
     public ResponseEntity<?> getIfHaveConvenio(@PathVariable("idCliente") int idCliente,
                                                @PathVariable("idTipoTarifa") int idTipoTarifa,
-                                               @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                               @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "";
             if (idTipoTarifa == 2) {
@@ -979,7 +979,7 @@ public class ClienteRest {
     @PostMapping("/Clientes/ModificarSeguro")
     public ResponseEntity<?> modificarSeguro(@RequestBody SeguroRequest
                                                      request, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "UPDATE CatClientes " +
                     "SET IdTipoSeguro =" + request.getIdTipoSeguro() + "," +
@@ -1002,7 +1002,7 @@ public class ClienteRest {
     @GetMapping("/Clientes/ValidarLogin/{correo}/{rfc}")
     public ResponseEntity<?> validarLoginPortal(@PathVariable("correo") String correo,
                                                 @PathVariable("rfc") String rfcCliente,
-                                                @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT [IdCliente] as m_nIdCliente\n" +
                     "      ,[NumeroCliente] as m_nNumeroCliente\n" +

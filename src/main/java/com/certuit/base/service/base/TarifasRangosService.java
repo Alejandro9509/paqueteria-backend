@@ -16,7 +16,7 @@ import java.util.List;
 public class TarifasRangosService {
 
     public JSONArray getViajesLocalesByIdTarifa(int id, Connection jdbcConnection)
-            throws SQLException, Exception {
+            throws Exception {
         String query = "SELECT IdViajeLocal, IdSucursal, IdConcepto, IdTarifa, IdTipoMedida\n" +
                 "FROM CatTarifasRangosViajesLocalesPQ \n" +
                 "WHERE IdTarifa = " + id;
@@ -27,7 +27,7 @@ public class TarifasRangosService {
     }
 
     public JSONObject validarTarifaRango(List<ViajeForaneoRequest> request, Connection jdbcConnection)
-            throws SQLException, Exception{
+            throws Exception{
        int setterIdViaje=0;
        int setterIdGrupo=0;
        JSONObject regreso=new JSONObject();
@@ -79,11 +79,10 @@ public class TarifasRangosService {
                                                                            && conceptoQueSeVaAComparar.getMaximo()>conceptoConElQueSeCompara.getMinimo())
                                                                    {
                                                                        regreso.put("success",false);
-                                                                       regreso.put("motivo","Repetición en viajes de Milla Intermedia entre viaje No."
+                                                                       regreso.put("motivo", "Repetición en viajes de Milla Intermedia entre viaje No."
                                                                                +(viajeQueSeVaACompararConLosDemas.getIdViajeForaneo()+1)
                                                                                +" y viaje No."
-                                                                               +(viajeConElQueSeCompara.getIdViajeForaneo()+1)
-                                                                               +"");
+                                                                               +(viajeConElQueSeCompara.getIdViajeForaneo()+1));
                                                                        return regreso;
                                                                    }
                                                                }
@@ -96,11 +95,10 @@ public class TarifasRangosService {
                                                                if(viajeQueSeVaACompararConLosDemas.getIdTipoMedida()==3)
                                                                {
                                                                    regreso.put("success",false);
-                                                                   regreso.put("motivo","Repetición en viajes de Milla Intermedia entre viaje No."
+                                                                   regreso.put("motivo", "Repetición en viajes de Milla Intermedia entre viaje No."
                                                                            +(viajeQueSeVaACompararConLosDemas.getIdViajeForaneo()+1)
                                                                            +" y viaje No."
-                                                                           +(viajeConElQueSeCompara.getIdViajeForaneo()+1)
-                                                                           +"");
+                                                                           +(viajeConElQueSeCompara.getIdViajeForaneo()+1));
                                                                    return regreso;
                                                                }
 
@@ -109,11 +107,10 @@ public class TarifasRangosService {
                                                                         && conceptoQueSeVaAComparar.getMaximo()>conceptoConElQueSeCompara.getMinimo())
                                                                 {
                                                                     regreso.put("success",false);
-                                                                    regreso.put("motivo","Repetición en viajes de Milla Intermedia entre viaje No."
+                                                                    regreso.put("motivo", "Repetición en viajes de Milla Intermedia entre viaje No."
                                                                             +(viajeQueSeVaACompararConLosDemas.getIdViajeForaneo()+1)
                                                                             +" y viaje No."
-                                                                            +(viajeConElQueSeCompara.getIdViajeForaneo()+1)
-                                                                            +"");
+                                                                            +(viajeConElQueSeCompara.getIdViajeForaneo()+1));
                                                                     return regreso;
                                                                 }
                                                            }
@@ -133,7 +130,7 @@ public class TarifasRangosService {
         return regreso;
     }
 
-    public JSONArray getViajesZonasByIdTarifa(int id, Connection jdbcConnection) throws SQLException, Exception {
+    public JSONArray getViajesZonasByIdTarifa(int id, Connection jdbcConnection) throws Exception {
         String query = "SELECT IdViajeZona, IdViajeLocal, IdViajeForaneoGrupo, IdZonaOperativa, zona.CodigoZona, zona.AplicaEntrega\n" +
                 "FROM CatTarifasRangosViajesZonasPQ tarZona\n" +
                 "         JOIN CatZonasOperativasPQ zona on zona.IdZona = tarZona.IdZonaOperativa\n" +
@@ -152,7 +149,7 @@ public class TarifasRangosService {
     }
 
     public JSONArray getViajesForaneosByIdTarifa(int id, Connection jdbcConnection)
-            throws SQLException, Exception {
+            throws Exception {
         String query = "SELECT IdViajeForaneo, IdOrigen, IdDestino, IdTipoMedida, IdTarifa, fleteMinimo\n" +
                 "FROM CatTarifasRangosViajesForaneosPQ\n" +
                 "WHERE IdTarifa = "+id;
@@ -163,7 +160,7 @@ public class TarifasRangosService {
     }
 
     public JSONArray getGruposByIdTarifa(int id, Connection jdbcConnection)
-            throws SQLException, Exception {
+            throws Exception {
         String query = "SELECT IdViajeForaneoGrupo, Referencia, IdViajeForaneo\n" +
                 "FROM CatTarifasRangosViajesForaneosGruposPQ\n" +
                 "WHERE IdViajeForaneo IN (SELECT IdViajeForaneo\n" +
@@ -176,7 +173,7 @@ public class TarifasRangosService {
     }
 
     public JSONArray getConceptosByIdTarifa(int id, Connection jdbcConnection)
-            throws SQLException, Exception {
+            throws Exception {
         String query = "SELECT IdTarifaConcepto,\n" +
                 "       tarconc.IdConceptoFacturacion,\n" +
                 "       conc.ConceptoFacturacion,\n" +
@@ -231,7 +228,7 @@ public class TarifasRangosService {
         return array;
     }
 
-    public JSONArray getProductosByConceptosByIdTarifa(int idConcepto, int idTarifa, Connection jdbcConnection) throws SQLException, Exception {
+    public JSONArray getProductosByConceptosByIdTarifa(int idConcepto, int idTarifa, Connection jdbcConnection) throws Exception {
         String query = "SELECT\n" +
                 "    CTRCPP.IdTarifa,\n" +
                 "    CTRCPP.IdConceptoFacturacion,\n" +
@@ -247,7 +244,7 @@ public class TarifasRangosService {
     }
 
     public JSONArray getProductosByIdTarifa(int id, Connection jdbcConnection)
-            throws SQLException, Exception {
+            throws Exception {
         String query = "SELECT IdTarifaProducto, tarpro.IdProducto, pro.Descripcion, pro.Activo, pro.NoProducto, " +
                 "IdViajeLocal, IdViajeForaneoGrupo\n" +
                 "                FROM CatTarifasRangosProductosPQ tarpro\n" +
@@ -267,7 +264,7 @@ public class TarifasRangosService {
     }
 
     public void validarVigenciaTarifas(Connection jdbcConnection)
-            throws SQLException, Exception {
+            throws Exception {
         String query = "UPDATE CatTarifasRangosPQ SET Activo = IIF(Vigencia < " +
                 "(convert(DATE,GETDATE())),CAST(0 AS BIT), CAST(1 AS BIT))";
         Statement statement = jdbcConnection.createStatement();

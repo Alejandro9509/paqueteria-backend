@@ -18,7 +18,7 @@ import java.util.*;
 @Service
 public class DBConection {
     public static HikariDataSource ds;
-    private Map<String, HikariDataSource> conecctions = new HashMap<>();
+    private final Map<String, HikariDataSource> conecctions = new HashMap<>();
     private Boolean actualizado = false;
 
     private  static Connection connectDB(String driverClassNameDB, String jdbcDriverUrl, String User, String Password) {

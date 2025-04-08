@@ -22,7 +22,7 @@ public class CuentasCorreoRest {
     DBConection dbConection;
 
     @GetMapping("/CuentasCorreo/GetListado")
-    public ResponseEntity<?> getlistadocuentascorreo(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getlistadocuentascorreo(@RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT * FROM SisCuentasCorreoPQ";
@@ -55,7 +55,7 @@ public class CuentasCorreoRest {
 
     @PostMapping("/CuentasCorreo/Agregar")
     public ResponseEntity<?> agregarCuentaCorreo(@RequestBody CuentaCorreoRequest request,
-                                                 @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                 @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String pattern = "yyyy-MM-dd hh:mm:ss";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
@@ -64,7 +64,7 @@ public class CuentasCorreoRest {
                 String query = "EXEC usp_SisCuentasCorreoAgregarPQ  " + request.getM_nTipoCuenta() + ", '"
                         + request.getM_sServidor() + "'," + request.getM_nPuerto() + ",'" + request.getM_sUsuario()
                         + "','" + request.getM_sContrasenia() + "'," + request.getM_nTipoCifrado() + ",'" + date
-                        + "'," + request.getM_sCreadoPor() + ", '" + date + "'," + request.getM_sCreadoPor() + "";
+                        + "'," + request.getM_sCreadoPor() + ", '" + date + "'," + request.getM_sCreadoPor();
                 Statement statement = jdbcConnection.createStatement();
                 statement.executeUpdate(query);
             } catch (Exception e) {
@@ -80,7 +80,7 @@ public class CuentasCorreoRest {
 
     @PutMapping("/CuentasCorreo/Modificar/{id}")
     public ResponseEntity<?> modificarCuentaCorreo(@PathVariable("id") int id, @RequestBody CuentaCorreoRequest request,
-                                                   @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                   @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String pattern = "yyyy-MM-dd hh:mm:ss";
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
@@ -90,7 +90,7 @@ public class CuentasCorreoRest {
                         + request.getM_sServidor() + "',"
                         + request.getM_nPuerto() + ",'"
                         + request.getM_sUsuario() + "','" + request.getM_sContrasenia() + "',"
-                        + request.getM_nTipoCifrado() + ", '" + date + "'," + request.getM_sModificadoPor() + "";
+                        + request.getM_nTipoCifrado() + ", '" + date + "'," + request.getM_sModificadoPor();
                 Statement statement = jdbcConnection.createStatement();
                 statement.executeUpdate(query);
             } catch (Exception e) {

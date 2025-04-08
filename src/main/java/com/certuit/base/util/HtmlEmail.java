@@ -1391,8 +1391,7 @@ public class HtmlEmail {
             "      </div>\n" +
             "\n" +
             "      </body>\n" +
-            "    </html>" +
-            "";
+            "    </html>";
 
 
     public static String htmlPaquetes = "<div>\n" +

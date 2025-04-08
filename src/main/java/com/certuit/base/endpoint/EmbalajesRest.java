@@ -24,7 +24,7 @@ public class EmbalajesRest {
     DBConection dbConection;
 
     @GetMapping("/Embalajes/GetListado")
-    public ResponseEntity<?> getEmbalaje(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getEmbalaje(@RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT " +
@@ -49,7 +49,7 @@ public class EmbalajesRest {
 
     @GetMapping("/Embalajes/GetById/{id}")
     public ResponseEntity<?> getEmbalajesById(@RequestHeader("RFC") String rfc, @PathVariable("id") int id)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT " +
                     "IdEmbalaje as m_nIdEmbalaje, " +
@@ -71,7 +71,7 @@ public class EmbalajesRest {
 
     @GetMapping("/Embalajes/ValidarEliminar/{id}")
     public ResponseEntity<?> getEmbalajeEliminar(@RequestHeader("RFC") String rfc, @PathVariable("id") int id)
-            throws SQLException, Exception {
+            throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = " select RegistroDeSistema from CatEmbalajesPQ where IdEmbalaje = " + id;
@@ -107,7 +107,7 @@ public class EmbalajesRest {
     @PutMapping("/Embalaje/Modificar/{idEmbalaje}")
     public ResponseEntity<?> modificarEmbalaje(@PathVariable("idEmbalaje") int idEmbalaje,
                                                @RequestBody EmbalajeModificarRequest embalaje,
-                                               @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                               @RequestHeader("RFC") String rfc) throws Exception {
 
         try {
             if (embalaje.getM_sNombre().equalsIgnoreCase("")) {
@@ -143,7 +143,7 @@ public class EmbalajesRest {
 
     @PostMapping("/Embalaje/Agregar")
     public ResponseEntity<?> agregarEmbalaje(@RequestBody EmbalajeModificarRequest embalaje,
-                                             @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                             @RequestHeader("RFC") String rfc) throws Exception {
         try {
             if (embalaje.getM_sNombre().equalsIgnoreCase("")) {
                 return ResponseEntity.status(500).body("Ocurrió un problema al guardar el embarque");
@@ -182,10 +182,10 @@ public class EmbalajesRest {
     @DeleteMapping("/Embalaje/Eliminar/{nIdEmbalaje}/{idUsuario}")
     public ResponseEntity<?> eliminarEmbalaje(@PathVariable("nIdEmbalaje") int nIdEmbalaje,
                                               @PathVariable("idUsuario") int idUsuario,
-                                              @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                              @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
-                String query = "EXEC usp_CatEmbalajesEliminarPQ " + nIdEmbalaje + "";
+                String query = "EXEC usp_CatEmbalajesEliminarPQ " + nIdEmbalaje;
                 Statement statement = jdbcConnection.createStatement();
                 statement.executeUpdate(query);
             } catch (Exception e) {

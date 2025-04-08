@@ -13,7 +13,7 @@ import java.sql.Statement;
 
 @Service
 public class ComplementosSATService {
-    public void agregarComplementosARecoleccion(RecoleccionRequest recoRequest, Connection jdbcConnection) throws SQLException, Exception {
+    public void agregarComplementosARecoleccion(RecoleccionRequest recoRequest, Connection jdbcConnection) throws Exception {
         String query = "";
         int esMaterialPeligroso;
 
@@ -60,7 +60,7 @@ public class ComplementosSATService {
         }
     }
 
-    public void modificarComplementosRecoleccion(RecoleccionRequest recoRequest, Connection jdbcConnection) throws SQLException, Exception {
+    public void modificarComplementosRecoleccion(RecoleccionRequest recoRequest, Connection jdbcConnection) throws Exception {
         String query = "";
         int esMaterialPeligroso;
         query = "EXEC usp_ProRecoleccionEliminarComplementosSATPQ "+recoRequest.getM_nIdRecoleccion();
@@ -110,7 +110,7 @@ public class ComplementosSATService {
         }
     }
 
-    public void agregarComplementosAEmbarque(EmbarqueRequest embRequest, Connection jdbcConnection) throws SQLException, Exception {
+    public void agregarComplementosAEmbarque(EmbarqueRequest embRequest, Connection jdbcConnection) throws Exception {
         String query = "";
         int esMaterialPeligroso;
         for (ComplementoSATRequest complemento : embRequest.getM_arrClsComplementoSAT()) {

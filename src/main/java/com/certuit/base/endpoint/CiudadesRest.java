@@ -19,7 +19,7 @@ public class CiudadesRest {
     DBConection dbConection;
 
     @GetMapping("/Ciudades/GetListadoCP/{idCiudad}")
-    public ResponseEntity<?> getListadoCP(@PathVariable("idCiudad") String idCiudad, @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getListadoCP(@PathVariable("idCiudad") String idCiudad, @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT\n" +
                     "\tIdCodigoPostal, \n" +

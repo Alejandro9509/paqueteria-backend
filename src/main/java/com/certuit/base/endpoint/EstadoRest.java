@@ -18,7 +18,7 @@ public class EstadoRest {
     DBConection dbConection;
 
     @GetMapping("/Estados/ByPais/{id}")
-    public ResponseEntity<?> getEstadoByPais(@RequestHeader("RFC") String rfc, @PathVariable("id") int id) throws SQLException, Exception {
+    public ResponseEntity<?> getEstadoByPais(@RequestHeader("RFC") String rfc, @PathVariable("id") int id) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT " +
@@ -48,7 +48,7 @@ public class EstadoRest {
     }
 
     @GetMapping("/Estados/GetListado")
-    public ResponseEntity<?> getEstadoListado(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getEstadoListado(@RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT IdEstado          as m_nIdEstado,\n" +

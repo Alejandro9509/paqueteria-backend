@@ -23,7 +23,7 @@ public class ParametrosConfiguracionRest {
 
     @GetMapping("/ParametrosConfiguracion/GetListado")
     public ResponseEntity<?> consultarParametrosConfiguracion(@RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT IdParametrosConfiguracion\n" +
@@ -101,7 +101,7 @@ public class ParametrosConfiguracionRest {
     @PutMapping("/ParametrosConfiguracion/Modificar")
     public ResponseEntity<?> modificarParametrosConfiguracion(@RequestBody ParametrosConfiguracionRequest request,
                                                               @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();
@@ -152,7 +152,7 @@ public class ParametrosConfiguracionRest {
 
     @PutMapping("/ParametrosConfiguracion/AgregarTipoDocumento")
     public ResponseEntity<?> agregarTipoDocumento(@RequestBody TipoDocumentoRequest documento,
-                                                  @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                  @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();
@@ -179,7 +179,7 @@ public class ParametrosConfiguracionRest {
     @GetMapping("/ParametrosConfiguracion/ValidarRequiereDocumentoTimbrado/{idSucursal}")
     public ResponseEntity<?> validarRequiereDocumentoTimbrado(@PathVariable("idSucursal") int idSucursal,
                                                               @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "";
             Statement statement = jdbcConnection.createStatement();

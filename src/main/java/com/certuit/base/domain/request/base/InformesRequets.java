@@ -2,8 +2,8 @@ package com.certuit.base.domain.request.base;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
 
-import jakarta.validation.constraints.NotNull;
 
 @Getter
 @Setter

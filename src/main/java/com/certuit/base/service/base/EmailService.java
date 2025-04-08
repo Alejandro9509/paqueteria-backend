@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Properties;
 
 public class EmailService  {
-    private JavaMailSender mailSender;
+    private final JavaMailSender mailSender;
 
     @Getter
     @Setter

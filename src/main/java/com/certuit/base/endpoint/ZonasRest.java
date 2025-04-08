@@ -28,7 +28,7 @@ public class ZonasRest {
     @GetMapping("/ZonaOperativa/GetByIdCodigoPostal/{id}")
     public ResponseEntity<?> getZonaOperativaByIdCodigoPostal(@PathVariable("id") int codigo,
                                                               @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT DISTINCT z.IdZona as m_nIdZona ," +
                     "CodigoZona as m_sCodigoZona," +
@@ -59,7 +59,7 @@ public class ZonasRest {
     @GetMapping("/ZonaOperativa/GetByCodigoPostal/{cp}")
     public ResponseEntity<?> getZonaOperativaByCodigoPostal(@PathVariable("cp") String codigo,
                                                             @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT DISTINCT z.IdZona as m_nIdZona ," +
                     "CodigoZona as m_sCodigoZona," +
@@ -87,7 +87,7 @@ public class ZonasRest {
         }
     }
     @GetMapping("/ZonaOperativa/GetColoniasCPs")
-    public ResponseEntity<?> getColoniasCPs(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getColoniasCPs(@RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
         String query = "SELECT DISTINCT MAX(IdCodigoPostal) IdCodigoPostal,MAX(z.IdZona) IdZona,CodigoPostal," +
@@ -110,7 +110,7 @@ public class ZonasRest {
 
     @GetMapping("/ZonaOperativa/GetDatosUbicacionDestinatario/{id}")
     public ResponseEntity<?> getParametrosDestino(@PathVariable("id") int idGuia, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "WITH params as (select c.CodigoMunicipio,c.IdCodigoPostal,c.IdEstado,p.IdPais," +
@@ -144,7 +144,7 @@ public class ZonasRest {
     @GetMapping("/ZonaOperativa/GetByIdOrigenDestino/{id}")
     public ResponseEntity<?> getZonaOperativaByOrigenDestino(@PathVariable("id") String codigo,
                                                              @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT zona.IdZona          as m_nIdZona,\n" +
                     "       zona.CodigoZona      as m_sCodigoZona,\n" +
@@ -174,7 +174,7 @@ public class ZonasRest {
     @GetMapping("/ZonaOperativa/GetListadoBySucursal/{id}")
     public ResponseEntity<?> getZonaOperativaBySucursal(@PathVariable("id") String codigo,
                                                         @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT zona.IdZona          as m_nIdZona,\n" +
                     "       zona.CodigoZona      as m_sCodigoZona,\n" +
@@ -203,7 +203,7 @@ public class ZonasRest {
 
     @GetMapping("/ZonaTarifa/GetByIdCodigoPostal/{id}")
     public ResponseEntity<?> getZonaTarifa(@PathVariable("id") String codigo, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT DISTINCT z.IdZona as m_nIdZona ,CodigoZona as m_sCodigoZona," +
@@ -227,7 +227,7 @@ public class ZonasRest {
 
     @GetMapping("/ZonaTarifa/GetById/{id}")
     public ResponseEntity<?> getZonaTarifa(@PathVariable("id") int id, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT  " +
                     " IdZona as m_nIdZona " +
@@ -253,7 +253,7 @@ public class ZonasRest {
 
     @GetMapping("/ZonaTarifa/GetByIdSinCP/{id}")
     public ResponseEntity<?> getZonaTarifaSinCP(@PathVariable("id") int id, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT  " +
                     " IdZona as m_nIdZona " +
@@ -278,9 +278,9 @@ public class ZonasRest {
 
     @GetMapping("/ZonaOperativa/GetById/{id}")
     public ResponseEntity<?> getZonaOperativaId(@PathVariable("id") int id, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
-            String query = "EXEC usp_CatZonasOperativasGetByIdPQ " + id + "";
+            String query = "EXEC usp_CatZonasOperativasGetByIdPQ " + id;
             Statement statement = jdbcConnection.createStatement();
             ResultSet rs = statement.executeQuery(query);
             JSONObject json = new JSONObject();
@@ -311,7 +311,7 @@ public class ZonasRest {
     @PostMapping("/ZonaOperativa/Agregar")
     public ResponseEntity<?> postZonaOperativa(@RequestBody ZonaOperativaRequest request,
                                                @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             try {
                 String query = " EXEC usp_CatZonasOperativasAgregarPQ "
@@ -355,7 +355,7 @@ public class ZonasRest {
     @PutMapping("/ZonaOperativa/Modificar/{m_nIdZona}")
     public ResponseEntity<?> putZonaOperativa(@PathVariable("m_nIdZona") int idZona,
                                               @RequestBody ZonaOperativaRequest request,
-                                              @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                              @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             try {
                 String query = " EXEC usp_CatZonasOperativasModificarPQ "
@@ -395,10 +395,10 @@ public class ZonasRest {
 
     @DeleteMapping("/ZonaOperativa/Eliminar/{id}")
     public ResponseEntity<?> deleteZonaOperativa(@PathVariable("id") int id, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
-                String query = "EXEC usp_CatZonasOperativasEliminarPQ " + id + "";
+                String query = "EXEC usp_CatZonasOperativasEliminarPQ " + id;
                 Statement statement = jdbcConnection.createStatement();
                 statement.executeUpdate(query);
             } catch (Exception e) {
@@ -413,7 +413,7 @@ public class ZonasRest {
     }
 
     @GetMapping("/ZonaOperativa/GetListado")
-    public ResponseEntity<?> getZonaOperativaListado(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getZonaOperativaListado(@RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "EXEC usp_CatZonasOperativasGetListadoPQ";
             Statement statement = jdbcConnection.createStatement();
@@ -447,7 +447,7 @@ public class ZonasRest {
     }
 
     @PutMapping("/ZonaOperativa/Rollback")
-    public ResponseEntity<?> rollbackZonaOpeartiva(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> rollbackZonaOpeartiva(@RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             try {
                 jdbcConnection.setAutoCommit(false);

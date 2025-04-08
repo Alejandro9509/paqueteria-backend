@@ -20,7 +20,7 @@ public class MunicipioRest {
 
     @GetMapping("/Municipios/GetByIdEstado/{id}")
     public ResponseEntity<?> getMunicipioByIdEstado(@RequestHeader("RFC") String rfc, @PathVariable("id") String id)
-            throws SQLException, Exception {
+            throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 JSONObject jsonResponse;

@@ -59,7 +59,7 @@ public class ConceptosFacturacionRest {
                     "\t  ,(SELECT Porcentaje FROM CatImpuestos WHERE IdImpuesto = Detalle.IdImpuesto) AS Porcentaje\n" +
                     "      ,Detalle.Predeterminado\n" +
                     "    FROM CatConceptosFacturacionImpuestos AS Detalle\n" +
-                    "\tWHERE IdConceptoFacturacion = " + id + "";
+                    "\tWHERE IdConceptoFacturacion = " + id;
             Statement statement = jdbcConnection.createStatement();
             ResultSet rs = statement.executeQuery(query);
             JSONArray array = new JSONArray();
@@ -67,11 +67,7 @@ public class ConceptosFacturacionRest {
             while (rs.next()) {
                 json = new JSONObject();
                 json.put("m_bPredeterminado", rs.getBoolean("Predeterminado"));
-                if (rs.getBoolean("Trasladado")) {
-                    json.put("m_bTrasladado", true);
-                } else {
-                    json.put("m_bTrasladado", false);
-                }
+                json.put("m_bTrasladado", rs.getBoolean("Trasladado"));
                 json.put("m_nIdConceptosFacturacion", rs.getInt("IdConceptosFacturacion"));
                 json.put("m_nIdConceptosFacturacionDetalle", rs.getInt("IdConceptosFacturacionDetalle"));
                 json.put("m_nIdImpuesto", rs.getInt("IdImpuesto"));

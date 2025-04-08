@@ -17,7 +17,7 @@ import java.time.LocalTime;
 @Service
 public class UltimaMillaService {
 
-    public void eliminarPaquetesIdParada(int idParada, Statement statement) throws Exception, SQLException {
+    public void eliminarPaquetesIdParada(int idParada, Statement statement) throws Exception {
         try{
             String query =  "EXEC usp_ProUltimaMillaEliminarParadasPQ " + idParada;
             statement.executeUpdate(query);
@@ -27,7 +27,7 @@ public class UltimaMillaService {
         }
     }
 
-    public void cambiarOrdenRuta (RutaRequest ruta, Statement statement) throws Exception, SQLException {
+    public void cambiarOrdenRuta (RutaRequest ruta, Statement statement) throws Exception {
         try{
             String query = "";
             for (GuiaUltimaMilla guia : ruta.getGuias()) {
@@ -47,7 +47,7 @@ public class UltimaMillaService {
         }
     }
 
-    public void descartarGuiasDeRuta (RutaRequest ruta, Statement statement) throws Exception, SQLException {
+    public void descartarGuiasDeRuta (RutaRequest ruta, Statement statement) throws Exception {
         try{
             String query = "";
             for (GuiaUltimaMilla guia : ruta.getGuiasDescartadasDeRuta()) {
@@ -88,7 +88,7 @@ public class UltimaMillaService {
 
     /**Agrega las guias a la ruta de ultima milla especificada.*/
     public void agregarGuiasParadaEspecificado(RutaRequest ruta, Statement statement,String fecha,String hora)
-            throws Exception, SQLException {
+            throws Exception {
         try{
             String query = "";
             ResultSet rs;
@@ -127,7 +127,7 @@ public class UltimaMillaService {
         }
     }
     /**Agrega las guias a la ruta de ultima milla especificada.*/
-    public void agregarGuiasParada(RutaRequest ruta, Statement statement) throws Exception, SQLException {
+    public void agregarGuiasParada(RutaRequest ruta, Statement statement) throws Exception {
         try{
             String query = "";
             ResultSet rs;
@@ -168,7 +168,7 @@ public class UltimaMillaService {
             throw e;
         }
     }
-    public JSONArray getZonasByUltimaMilla(Statement statement, int idUltimaMilla) throws Exception, SQLException {
+    public JSONArray getZonasByUltimaMilla(Statement statement, int idUltimaMilla) throws Exception {
         try{
             String query = "SELECT\n" +
                     "zonas.IdZona as m_nIdZona,\n" +
@@ -195,7 +195,7 @@ public class UltimaMillaService {
         }
     }
     public JSONArray getParadasByIdUltimaMilla(Statement statement, int idUltimaMilla)
-            throws Exception, SQLException {
+            throws Exception {
         try{
             String query = "SELECT\n" +
                     "    parada.m_nIdProParadaUltimaMilla as m_nIdParadaUltimaMilla,\n" +
@@ -253,13 +253,13 @@ public class UltimaMillaService {
     }
 
     public JSONArray getPaquetesByIdParada(Statement statement, int idParadaUltimaMilla)
-            throws Exception, SQLException {
+            throws Exception {
         try{
             String query = "EXEC usp_ProIdUltimaMillaGetPaquetesPQ "+idParadaUltimaMilla;
             ResultSet rs = statement.executeQuery(query);
             JSONArray jsonResponse = UtilFuctions.convertArray(rs);
             for (int i= 0 ;  i < jsonResponse.length(); i++){
-                JSONObject jsonTemp = jsonResponse.getJSONObject(i);;
+                JSONObject jsonTemp = jsonResponse.getJSONObject(i);
                 jsonTemp.put("m_nId", jsonTemp.getInt("m_nIdPaquete"));
                 if (jsonTemp.getBoolean("m_bEsRecoleccion")){
                     jsonTemp.put("m_parrPaquetes", getListadoPaquetesByIdRecoleccion(statement,jsonTemp.getInt("m_nIdPaquete")));
@@ -276,7 +276,7 @@ public class UltimaMillaService {
     }
 
     public JSONArray getListadoPaquetesByIdRecoleccion(Statement statement, int idRecoleccion)
-            throws Exception, SQLException {
+            throws Exception {
         try{
             String query = "SELECT\n" +
                     "IdPaquete as m_nIdPaquete\n" +
@@ -312,7 +312,7 @@ public class UltimaMillaService {
         }
     }
 
-    public JSONArray getListadoPaquetesByIdGuia(Statement statement, int idGuia) throws Exception, SQLException {
+    public JSONArray getListadoPaquetesByIdGuia(Statement statement, int idGuia) throws Exception {
         try{
             String query = "SELECT\n" +
                     "    e.IdEmbarqueDetalle as m_nIdEmbarqueDetalle\n" +
@@ -344,7 +344,7 @@ public class UltimaMillaService {
     }
 
     public JSONArray getImagenPaquete(Statement statement, int idGuia, boolean esRecoleccion)
-            throws Exception, SQLException {
+            throws Exception {
         try{
             String query = "SELECT * FROM CatParadasImagenes where IdGuia = "+idGuia
                     +" AND EsRecoleccion = "+esRecoleccion;
@@ -357,7 +357,7 @@ public class UltimaMillaService {
     }
 
     /**Actualiza los datos de ProGuiaPQ y ProRecoleccionPQ con los datos de ultima milla*/
-    public void guardarRuta(RutaRequest ruta, Statement statement) throws Exception, SQLException {
+    public void guardarRuta(RutaRequest ruta, Statement statement) throws Exception {
         try{
             String query = "";
             for (GuiaUltimaMilla guia : ruta.getGuias()) {

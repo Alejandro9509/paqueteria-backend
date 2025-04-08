@@ -14,7 +14,7 @@ public enum QuestionType {
     @Getter
     @Setter
     private int id;
-    private String name;
+    private final String name;
 
     QuestionType(int id, String name) {
         this.id = id;

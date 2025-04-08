@@ -27,7 +27,7 @@ public class FormatosRest {
                                             @RequestPart("request") FormatoRequest request,
                                             @RequestPart("file") MultipartFile file,
                                             @RequestPart(value = "image", required = false) MultipartFile image)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
             String encodedFileString = Base64.getEncoder().encodeToString(file.getBytes());
@@ -67,7 +67,7 @@ public class FormatosRest {
                                               @RequestHeader("RFC") String rfc,
                                               @RequestPart("request") FormatoRequest request
             /*@RequestPart("file") MultipartFile file,*/ /*@RequestPart("image") MultipartFile image*/)
-            throws SQLException, Exception {
+            throws Exception {
 
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
@@ -105,7 +105,7 @@ public class FormatosRest {
 
     @GetMapping("/Formato/Proceso/{id}")
     public ResponseEntity<?> obtenerFormatosProceso(@PathVariable("id") int id, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
 
             String query = "SELECT\n" +
@@ -130,7 +130,7 @@ public class FormatosRest {
 
     @GetMapping("/Formato/{id}")
     public ResponseEntity<?> obtenerFormatoId(@PathVariable("id") int id, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
 
             String query = "SELECT\n" +
@@ -155,7 +155,7 @@ public class FormatosRest {
     }
 
     @GetMapping("/Formato/GetListado")
-    public ResponseEntity<?> obtenerFormatos(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> obtenerFormatos(@RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT\n" +
                     "    CF.IdFormato AS m_nIdFormato,\n" +

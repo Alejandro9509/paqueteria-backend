@@ -38,7 +38,7 @@ public class ViajesRest {
                                                @PathVariable("origen") int origen,
                                                @PathVariable("destino") int destino,
                                                @PathVariable("operador") int idOperador,
-                                               @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                               @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             fechaInicial = !fechaInicial.equalsIgnoreCase("0") ? "'" + fechaInicial + "'" : null;
             fechaFinal = !fechaFinal.equalsIgnoreCase("0") ? "'" + fechaFinal + "'" : null;
@@ -155,7 +155,7 @@ public class ViajesRest {
     }
 
     @GetMapping("/Viajes/GetListado")
-    public ResponseEntity<?> getAllViajes(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getAllViajes(@RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT\n" +
                     "v.IdViaje\n" +
@@ -246,7 +246,7 @@ public class ViajesRest {
                                                 @PathVariable("FechaFinal") String fechaFinal,
                                                 @PathVariable("Sucursal") String sucursal,
                                                 @PathVariable("Estatus") String estatus,
-                                                @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             if (fechaInicial.equalsIgnoreCase("0")) {
                 fechaInicial = "NULL";
@@ -268,7 +268,7 @@ public class ViajesRest {
             }
 
             String query = "EXEC usp_ProViajesGetListadoFiltroPQ " + sucursal + "," + estatus + ","
-                    + fechaInicial + ", " + fechaFinal + "";
+                    + fechaInicial + ", " + fechaFinal;
             Statement statement = jdbcConnection.createStatement();
             ResultSet rs = statement.executeQuery(query);
             JSONArray array = new JSONArray();
@@ -306,7 +306,7 @@ public class ViajesRest {
 
     @GetMapping("/Viajes/GetById/{id}")
     public ResponseEntity<?> getViajeId(@PathVariable("id") int id, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT \n" +
                     "                    IdViaje as m_nIdViaje \n" +
@@ -421,7 +421,7 @@ public class ViajesRest {
 
     @GetMapping("/Viajes/paradasTimbradas/{idViajeTrayecto}")
     public ResponseEntity<?> getViajeTimbrado(@PathVariable("idViajeTrayecto") int id,
-                                              @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                              @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
 //          CUANDO ES OPERADOR PERMISIONARIO NO SE VALIDA QUE ESTE TIMBRADO
@@ -453,7 +453,7 @@ public class ViajesRest {
     @PostMapping("/Viajes/cancelarTrayecto/{idViajeTrayecto}")
     public ResponseEntity<?> cancelarTrayecto(@PathVariable("idViajeTrayecto") int id,
                                               @RequestBody CancelarRequest request,
-                                              @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                              @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "exec usp_ProViajeCancelarSalidaLLegadaoPQ " + id + "," + request.getTipo() + ",'"
                     + request.getFecha() + "','" + request.getHora() + "'," + request.getUsuarioId() + ",'"
@@ -496,7 +496,7 @@ public class ViajesRest {
 
     @GetMapping("/Viajes/GetListadoEstatus/{idEstatus}")
     public ResponseEntity<?> getListadoEstatusViajes(@PathVariable("idEstatus") int idEstatus,
-                                                     @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                     @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT\n" +
                     "\t\tv.IdViaje\n" +
@@ -566,9 +566,9 @@ public class ViajesRest {
     @PutMapping("/Viajes/Eliminar/{idViaje}/{idEstatus}")
     public ResponseEntity<?> getListadoEstatusViajes(@PathVariable("idViaje") int idViaje,
                                                      @PathVariable("idEstatus") int idEstatus,
-                                                     @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                     @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
-            String query = "EXEC usp_ProViajeEliminarPQ " + idViaje + "";
+            String query = "EXEC usp_ProViajeEliminarPQ " + idViaje;
             if (idEstatus != 10) {
                 return ResponseEntity.status(500).body("Para eliminar debe estar cancelado");
             }
@@ -584,7 +584,7 @@ public class ViajesRest {
 
     @PostMapping("/Viajes/Agregar")
     public ResponseEntity<?> agregarViaje(@RequestBody ViajeRequest viaje, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();
@@ -612,7 +612,7 @@ public class ViajesRest {
 
     @PutMapping("/Viajes/Modificar")
     public ResponseEntity<?> modificarViaje(@RequestBody ViajeRequest viaje, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();
@@ -681,7 +681,7 @@ public class ViajesRest {
 
     @PostMapping("/Viajes/AgregarSalida")
     public ResponseEntity<?> agregarSalidaViaje(@RequestBody ViajeSalidaRequest salida,
-                                                @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();
@@ -867,7 +867,7 @@ public class ViajesRest {
 
     @PostMapping("/Viajes/AgregarLlegada")
     public ResponseEntity<?> agregarLlegadaViaje(@RequestBody ViajeLlegadaRequest llegada,
-                                                 @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                 @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();
@@ -1092,7 +1092,7 @@ public class ViajesRest {
     @PostMapping("/Viajes/CancelarViaje/{idViaje}")
     public ResponseEntity<?> cancelarViaje(@PathVariable("idViaje") int idViaje,
                                            @RequestBody ViajeRequest request,
-                                           @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                           @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 int result = viajesService.getCantidadAnticiposViaje(idViaje, jdbcConnection);

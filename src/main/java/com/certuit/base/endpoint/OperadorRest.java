@@ -18,7 +18,7 @@ public class OperadorRest {
     DBConection dbConection;
 
     @GetMapping("/Operadores/GetListado")
-    public ResponseEntity<?> getEmbalaje(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getEmbalaje(@RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "Select \n" +
@@ -53,7 +53,7 @@ public class OperadorRest {
     @PutMapping("/ReasignarOperador/{idParada}/{idOperdor}")
     public ResponseEntity<?> reasignarGuia(@PathVariable("idParada") int idParada,
                                            @PathVariable("idOperdor") int idOperador,
-                                           @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                           @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();
@@ -76,7 +76,7 @@ public class OperadorRest {
     }
 
     @PostMapping("/Operador/ValidarLoginPaqueteria")
-    public ResponseEntity<?> loginOperador(@RequestBody LoginApp2Request loginAppRequest, @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> loginOperador(@RequestBody LoginApp2Request loginAppRequest, @RequestHeader("RFC") String rfc) throws Exception {
         try {
             Connection jdbcConnection = dbConection.getconnection(rfc);
             Statement statement = jdbcConnection.createStatement();
@@ -131,7 +131,7 @@ public class OperadorRest {
      * */
     @PostMapping("/v2/Operador/ValidarLoginPaqueteria")
     public ResponseEntity<?> loginOperadorv2(@RequestBody LoginAppRequest
-                                                   loginAppRequest, @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                   loginAppRequest, @RequestHeader("RFC") String rfc) throws Exception {
         try {
             Connection jdbcConnection = dbConection.getconnection(rfc);
             String query = "SELECT top 1 o.IdOperador FROM CatOperadores o WHERE o.NumeroOperador = ?";
@@ -187,7 +187,7 @@ public class OperadorRest {
 
     @PutMapping("/Operador/LogoutPaqueteria")
     public ResponseEntity<?> logoutOperador(@RequestBody LoginAppRequest loginAppRequest,
-                                            @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                            @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             try {
                 Statement statement = jdbcConnection.createStatement();
@@ -213,7 +213,7 @@ public class OperadorRest {
     @GetMapping("/Operadores/GetListado/PorSucursal/{idSucursal}")
     public ResponseEntity<?> getOperadoresPorSucursal(@RequestHeader("RFC") String rfc,
                                                       @PathVariable("idSucursal") int idSucursal)
-            throws SQLException, Exception {
+            throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "Select \n" +

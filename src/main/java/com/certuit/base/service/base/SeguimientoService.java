@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class SeguimientoService {
     public JSONArray getPaquetesSeguimiento(int id, int tipo, Connection jdbcConnection)
-            throws SQLException, Exception {
+            throws Exception {
         if (tipo == 4 || tipo == 5){
             tipo = 3;
         }
@@ -26,7 +26,7 @@ public class SeguimientoService {
     }
 
     public JSONArray getConceptosSeguimiento(int id, int tipo, Connection jdbcConnection)
-            throws SQLException, Exception {
+            throws Exception {
         if (tipo == 4 || tipo == 5){
             tipo = 3;
         }
@@ -38,7 +38,7 @@ public class SeguimientoService {
     }
 
     public JSONArray getBitacoraSeguimiento(int id, int tipo, Connection jdbcConnection)
-            throws SQLException, Exception {
+            throws Exception {
         if (tipo == 4 || tipo == 5){
             tipo = 3;
         }
@@ -70,7 +70,7 @@ public class SeguimientoService {
     }
 
     public Object[] getFoliosRecoleccion(Connection jdbcConnection)
-            throws SQLException, Exception {
+            throws Exception {
         String query = "SELECT pe.FolioRecoleccion FROM ProRecoleccionPQ pe";
         Statement statement = jdbcConnection.createStatement();
         ResultSet rs = statement.executeQuery(query);
@@ -82,7 +82,7 @@ public class SeguimientoService {
     }
 
     public Object[] getFoliosEmbarques(Connection jdbcConnection)
-            throws SQLException, Exception {
+            throws Exception {
         String query = "SELECT pe.FolioEmbarque FROM ProEmbarquePQ pe";
         Statement statement = jdbcConnection.createStatement();
         ResultSet rs = statement.executeQuery(query);
@@ -93,7 +93,7 @@ public class SeguimientoService {
         return al.toArray();
     }
     public  Object[] getFoliosGuias(Connection jdbcConnection)
-            throws SQLException, Exception {
+            throws Exception {
         String query = "SELECT pg.FolioGuia FROM ProGuiaPQ pg";
         Statement statement = jdbcConnection.createStatement();
         ResultSet rs = statement.executeQuery(query);

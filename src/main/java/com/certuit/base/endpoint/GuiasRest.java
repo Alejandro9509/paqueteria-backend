@@ -35,7 +35,7 @@ public class GuiasRest {
 
     @GetMapping("/Guia/GetById/{idGuia}")
     public ResponseEntity<?> obtenerGuiaById(@PathVariable("idGuia") int idGuia, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "exec usp_GetGuiaByIdPQ " + idGuia;
 
@@ -168,7 +168,7 @@ public class GuiasRest {
                                                   @PathVariable("destino") int destino,
                                                   @PathVariable("cliente") int cliente,
                                                   @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 fechaInicial = !fechaInicial.equalsIgnoreCase("0") ? "'" + fechaInicial + "'" : null;
@@ -302,7 +302,7 @@ public class GuiasRest {
 //  BUSQUEDA 3 = RETORNA LISTADO DE GUIAS Y RECOLECCIONES QUE CORRESPONDAN A UNA DE LAS ZONAS DADAS
     @PostMapping("/Guias/GetUltimaMilla")
     public ResponseEntity<?> getListdoUltimaMilla(@RequestBody UltimaMillaRequest request,
-                                                  @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                  @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = " EXEC usp_ProUltimaMillaGetGuiasByZonaPQ '" + request.getZonas() + "', " + request.getTipoServicio();
             Statement statement = jdbcConnection.createStatement();
@@ -318,7 +318,7 @@ public class GuiasRest {
 
     @GetMapping("/Guias/ValidacionById/{id}")
     public ResponseEntity<?> getListadoGuiasFiltro(@PathVariable("id") int id,
-                                                   @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                   @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();
@@ -383,7 +383,7 @@ public class GuiasRest {
 
     @GetMapping("/Guias/GetDetalles/{id}")
     public ResponseEntity<?> getComplementos(@PathVariable("id") int id, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "select " +
                     "PG.Tracking, " +
@@ -495,9 +495,9 @@ public class GuiasRest {
 
     @GetMapping("/Guias/BitacoraPaquete/{idGuia}")
     public ResponseEntity<?> getFechaHora(@PathVariable("idGuia") int idGuia,
-                                          @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                          @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
-            String query = "Select Fecha,Hora from ProGuiaPQ where IdGuia=" + idGuia + "";
+            String query = "Select Fecha,Hora from ProGuiaPQ where IdGuia=" + idGuia;
             String validacionFechaLlegada = "Select COUNT(*) as valor from ProViajesPQ pviaje\n" +
                     "\n" +
                     "inner join ProViajeDetalleParadasPQ pviajeparada on pviajeparada.IdViaje=pviaje.IdViaje\n" +
@@ -506,7 +506,7 @@ public class GuiasRest {
                     "\n" +
                     "inner join ProInformeGuiaPQ pinfguia on pinfguia.IdInforme=pinf.IdInforme \n" +
                     "\n" +
-                    "where pinfguia.IdGuia=" + idGuia + "";
+                    "where pinfguia.IdGuia=" + idGuia;
             String query2 = "Select pviaje.FechaLLegada from ProViajesPQ pviaje\n" +
                     "\n" +
                     "inner join ProViajeDetalleParadasPQ pviajeparada on pviajeparada.IdViaje=pviaje.IdViaje\n" +
@@ -515,7 +515,7 @@ public class GuiasRest {
                     "\n" +
                     "inner join ProInformeGuiaPQ pinfguia on pinfguia.IdInforme=pinf.IdInforme \n" +
                     "\n" +
-                    "where pinfguia.IdGuia=" + idGuia + "";
+                    "where pinfguia.IdGuia=" + idGuia;
 
             String query3 = "Select pviaje.FechaSalida from ProViajesPQ pviaje\n" +
                     "\n" +
@@ -525,7 +525,7 @@ public class GuiasRest {
                     "\n" +
                     "inner join ProInformeGuiaPQ pinfguia on pinfguia.IdInforme=pinf.IdInforme \n" +
                     "\n" +
-                    "where pinfguia.IdGuia=" + idGuia + "";
+                    "where pinfguia.IdGuia=" + idGuia;
 
             Statement statement = jdbcConnection.createStatement();
             Statement statement2 = jdbcConnection.createStatement();
@@ -540,11 +540,7 @@ public class GuiasRest {
             JSONObject json = new JSONObject();
             JSONObject jsonDefault = new JSONObject();
             while (rs4.next()) {
-                if (rs4.getInt("valor") == 1) {
-                    isNotNull = false;
-                } else {
-                    isNotNull = true;
-                }
+                isNotNull = rs4.getInt("valor") != 1;
             }
             if (!isNotNull) {
                 json.put("FechaHora", UtilFuctions.convertObject(rs));
@@ -565,11 +561,11 @@ public class GuiasRest {
 
     @GetMapping("/Guia/Seguimiento/{idGuia}")
     public ResponseEntity<?> getSeguimientoGuia(@PathVariable("idGuia") int idGuia,
-                                                @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "select pe.EntregaEnSucursal from ProGuiaPQ pg \n" +
                     "inner join ProEmbarquePQ pe on pe.IdGuia=pg.IdGuia\n" +
-                    "where pg.IdGuia=" + idGuia + "";
+                    "where pg.IdGuia=" + idGuia;
 
             //ENTREGA :Si es Entrega en ocurre  fecha entrega
             String query2 = "IF NOT EXISTS (\n" +
@@ -595,7 +591,7 @@ public class GuiasRest {
                     "ELSE\n" +
                     "select FechaEntrega,ceg.Descripcion from ProGuiaPQ inner join CatEstatusGuiasPQ ceg " +
                     "on ceg.IdEstatusGuias = 17\n" +
-                    "where IdGuia=" + idGuia + "";
+                    "where IdGuia=" + idGuia;
 
             Statement statement = jdbcConnection.createStatement();
             Statement statement2 = jdbcConnection.createStatement();
@@ -623,19 +619,16 @@ public class GuiasRest {
 
     @GetMapping("/Guia/ValidarEliminar/{idGuia}")
     public ResponseEntity<?> getGuiaEliminar(@PathVariable("idGuia") int idGuia,
-                                             @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                             @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
-            String query = "select IdEstatusGuia from ProGuiaPQ pq where pq.IdGuia = " + idGuia + "";
+            String query = "select IdEstatusGuia from ProGuiaPQ pq where pq.IdGuia = " + idGuia;
 
             Statement statement = jdbcConnection.createStatement();
             ResultSet rs = statement.executeQuery(query);
             JSONObject json = new JSONObject();
             if (rs.next()) {
-                if (rs.getInt("IdEstatusGuia") == 8) {//si esta cancelada permitira eliminar la guia
-                    json.put("sePuedeEliminar", true);
-                } else {
-                    json.put("sePuedeEliminar", false);
-                }
+                //si esta cancelada permitira eliminar la guia
+                json.put("sePuedeEliminar", rs.getInt("IdEstatusGuia") == 8);
             }
             return ResponseEntity.ok(json.toString());
         } catch (Exception e) {
@@ -646,13 +639,13 @@ public class GuiasRest {
 
     @GetMapping("/Guia/ValidarCancelar/{idGuia}")
     public ResponseEntity<?> getGuiaCancelar(@PathVariable("idGuia") int idGuia,
-                                             @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                             @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
 
             String query = "select ISNULL(IdInforme,0) as IdInforme from ProGuiaPQ pq where pq.IdGuia = "
-                    + idGuia + "";
+                    + idGuia;
             String query2 = "select (select pi.FolioInforme FROM ProInformePQ pi where pi.IdInforme = pg.IdInforme)" +
-                    " as FolioInforme from ProGuiaPQ pg where pg.IdGuia = " + idGuia + "";
+                    " as FolioInforme from ProGuiaPQ pg where pg.IdGuia = " + idGuia;
 
             Statement statement = jdbcConnection.createStatement();
             Statement statement2 = jdbcConnection.createStatement();
@@ -690,7 +683,7 @@ public class GuiasRest {
 
     @GetMapping("/Guia/GetBancos")
     public ResponseEntity<?> getBancos(@RequestHeader("RFC") String rfc) throws
-            SQLException, Exception {
+            Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
 
             String query = "select * from CatBancos";
@@ -718,7 +711,7 @@ public class GuiasRest {
     public ResponseEntity<?> getBancos(@PathVariable("idOrigen") int idOrigen,
                                        @PathVariable("idDestino") int idDestino,
                                        @PathVariable("tipoTimbrado") int tipoTimbrado,
-                                       @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                       @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
 
             String query = "SELECT\n" +
@@ -764,11 +757,11 @@ public class GuiasRest {
             @PathVariable("nIdGuia") int nIdGuia,
             @PathVariable("sLatitud") String sLatitud,
             @PathVariable("sLongitud") String sLongitud,
-            @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+            @RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "update ProGuiaPQ SET Latitud = '" + sLatitud + "', Longitud = '" + sLongitud
-                    + "'  WHERE IdGuia = " + nIdGuia + "";
+                    + "'  WHERE IdGuia = " + nIdGuia;
             Statement statement = jdbcConnection.createStatement();
             statement.executeUpdate(query);
 
@@ -783,7 +776,7 @@ public class GuiasRest {
     public ResponseEntity<?> generarEntregaOcurre(
             @PathVariable("nIdGuia") int nIdGuia,
             @RequestBody EntregaOcurreRequest bodyRequest,
-            @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+            @RequestHeader("RFC") String rfc) throws Exception {
 
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
@@ -812,7 +805,7 @@ public class GuiasRest {
     @PostMapping("/Guia/Agregar")
     public ResponseEntity<?> agregarGuia(@RequestBody GuiaRequest
                                                  guia, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             try {
@@ -849,14 +842,12 @@ public class GuiasRest {
                 }
 
                 query = "EXEC usp_ProGuiaAgregarPQ " + (guia.getM_nTracking() != null ? guia.getM_nTracking() : 0)
-                        + "," + 0 + ",'" + guia.getM_dFecha() + "','" + guia.getM_sHora() + "'," +
-                        "" + guia.getM_nIdEstatusGuia() + "," + guia.getM_nIdEmbarque() + "," + guia.getM_nIdMoneda()
+                        + "," + 0 + ",'" + guia.getM_dFecha() + "','" + guia.getM_sHora() + "'," + guia.getM_nIdEstatusGuia() + "," + guia.getM_nIdEmbarque() + "," + guia.getM_nIdMoneda()
                         + "," + guia.getM_nTIpoCambio() + "," +
                         "'" + guia.getM_dFecha() + " " + guia.getM_sHora() + "'," + guia.getM_nCreadoPor() + ",'"
-                        + guia.getM_dFecha() + " " + guia.getM_sHora() + "'," +
-                        "" + guia.getM_nModificadoPor() + "," + guia.getM_nIdSucursal() + ","
+                        + guia.getM_dFecha() + " " + guia.getM_sHora() + "'," + guia.getM_nModificadoPor() + "," + guia.getM_nIdSucursal() + ","
                         + guia.getM_nValorDeclarado() + "," + guia.getM_nidTipoServicio() + "," + 0 +
-                        "," + guia.getM_nCreadoPor() + "";
+                        "," + guia.getM_nCreadoPor();
                 statement.executeUpdate(query);
                 String query2 = "SELECT IDENT_CURRENT( 'ProGuiaPQ' ) as id";
                 Statement statement2 = jdbcConnection.createStatement();
@@ -880,7 +871,7 @@ public class GuiasRest {
                     }
                 }
 
-                String query4 = "SELECT IdEmbarqueDetalle as id FROM ProEmbarqueDetallePQ where IdEmbarque = " + guia.getM_nIdEmbarque() + "";
+                String query4 = "SELECT IdEmbarqueDetalle as id FROM ProEmbarqueDetallePQ where IdEmbarque = " + guia.getM_nIdEmbarque();
                 Statement statement4 = jdbcConnection.createStatement();
                 ResultSet rs4 = statement4.executeQuery(query4);
                 int idEmbarqueDetalle = 0;
@@ -888,7 +879,7 @@ public class GuiasRest {
                     idEmbarqueDetalle = rs4.getInt("id");
                 }
 
-                String query5 = "EXEC usp_ProGuiaActualizarEmbarquePQ " + idEmbarqueDetalle + "";
+                String query5 = "EXEC usp_ProGuiaActualizarEmbarquePQ " + idEmbarqueDetalle;
                 Statement statement5 = jdbcConnection.createStatement();
                 statement5.executeUpdate(query5);
 
@@ -923,7 +914,7 @@ public class GuiasRest {
 
     @PutMapping("/Guia/Modificar")
     public ResponseEntity<?> modificarGuia(@RequestBody GuiaRequest guia,
-                                           @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                           @RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             Statement statement = jdbcConnection.createStatement();
@@ -980,7 +971,7 @@ public class GuiasRest {
     public ResponseEntity<?> eliminarGuia(
             @PathVariable("idGuia") int idGuia,
             @RequestHeader("RFC") String rfc) throws
-            SQLException, Exception {
+            Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();
@@ -1000,7 +991,7 @@ public class GuiasRest {
     @PutMapping("/Guia/Cancelar")
     public ResponseEntity<?> cancelarGuia(
             @RequestBody GuiaRequest guia,
-            @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+            @RequestHeader("RFC") String rfc) throws Exception {
         try {
 
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
@@ -1064,7 +1055,7 @@ public class GuiasRest {
             @PathVariable("idParadaVieja") int idParadaVieja,
             @PathVariable("idGuia") int idGuia,
             @RequestHeader("RFC") String rfc) throws
-            SQLException, Exception {
+            Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();
@@ -1086,7 +1077,7 @@ public class GuiasRest {
     public ResponseEntity<?> cambiarTipoCobro
             (@RequestBody EmbarqueRequest
                      embarque, @RequestHeader("RFC") String rfc) throws
-            SQLException, Exception {
+            Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();
@@ -1108,7 +1099,7 @@ public class GuiasRest {
     public ResponseEntity<?> actualizarCoordenadasGuia
             (@RequestBody GuiaRequest
                      guia, @RequestHeader("RFC") String rfc) throws
-            SQLException, Exception {
+            Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();
@@ -1130,7 +1121,7 @@ public class GuiasRest {
     public ResponseEntity<?> cambiarEstatus
             (@RequestBody GuiaRequest
                      guia, @RequestHeader("RFC") String rfc) throws
-            SQLException, Exception {
+            Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 String query = "";
@@ -1191,7 +1182,7 @@ public class GuiasRest {
     public ResponseEntity<?> validarCFDI
             (@PathVariable("id") int id,
              @RequestHeader("RFC") String rfc) throws
-            SQLException, Exception {
+            Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 String query = "select ISNULL(pf.FolioFiscalUUID,'') as FolioFiscalUUID, pg.FolioGuia " +
@@ -1231,7 +1222,7 @@ public class GuiasRest {
 
     @PutMapping("/Guia/CambiarEstatusGuiaSAT")
     public ResponseEntity<?> cambiarEstatusSAT(@RequestBody GuiaRequest guia, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 String query = "";
@@ -1345,7 +1336,7 @@ public class GuiasRest {
             (
                     @PathVariable("id") int id,
                     @RequestHeader("RFC") String rfc) throws
-            SQLException, Exception {
+            Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 String query = "SELECT IdEmbarque FROM ProGuiaPQ WHERE IdGuia =  " + id;
@@ -1371,7 +1362,7 @@ public class GuiasRest {
             (
                     @PathVariable("id") int id,
                     @RequestHeader("RFC") String rfc) throws
-            SQLException, Exception {
+            Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 String query = "SELECT IdEmbarque FROM ProGuiaPQ WHERE IdGuia =  " + id;

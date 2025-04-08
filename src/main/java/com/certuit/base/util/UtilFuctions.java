@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.ResultSet;
 
 public class UtilFuctions {
@@ -62,8 +63,7 @@ public class UtilFuctions {
     }
 
     public static String getPlantillaPaquetesCorreo(){
-        return "" +
-                "<!-- inicio de paquetes-->\n" +
+        return "<!-- inicio de paquetes-->\n" +
                 "    <div>\n" +
                 "\n" +
                 "    <div style=\"background:#ffffff;background-color:#ffffff;margin:0px auto;max-width:600px;\">\n" +
@@ -526,6 +526,6 @@ public class UtilFuctions {
     }
 
     public static float round(float d, int decimalPlace) {
-        return BigDecimal.valueOf(d).setScale(decimalPlace,BigDecimal.ROUND_HALF_UP).floatValue();
+        return BigDecimal.valueOf(d).setScale(decimalPlace, RoundingMode.HALF_UP).floatValue();
     }
 }

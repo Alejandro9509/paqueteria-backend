@@ -7,7 +7,7 @@ public class DataNotification {
     private String titulo;
     private String mensaje;
     private String nombre;
-    private String descripcion;;
+    private String descripcion;
     @JsonProperty("click_action")
     private String clickAction;
 

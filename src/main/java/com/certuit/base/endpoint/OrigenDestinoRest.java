@@ -18,7 +18,7 @@ public class OrigenDestinoRest {
     DBConection dbConection;
 
     @GetMapping("/Ciudades/GetListado")
-    public ResponseEntity<?> getOrigenDestino(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getOrigenDestino(@RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "select distinct  ctod.IdOrigenDestino  as m_nIdCiudad,ctod.OrigenDestino as m_sCiudad, " +
@@ -49,7 +49,7 @@ public class OrigenDestinoRest {
 
     @GetMapping("/Ciudades/GetById/{id}")
     public ResponseEntity<?> getOrigenDestinoById(@RequestHeader("RFC") String rfc, @PathVariable("id") int id)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT " +
                     "IdOrigenDestino as m_nIdCiudad, " +

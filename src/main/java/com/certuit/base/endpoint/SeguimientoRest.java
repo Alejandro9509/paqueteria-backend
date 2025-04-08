@@ -24,7 +24,7 @@ public class SeguimientoRest {
     @GetMapping("/Seguimeinto/folio/{folio}/tipo/{tipo}")
     public ResponseEntity<?> getByIdTipo(@PathVariable("folio") String folio,
                                          @PathVariable("tipo") int tipo,
-                                         @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                         @RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             if (tipo == 4) {
@@ -57,7 +57,7 @@ public class SeguimientoRest {
     }
 
     @GetMapping("/Seguimiento/folios")
-    public ResponseEntity<?> getByIdTipo(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getByIdTipo(@RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("recolecciones", seguimientoService.getFoliosRecoleccion(jdbcConnection));

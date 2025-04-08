@@ -18,7 +18,7 @@ public class UsuarioRest {
     DBConection dbConection;
 
     @GetMapping("/Usuarios/GetListado")
-    public ResponseEntity<?> getUsers(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getUsers(@RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "select IdUsuario as idUsuario, Usuario as usuario, Nombre as nombre, " +
                     "userr.IdSucursal as idSucursal, suc.Sucursal as sucursal " +

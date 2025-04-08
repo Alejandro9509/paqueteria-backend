@@ -48,7 +48,7 @@ public class EmbarquesRest {
                                                        @PathVariable("origen") int origen,
                                                        @PathVariable("destino") int destino,
                                                        @PathVariable("cliente") int cliente,
-                                                       @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                       @RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc))
         {
@@ -125,7 +125,7 @@ public class EmbarquesRest {
 
     @GetMapping("/Embarque/GetById/{id}")
     public ResponseEntity<?> getEmbarqueId(@PathVariable("id") int id, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT e.IdEmbarque              as m_nIdEmbarque\n" +
                     "     , e.FolioEmbarque           as m_sFolioEmbarque\n" +
@@ -319,7 +319,7 @@ public class EmbarquesRest {
     public ResponseEntity<?> enviarNotificacion(@RequestHeader("RFC") String rfc,
                                                 @PathVariable("id") int id,
                                                 @RequestBody EnvioCorreosRequest request)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "select  CCC.CorreoElectronico AS 'Correos' " +
                     "from ProEmbarquePQ PIP inner join CatClientes CC on PIP.IdCliente = CC.IdCliente " +
@@ -348,7 +348,7 @@ public class EmbarquesRest {
                                                    @PathVariable("idMoneda") int idMoneda,
                                                    @PathVariable int idGuia,
                                                    @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT " +
                     " IdEmbarque " +
@@ -375,7 +375,7 @@ public class EmbarquesRest {
 
     @GetMapping("/SisEstatus/GetListadoEmbarque")
     public ResponseEntity<?> obtenerEstatusEmbarque(@RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT\n" +
                     "\tIdEstatusEmbarque as m_nIdEstatusEmbarque,\n" +
@@ -398,7 +398,7 @@ public class EmbarquesRest {
 
     @GetMapping("/SisEstatus/getListadoInformes")
     public ResponseEntity<?> obtenerEstatusInformes(@RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT\n" +
                     "\tIdEstatusInforme as m_nIdEstatusInforme,\n" +
@@ -422,7 +422,7 @@ public class EmbarquesRest {
     @GetMapping("/Embarques/RecopilacionComplementosGuia/{id}")
     public ResponseEntity<?> getComplementosGuia(@PathVariable("id") int id,
                                                  @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "select pgpq.FolioGuia,ctcf.ConceptoFacturacion,pgcpq.Importe,pgcpq.ImporteIva," +
                     "pgcpq.ImporteRetiene \n" +
@@ -469,7 +469,7 @@ public class EmbarquesRest {
 
     @PostMapping("/Embarques/Agregar")
     public ResponseEntity<?> postEmbarque(@RequestBody EmbarqueRequest embRequest,
-                                          @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                          @RequestHeader("RFC") String rfc) throws Exception {
         int esEntregarMismoDomicilio;
         if (embRequest.isEntregarMismoDomicilio()) {
             esEntregarMismoDomicilio = 1;
@@ -650,7 +650,7 @@ public class EmbarquesRest {
     public ResponseEntity<?> putEmbarque(@PathVariable("idEmbarque") int idEmbarque,
                                          @RequestBody EmbarqueRequest embRequest,
                                          @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         int esEntregarMismoDomicilio;
         if (embRequest.isEntregarMismoDomicilio()) {
             esEntregarMismoDomicilio = 1;
@@ -770,9 +770,9 @@ public class EmbarquesRest {
     public ResponseEntity<?> deleteEmbarque(@PathVariable("idEmbarque") int idEmbarque,
                                             @PathVariable("idUsuario") int idUsuario,
                                             @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
-            String query = "EXEC usp_ProEmbarqueEliminarPQ " + idEmbarque + "";
+            String query = "EXEC usp_ProEmbarqueEliminarPQ " + idEmbarque;
             String query2 = "select ExisteGuia = count(*)\n" +
                     "\t\tfrom dbo.ProEmbarquePQ g\n" +
                     "\t\twhere g.IdEmbarque = " + idEmbarque + " and (IdGuia is not null and IdGuia > 0)";
@@ -810,7 +810,7 @@ public class EmbarquesRest {
     @PutMapping("/Embarques/Cancelar/{idEmbarque}")
     public ResponseEntity<?> cancelarEmbarque(@RequestBody EmbarqueCancelarRequest cancelado,
                                               @PathVariable("idEmbarque") int idEmbarque,
-                                              @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                              @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "EXEC usp_ProEmbarqueCancelarPQ  " + idEmbarque + "," + cancelado.getUsuarioCancelacion()
                     + ", '" + cancelado.getFechaCancelacion() + "', '" + cancelado.getMotivoCancelacion() + "'";
@@ -832,7 +832,7 @@ public class EmbarquesRest {
     @PostMapping("/Embarques/validar-importacion")
     public ResponseEntity<?> validarEmbarquesImportados(@RequestBody ImportacionRequest request,
                                                         @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         JSONObject jsonAux = new JSONObject();
         JSONArray jsonArrayAux = new JSONArray();
         JSONArray jsonListadoEmbarquesFinal = new JSONArray();
@@ -2510,7 +2510,7 @@ public class EmbarquesRest {
     @PostMapping("/Embarques/agregar-importados")
     public ResponseEntity<?> agregarEmbarquesImportados
             (@RequestHeader("RFC") String rfc, @RequestBody ImportacionRequest request) throws
-            SQLException, Exception {
+            Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();

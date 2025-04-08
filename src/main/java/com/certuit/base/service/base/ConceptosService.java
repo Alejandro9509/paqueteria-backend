@@ -15,7 +15,7 @@ import java.sql.Statement;
 
 @Service
 public class ConceptosService {
-    public JSONArray getDestinosTarifaConvenio(int idConvenio, Connection jdbcConnection) throws SQLException, Exception{
+    public JSONArray getDestinosTarifaConvenio(int idConvenio, Connection jdbcConnection) throws Exception{
         String query = "SELECT " +
                 " IdOrigenDestino as m_nIdCiudad, " +
                 " OrigenDestino as m_sCiudad, " +
@@ -26,7 +26,7 @@ public class ConceptosService {
         ResultSet rs = statement.executeQuery(query);
         return UtilFuctions.convertArray(rs);
     }
-    public JSONArray getProductosTarifaConvenio(int idConvenio, Connection jdbcConnection) throws SQLException, Exception{
+    public JSONArray getProductosTarifaConvenio(int idConvenio, Connection jdbcConnection) throws Exception{
         String query = "Select  " +
                 "  m_nIdTarifaConvenioProducto = IdProductoTarifaConvenio, " +
                 " m_nIdTarifaConvenio = IdTarifaConvenio, " +
@@ -53,7 +53,7 @@ public class ConceptosService {
         return UtilFuctions.convertArray(rs);
     }
 
-    public JSONArray getConceptosZonaTarifaConvenio(int idConvenio, Connection jdbcConnection) throws SQLException, Exception{
+    public JSONArray getConceptosZonaTarifaConvenio(int idConvenio, Connection jdbcConnection) throws Exception{
         String query = " select  " +
                 " m_cImporte = Importe, " +
                 "  m_cImporteIva = ImporteIva, " +
@@ -74,7 +74,7 @@ public class ConceptosService {
         ResultSet rs = statement.executeQuery(query);
         return convertirConcepto(rs, jdbcConnection);
     }
-    public JSONArray getConceptosTarifaConvenio(int idConvenio, Connection jdbcConnection) throws SQLException, Exception{
+    public JSONArray getConceptosTarifaConvenio(int idConvenio, Connection jdbcConnection) throws Exception{
         String query = "SELECT " +
                 " IdTarifaConvenioConcepto as m_nIdTarifaConvenioConcepto " +
                 "    ,IdTarifaConvenio as m_nIdTarifaConvenio " +
@@ -114,7 +114,7 @@ public class ConceptosService {
         return jsonArray;
     }
 
-    public  JSONArray obtenerConceptosTarifa(int idConcepto, Connection jdbcConnection) throws SQLException, Exception{
+    public  JSONArray obtenerConceptosTarifa(int idConcepto, Connection jdbcConnection) throws Exception{
         String query = "SELECT Detalle.IdConceptoFacturacionImpuesto as IdConceptosFacturacionDetalle " +
                 "      ,Detalle.IdConceptoFacturacion as IdConceptosFacturacion " +
                 "      ,IdImpuesto " +
@@ -129,7 +129,7 @@ public class ConceptosService {
         return UtilFuctions.convertArray(rs);
     }
 
-    public JSONObject conceptosFacturacion(int id, Connection jdbcConnection) throws SQLException, Exception {
+    public JSONObject conceptosFacturacion(int id, Connection jdbcConnection) throws Exception {
         String query = "SELECT\n" +
                 "\tIdConceptoFacturacion as IdConceptosFacturacion\n" +
                 "      ,Codigo\n" +
@@ -146,7 +146,7 @@ public class ConceptosService {
                 "      ,CreadoPor\n" +
                 "    FROM CatConceptosFacturacion\n" +
                 "\n" +
-                "\tWHERE IdConceptoFacturacion = "+id+"";
+                "\tWHERE IdConceptoFacturacion = "+id;
         Statement statement = jdbcConnection.createStatement();
         ResultSet rs = statement.executeQuery(query);
         JSONObject json = new JSONObject();
@@ -168,7 +168,7 @@ public class ConceptosService {
         return json;
     }
 
-    public  JSONArray obtenerListadoIdConcepto(int idConcepto, Connection jdbcConnection) throws SQLException, Exception{
+    public  JSONArray obtenerListadoIdConcepto(int idConcepto, Connection jdbcConnection) throws Exception{
         String query = "SELECT Detalle.IdConceptoFacturacionImpuesto as IdConceptosFacturacionDetalle\n" +
                 "      ,Detalle.IdConceptoFacturacion as IdConceptosFacturacion\n" +
                 "                ,IdImpuesto\n" +
@@ -177,7 +177,7 @@ public class ConceptosService {
                 "\t  ,(SELECT Porcentaje FROM CatImpuestos WHERE IdImpuesto = Detalle.IdImpuesto) AS Porcentaje\n" +
                 "      ,Detalle.Predeterminado\n" +
                 "        FROM CatConceptosFacturacionImpuestos AS Detalle\n" +
-                "        WHERE IdConceptoFacturacion = "+idConcepto+"";
+                "        WHERE IdConceptoFacturacion = "+idConcepto;
         Statement statement = jdbcConnection.createStatement();
         ResultSet rs = statement.executeQuery(query);
         JSONArray jsonArray = new JSONArray();
@@ -196,9 +196,9 @@ public class ConceptosService {
         return jsonArray;
     }
 
-    public void agregarConceptosARecoleccion(RecoleccionRequest recoRequest, Statement statement) throws SQLException, Exception {
+    public void agregarConceptosARecoleccion(RecoleccionRequest recoRequest, Statement statement) throws Exception {
         String query = "";
-        query = "update CatCotizacion set IdRecoleccion = "+recoRequest.getM_nIdRecoleccion()+",Activa=1 where IdCotizacion = "+recoRequest.getM_nIdCotizacion()+"";
+        query = "update CatCotizacion set IdRecoleccion = "+recoRequest.getM_nIdRecoleccion()+",Activa=1 where IdCotizacion = "+recoRequest.getM_nIdCotizacion();
         statement.executeUpdate(query);
         for (ConceptoFacturacionRequest concepto : recoRequest.getM_arrConceptos()) {
             concepto.setM_nIdCotizacion(recoRequest.getM_nIdCotizacion());
@@ -209,9 +209,9 @@ public class ConceptosService {
         }
     }
 
-    public void agregarConceptosAEmbarque(EmbarqueRequest embRequest, Statement statement) throws SQLException, Exception {
+    public void agregarConceptosAEmbarque(EmbarqueRequest embRequest, Statement statement) throws Exception {
         String query = "";
-        query = "update CatCotizacion set IdEmbarque = "+embRequest.getM_nIdEmbarque()+",Activa=1 where IdCotizacion = "+embRequest.getM_nIdCotizacion()+"";
+        query = "update CatCotizacion set IdEmbarque = "+embRequest.getM_nIdEmbarque()+",Activa=1 where IdCotizacion = "+embRequest.getM_nIdCotizacion();
         statement.executeUpdate(query);
         for (ConceptoFacturacionRequest concepto : embRequest.getM_arrConceptos()) {
             concepto.setM_nIdCotizacion(embRequest.getM_nIdCotizacion());

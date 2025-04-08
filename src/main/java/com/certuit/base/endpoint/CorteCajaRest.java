@@ -134,10 +134,10 @@ public class CorteCajaRest {
 
     @DeleteMapping("/CorteCaja/Eliminar/{id}")
     public ResponseEntity<?> eliminarCorte(@PathVariable("id") int id, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
-                String query = "EXEC usp_ProCorteCajaEliminarPQ " + id + "";
+                String query = "EXEC usp_ProCorteCajaEliminarPQ " + id;
                 Statement statement = jdbcConnection.createStatement();
                 int resultado = statement.executeUpdate(query);
             } catch (Exception e) {
@@ -153,7 +153,7 @@ public class CorteCajaRest {
 
     @PutMapping("/CorteCaja/Modificar/{id}")
     public ResponseEntity<?> modificarCorte(@RequestBody CorteCajaRequest corte, @PathVariable("id") int id,
-                                            @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                            @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 corte.setM_nIdCorte(id);
@@ -179,7 +179,7 @@ public class CorteCajaRest {
 
     @PostMapping("/CorteCaja/Agregar")
     public ResponseEntity<?> agregarCorte(@RequestBody CorteCajaRequest
-                                                  corte, @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                  corte, @RequestHeader("RFC") String rfc) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 String query = "EXEC usp_ProCorteCajaAgregarPQ  " + corte.getM_cTotal() + ", " + corte.getM_nIdUsuario()
@@ -211,14 +211,14 @@ public class CorteCajaRest {
     @PostMapping("/Guias/GetListadoFiltrosCorteCaja")
     public ResponseEntity<?> filtroCorte(@RequestBody CorteCajaFiltroRequest
                                                  filtro, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 if (filtro.getFecha() != null) {
                     filtro.setFecha("'" + filtro.getFecha() + "'");
                 }
                 String query = "EXEC usp_ProCorteCajaGuiasDisponiblesPQ " + (filtro.getBusquedaPorUsuario() ? 1 : 0) + ", "
-                        + filtro.getIdOperador() + ", " + filtro.getIdUsuario() + ", " + filtro.getFecha() + "";
+                        + filtro.getIdOperador() + ", " + filtro.getIdUsuario() + ", " + filtro.getFecha();
                 Statement statement = jdbcConnection.createStatement();
                 ResultSet rs = statement.executeQuery(query);
                 JSONArray jsonArray = convertArray(rs);

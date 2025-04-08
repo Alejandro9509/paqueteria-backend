@@ -19,7 +19,7 @@ import java.util.Date;
 @Service
 public class ViajesService {
 
-    public JSONArray getListadoByViajeId(int id, Connection jdbcConnection) throws SQLException,Exception{
+    public JSONArray getListadoByViajeId(int id, Connection jdbcConnection) throws Exception{
         String query = "SELECT\n" +
                 "\t\n" +
                 "      i.IdViaje\n" +
@@ -40,7 +40,7 @@ public class ViajesService {
                 "\n" +
                 "\n" +
                 "\tFROM ProInformePQ i \n" +
-                "\tWHERE IdViaje ="+id+"";
+                "\tWHERE IdViaje ="+id;
 
         Statement statement = jdbcConnection.createStatement();
         ResultSet rs = statement.executeQuery(query);
@@ -262,7 +262,7 @@ public class ViajesService {
         return listPaquetes;
 
     }
-    public JSONArray getInformesAsignadosByIdViaje(int id, Connection jdbcConnection) throws SQLException, Exception {
+    public JSONArray getInformesAsignadosByIdViaje(int id, Connection jdbcConnection) throws Exception {
         String query = "SELECT \n" +
                 "            i.IdInforme as m_nIdInforme\n" +
                 "                 ,FORMAT(i.Fecha, 'dd-MM-yyyy') + ' ' +  " +
@@ -298,7 +298,7 @@ public class ViajesService {
 
     }
 
-    public JSONArray getIdRutasByIdViaje(int id, Connection jdbcConnection) throws SQLException, Exception{
+    public JSONArray getIdRutasByIdViaje(int id, Connection jdbcConnection) throws Exception{
         String query = "select pvt.IdRuta,\n" +
                 "       case when pvt.IdLlegada is null then 0 else 1 end as 'Terminado',\n" +
                 "       case when pvt.IdSalida is null or PVSP.Cancelado = 1 then 0 else 1 end as 'Iniciado' ,\n" +
@@ -310,7 +310,7 @@ public class ViajesService {
         return UtilFuctions.convertArray(rs);
     }
 
-    public JSONArray getTrayectosViaje(int id, Connection jdbcConnection) throws SQLException, Exception {
+    public JSONArray getTrayectosViaje(int id, Connection jdbcConnection) throws Exception {
         String query = "SELECT IdViajeTrayecto as m_nIdViajeTrayecto,vt.IdViaje as m_nIdViaje,r.IdRuta as m_nIdRuta, " +
                 "vt.IdOrigen as m_nIdOrigen, \n" +
                 "                       vt.IdDestino as m_nIdDestino ,o.OrigenDestino as m_sOrigen, \n" +
@@ -334,7 +334,7 @@ public class ViajesService {
     }
 
     public double getTotalCalculoLiquidacionPorcentajeSobreImpFlete(int id, Connection jdbcConnection)
-            throws SQLException, Exception {
+            throws Exception {
         String query = "select ISNULL(SUM(PGCP.Importe), 0.0) as TotalCalculoLiquidacionPorcentajeSobreImpFlete\n" +
                 "from ProGuiaConceptoPQ PGCP\n" +
                 "         inner join CatConceptosFacturacion CCF on CCF.IdConceptoFacturacion = PGCP.IdConceptoFacturacion\n" +
@@ -372,7 +372,7 @@ public class ViajesService {
         return jsonArray;
     }
 
-    public void insertarCartaPorte(int idGuia,String rfc,Connection jdbcConnection)throws SQLException, Exception {
+    public void insertarCartaPorte(int idGuia,String rfc,Connection jdbcConnection)throws Exception {
 
         try {
             String query = "SELECT\n" +
@@ -402,7 +402,7 @@ public class ViajesService {
                     "      ,IdCiudadOrigen\n" +
                     "      ,IdCiudadDestino\n" +
                     "    FROM ProEmbarquePQ e\n" +
-                    "    WHERE IdEmbarque = "+idEmbarque+"";
+                    "    WHERE IdEmbarque = "+idEmbarque;
 
             ResultSet rs2 = statement2.executeQuery(query2);
             int idCliente=0;
@@ -444,7 +444,7 @@ public class ViajesService {
     }
 
     public void agregarAPI(int idGuia,String rfc,ViajeRequest viaje,Connection jdbcConnection)
-            throws SQLException, Exception {
+            throws Exception {
         try{
             Statement statement = jdbcConnection.createStatement();
             String pattern = "yyyy-MM-dd HH:mm:ss";
@@ -454,8 +454,7 @@ public class ViajesService {
 
             String query2 = "EXEC usp_ProViajeCartaPorteAgregarPQ "+
                     viaje.getM_nTipoCobroPorViaje()+",'"+fecha
-                    +"','"+01+"'," +
-                    ""+viaje.getM_nIdCliente()+","+viaje.getM_nIdSucursal()+","+viaje.getM_nIdRemitente()+","
+                    +"','"+01+"'," +viaje.getM_nIdCliente()+","+viaje.getM_nIdSucursal()+","+viaje.getM_nIdRemitente()+","
                     +viaje.getM_nIdDestinatario()+","+viaje.getM_nIdMoneda()+","+viaje.getM_nGeneradoDesde()+",'"
                     +fecha+"'," +viaje.getM_nIdEstatusViaje()+","+viaje.getM_nSecuencia()+","+viaje.getM_nOrigen()+","
                     +viaje.getM_nDestino()+","+viaje.getM_nKilometros()+","+viaje.getM_xHoras()+","+0+"," +0 +"," +

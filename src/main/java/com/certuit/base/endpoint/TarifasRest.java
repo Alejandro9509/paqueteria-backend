@@ -25,7 +25,7 @@ public class TarifasRest {
 
     @GetMapping("/Tarifas/GetByTipo/{idTipoTarifa}")
     public ResponseEntity<?> getListadoTarifasByTipo(@PathVariable("idTipoTarifa") int idTipotarifa,
-                                                     @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                     @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "";
             switch (idTipotarifa) {
@@ -157,7 +157,7 @@ public class TarifasRest {
 
     @GetMapping("/Tarifas/GetById/{id}")
     public ResponseEntity<?> getTarifaById(@PathVariable("id") int id, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT \n" +
@@ -192,7 +192,7 @@ public class TarifasRest {
 
     @PostMapping("/Tarifas/Agregar")
     public ResponseEntity<?> postTarifa(@RequestBody TarifaRequest request, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
 
             String query = " EXEC usp_CatTarifaAgregarPQ "
@@ -241,7 +241,7 @@ public class TarifasRest {
 
     @PutMapping("/Tarifas/Modificar/{idTarifa}")
     public ResponseEntity<?> putTarifa(@PathVariable("idTarifa") int idTarifa, @RequestBody TarifaRequest request,
-                                       @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                       @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             ResultSet rs;
             String query = " EXEC usp_CatTarifaModificarPQ "

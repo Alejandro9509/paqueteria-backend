@@ -15,7 +15,7 @@ import static com.certuit.base.util.UtilFuctions.convertArray;
 
 @Service
 public class PaquetesService {
-    public void agregarPaquetesARecoleccion(RecoleccionRequest recoRequest, Statement statement) throws SQLException, Exception {
+    public void agregarPaquetesARecoleccion(RecoleccionRequest recoRequest, Statement statement) throws Exception {
         String query = "";
         for (PaqueteRequest paquete : recoRequest.getM_parrPaquetes()) {
             paquete.setM_nIdRecoleccion(recoRequest.getM_nIdRecoleccion());
@@ -31,7 +31,7 @@ public class PaquetesService {
     }
 
     public void modificarPaquetesRecoleccion(RecoleccionRequest recoRequest, Statement statement)
-            throws SQLException, Exception {
+            throws Exception {
         String query = "";
         query = "EXEC usp_ProRecoleccionEliminarPaquetesPQ " + recoRequest.getM_nIdRecoleccion();
         statement.executeUpdate(query);
@@ -49,7 +49,7 @@ public class PaquetesService {
     }
 
     public void agregarPaquetesAEmbarque(EmbarqueRequest embRequest, Statement statement)
-            throws SQLException, Exception {
+            throws Exception {
         String query = "";
         for (PaqueteRequest paquete : embRequest.getM_arrClsDetalle()) {
             paquete.setM_nIdEmbarque(embRequest.getM_nIdEmbarque());
@@ -66,7 +66,7 @@ public class PaquetesService {
 
     /**Retorna listado de paquetes que se mandaron en entrega parcial.*/
     public JSONArray getPaquetesParcialesByGuia(int idParadaGuia, Connection jdbcConnection)
-            throws SQLException,Exception{
+            throws Exception{
         Statement statement = jdbcConnection.createStatement();
         String query = "Select PUMGPPU.IdParciales         as idParciales,\n" +
                 "       PUMGPPU.IdPaquete           as idPaquete,\n" +
@@ -85,7 +85,7 @@ public class PaquetesService {
     /**Retorna los paquetes de la guia con los indices de los paquetes que ya fueron o estan siendo entregadas de
      * forma parcial pero no cancelados*/
     public JSONArray getPaquetesDisponiblesPorParada(int idGuia, Connection jdbcConnection)
-            throws SQLException,Exception{
+            throws Exception{
         Statement statement = jdbcConnection.createStatement();
         String query = " SELECT\n" +
                 "pe.IdEmbarqueDetalle as idPaquete\n" +
@@ -112,7 +112,7 @@ public class PaquetesService {
 
     /**Retorna el listado de index de los paquetes que están en entrega parcial pero no canceladas*/
     public JSONArray getIndexPaquetesEnParciales(int idGuia,int idPaquete, Connection connection)
-            throws SQLException,Exception{
+            throws Exception{
         String query = "Select pe.[index] as noIndex \n" +
                 "FROM ProUltimaMillaGuiasPaquetesParcialesPQ pe \n" +
                 "INNER join ProParadaUltimaMillaGuiasPQ guia on guia.IdParadaGuia = pe.IdParadaGuia \n" +

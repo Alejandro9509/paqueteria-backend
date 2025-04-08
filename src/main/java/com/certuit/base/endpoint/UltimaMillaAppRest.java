@@ -35,7 +35,7 @@ public class UltimaMillaAppRest {
     @GetMapping("/GetParadasOperador/{idOperador}/{fecha}")
     public ResponseEntity<?> obtenerParadasOperador(@PathVariable("idOperador") int idOperador,
                                                     @PathVariable("fecha") String fecha,
-                                                    @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                    @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT TOP 1\n" +
                     "parada.m_nIdProParadaUltimaMilla as m_nIdParadaUltimaMilla,\n" +
@@ -89,7 +89,7 @@ public class UltimaMillaAppRest {
                                             @PathVariable("idEstatus") int idEstatus,
                                             @PathVariable("idParadaGuia") int idParadaGuia,
                                             @RequestBody TerminarParadaUltimaMillaRequest request)
-            throws SQLException, Exception {
+            throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();
@@ -122,7 +122,7 @@ public class UltimaMillaAppRest {
     @PutMapping("/UltimaMilla/TerminarRuta/{IdDetalleParada}")
     public ResponseEntity<?> terminarRutaUltimaMilla(@RequestHeader("RFC") String rfc,
                                                      @PathVariable("IdDetalleParada") int id)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "UPDATE ParadaUltimaMillaPQ set Completada = 1 where m_nIdProParadaUltimaMilla =" + id;
             Statement statement = jdbcConnection.createStatement();
@@ -144,7 +144,7 @@ public class UltimaMillaAppRest {
                                                 @RequestHeader("IdGuia") int idGuia,
                                                 @RequestHeader("EsRecoleccion") int esRec,
                                                 @RequestHeader("TipoArchivo") int tipo,
-                                                @RequestBody byte[] byteArray) throws SQLException, Exception {
+                                                @RequestBody byte[] byteArray) throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 if (idGuia <= 0) {

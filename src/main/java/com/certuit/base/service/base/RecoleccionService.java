@@ -76,7 +76,7 @@ public class RecoleccionService {
     }
 
     public JSONArray getPaquetesRecoleccion(int id, Connection jdbcConnection,String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         String query = "SELECT\n" +
                 "e.IdPaquete as m_nIdPaquete\n" +
                 ",e.Peso as m_rPeso\n" +
@@ -130,7 +130,7 @@ public class RecoleccionService {
     }
 
     public JSONArray getConceptosSATRecoleccion(int id, Connection jdbcConnection)
-            throws SQLException, Exception {
+            throws Exception {
         String query = "SELECT IdRecoleccionComplementoSAT as id,\n" +
                 "       IdRecoleccion as m_nIdRecoleccion,\n" +
                 "       Cantidad as cantidad,\n" +
@@ -184,7 +184,7 @@ public class RecoleccionService {
     }
 
     public JSONArray getConceptosCotizacionRecoleccion(int id, Connection jdbcConnection)
-            throws SQLException, Exception {
+            throws Exception {
         String query = "SELECT pg.IdCotizadorConcepto\n" +
                 "     ,pg.IdCotizador as m_nIdCotizacion\n" +
                 "     ,pg.IdConceptoFacturacion as m_nIdConceptoFacturacion\n" +

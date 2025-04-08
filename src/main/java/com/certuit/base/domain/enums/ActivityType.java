@@ -8,11 +8,11 @@ public enum  ActivityType {
     private int id;
     private String name;
 
-    private ActivityType(int id) {
+    ActivityType(int id) {
         this.id = id;
     }
 
-    private ActivityType(int id, String name) {
+    ActivityType(int id, String name) {
         this.id = id;
         this.name = name;
 

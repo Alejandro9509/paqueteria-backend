@@ -23,7 +23,7 @@ public class PlantillasTarifasRest {
     DBConection dbConection;
 
     @GetMapping("/PlantillasImportacionTarifas/GetListado")
-    public ResponseEntity<?> consultarPlantillas(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> consultarPlantillas(@RequestHeader("RFC") String rfc) throws Exception {
         JSONObject jsonResponse = new JSONObject();
         jsonResponse.put("success", true);
         jsonResponse.put("message", "");
@@ -63,7 +63,7 @@ public class PlantillasTarifasRest {
     }
 
     @GetMapping("/PlantillasImportacionTarifas/GetById/{id}")
-    public ResponseEntity<?> consultarPlantillaPorId(@RequestHeader("RFC") String rfc, @PathVariable("id") int id) throws SQLException, Exception {
+    public ResponseEntity<?> consultarPlantillaPorId(@RequestHeader("RFC") String rfc, @PathVariable("id") int id) throws Exception {
         JSONObject jsonResponse = new JSONObject();
         jsonResponse.put("success", true);
         jsonResponse.put("message", "");
@@ -197,7 +197,7 @@ public class PlantillasTarifasRest {
      */
     @GetMapping("/PlantillasImportacionTarifas/GetByIdCliente/{id}")
     public ResponseEntity<?> consultarCamposPlantillaPorIdCliente(@RequestHeader("RFC") String rfc,
-                                                                  @PathVariable("id") int id) throws SQLException, Exception {
+                                                                  @PathVariable("id") int id) throws Exception {
         JSONObject jsonResponse = new JSONObject();
         jsonResponse.put("success", true);
         jsonResponse.put("message", "");
@@ -330,7 +330,7 @@ public class PlantillasTarifasRest {
 
     @PostMapping("/PlantillasImportacionTarifas/Agregar")
     public ResponseEntity<?> agregarPlantillas(@RequestHeader("RFC") String rfc, @RequestBody PlantillaRequest
-            request) throws SQLException, Exception {
+            request) throws Exception {
         JSONObject jsonResponse = new JSONObject();
         jsonResponse.put("success", true);
         jsonResponse.put("message", "");
@@ -453,7 +453,7 @@ public class PlantillasTarifasRest {
     @PutMapping("/PlantillasImportacionTarifas/Modificar/{idPlantilla}")
     public ResponseEntity<?> ModificarPlantillas(@RequestHeader("RFC") String rfc,
                                                  @RequestBody PlantillaRequest request,
-                                                 @PathVariable("idPlantilla") int idPlantilla) throws SQLException, Exception {
+                                                 @PathVariable("idPlantilla") int idPlantilla) throws Exception {
         JSONObject jsonResponse = new JSONObject();
         jsonResponse.put("success", true);
         jsonResponse.put("message", "");
@@ -582,7 +582,7 @@ public class PlantillasTarifasRest {
 
     @DeleteMapping("/PlantillasImportacionTarifas/Eliminar/{idPlantilla}")
     public ResponseEntity<?> EliminarPlantillas(@RequestHeader("RFC") String rfc,
-                                                @PathVariable("idPlantilla") int idPlantilla) throws SQLException, Exception {
+                                                @PathVariable("idPlantilla") int idPlantilla) throws Exception {
         JSONObject jsonResponse = new JSONObject();
         jsonResponse.put("success", true);
         jsonResponse.put("message", "");
@@ -614,7 +614,7 @@ public class PlantillasTarifasRest {
 
     @GetMapping("/PlantillasImportacionTarifas/GetNombrePlantilla/{idCliente}")
     public ResponseEntity<?> consultarNombrePlantillaPorIdCliente(@RequestHeader("RFC") String rfc,
-                                                                  @PathVariable("idCliente") int id) throws SQLException, Exception {
+                                                                  @PathVariable("idCliente") int id) throws Exception {
         JSONObject jsonResponse = new JSONObject();
         jsonResponse.put("success", true);
         jsonResponse.put("message", "");

@@ -21,7 +21,7 @@ public class EstatusGuiaRest {
     DBConection dbConection;
 
     @GetMapping("/EstatusGuia/GetListado")
-    public ResponseEntity<?> getEstatusGuia(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getEstatusGuia(@RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT " +

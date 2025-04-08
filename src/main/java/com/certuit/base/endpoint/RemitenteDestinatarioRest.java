@@ -24,7 +24,7 @@ public class RemitenteDestinatarioRest {
     DBConection dbConection;
 
     @GetMapping("/RemitentesDestinatarios/GetById/{id}")
-    public ResponseEntity<?> getRemitenteDestinatarioId(@PathVariable("id") int id, @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getRemitenteDestinatarioId(@PathVariable("id") int id, @RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = " Select *,\n" +
@@ -32,7 +32,7 @@ public class RemitenteDestinatarioRest {
                     "  (select top 1 cp.IdCodigoPostal from CatCodigosPostales cp " +
                     "where cp.CodigoPostal = ctrd.CodigoPostal and cp.IdEstado = ctrd.IdEstado) as IdCP\n" +
                     "  from CatRemitentesDestinatarios ctrd\n" +
-                    "where IdRemitenteDestinatario =" + id + "";
+                    "where IdRemitenteDestinatario =" + id;
             Statement statement = jdbcConnection.createStatement();
             ResultSet rs = statement.executeQuery(query);
             JSONObject json = new JSONObject();
@@ -72,7 +72,7 @@ public class RemitenteDestinatarioRest {
     @GetMapping("/RemitentesDestinatarios/GetByName/{nombre}")
     public ResponseEntity<?> getRemitenteDestinatarioByName(@PathVariable("nombre") String nombre,
                                                             @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT COUNT(*) AS total FROM CatRemitentesDestinatarios WHERE Nombre = '" + nombre + "'";
             Statement statement = jdbcConnection.createStatement();
@@ -88,7 +88,7 @@ public class RemitenteDestinatarioRest {
 
     @GetMapping("/RemitentesDestinatarios/GetListado")
     public ResponseEntity<?> getlistadoRemitentesDestinatarios(@RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT\n" +
@@ -141,7 +141,7 @@ public class RemitenteDestinatarioRest {
 
     @GetMapping("/RemitentesDestinatarios/GetListadoById/{id}")
     public ResponseEntity<?> getListadoIdCliente(@PathVariable("id") int id, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT\n" +
                     "crd.IdRemitenteDestinatario as m_nIdRemitenteDestinatario,\n" +
@@ -187,7 +187,7 @@ public class RemitenteDestinatarioRest {
     @PostMapping("/RemitentesDestinatarios/Agregar")
     public ResponseEntity<?> remitenteDestinatarioAgregar(@RequestBody RemitenteDestinatarioRequest request,
                                                           @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try {
             Connection jdbcConnection = dbConection.getconnection(rfc);
             String query;
@@ -217,7 +217,7 @@ public class RemitenteDestinatarioRest {
                         addString(request.getTelefono()) + addString(request.getNoRegistroIdentidadFiscal())+
                         addString(request.getAlias()) + ",''";
             } else {
-                queryAgregar = "EXEC usp_CatRemitentesDestinatariosAgregar " + request.getIdCliente() + "" +
+                queryAgregar = "EXEC usp_CatRemitentesDestinatariosAgregar " + request.getIdCliente() +
                         addInt(nextNumero) + addString(request.getNombre()) + addString(request.getRfc()) +
                         addBoolean(request.isActivo()) + addString(request.getCalle()) +
                         addString(request.getNoExterior()) + addString(request.getNoInterior()) +
@@ -241,7 +241,7 @@ public class RemitenteDestinatarioRest {
     @PostMapping("/RemitentesDestinatarios/Agregar/v2")
     public ResponseEntity<?> remitenteDestinatarioAgregarv2(@RequestBody RemitenteDestinatarioRequest request,
                                                             @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query;
             Statement statement = jdbcConnection.createStatement();
@@ -326,15 +326,14 @@ public class RemitenteDestinatarioRest {
     public ResponseEntity<?> remitenteDestinatarioModificar(@PathVariable("id") int id,
                                                             @RequestBody RemitenteDestinatarioRequest request,
                                                             @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 String query = "EXEC usp_CatRemitentesDestinatariosGetNextNumeroPQ";
                 Statement statement = jdbcConnection.createStatement();
                 DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String currentDateTime = dateFormatter.format(new Date());
-                String queryModificar = "EXEC usp_CatRemitentesDestinatariosModificar " + id + ""
-                        + addInt(request.getIdCliente())
+                String queryModificar = "EXEC usp_CatRemitentesDestinatariosModificar " + id + addInt(request.getIdCliente())
                         + addInt(request.getNumero())
                         + addString(request.getNombre())
                         + addString(request.getRfc())
@@ -372,7 +371,7 @@ public class RemitenteDestinatarioRest {
     @PutMapping("/RemitentesDestinatarios/ConfirmarCoordenadas")
     public ResponseEntity<?> remitenteDestinatarioConfirmarCoordenadas(@RequestBody RemitenteDestinatarioRequest request,
                                                                        @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
                 Statement statement = jdbcConnection.createStatement();
@@ -396,7 +395,7 @@ public class RemitenteDestinatarioRest {
                     String queryModificar = "EXEC usp_CatRemitentesDestinatariosConfirmarCoord "
                             + idRemitenteDestinatario
                             + addString(request.getLatitud()) + addString(request.getLongitud()) + "," +
-                            idRecoleccion + "";
+                            idRecoleccion;
                     statement.executeUpdate(queryModificar);
                 }
                 return ResponseEntity.ok(Constants.MESSAGE_SUCCESS_POST);
@@ -415,10 +414,10 @@ public class RemitenteDestinatarioRest {
     public ResponseEntity<?> eliminarRemitenteDestinatario(@PathVariable("id") int id,
                                                            @PathVariable("idEliminadoPor") int idEliminadoPor,
                                                            @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
-                String query = "EXEC usp_CatRemitentesDestinatariosEliminarPQ " + id + "";
+                String query = "EXEC usp_CatRemitentesDestinatariosEliminarPQ " + id;
                 Statement statement = jdbcConnection.createStatement();
                 statement.executeUpdate(query);
                 return ResponseEntity.ok(Constants.MESSAGE_SUCCESS_DELETE);

@@ -21,7 +21,7 @@ public class TipoMonedaRest {
     DBConection dbConection;
 
     @GetMapping("/Moneda/GetListado")
-    public ResponseEntity<?> getOrigenDestino(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getOrigenDestino(@RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT " +
                     "IdMoneda as m_nIdMoneda," +
@@ -47,7 +47,7 @@ public class TipoMonedaRest {
 
     @GetMapping("/Moneda/GetById/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") int id, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT\n" +
                     "IdMoneda as m_nIdMoneda,\n" +
@@ -59,7 +59,7 @@ public class TipoMonedaRest {
                     "'' as m_sModificadoEl,\n" +
                     "'' AS m_sModificadoPor,\n" +
                     "Abreviacion as m_sAbreviacion\t\n" +
-                    "FROM CatMonedasPQ AS MONEDA where IdMoneda=" + id + "";
+                    "FROM CatMonedasPQ AS MONEDA where IdMoneda=" + id;
             Statement statement = jdbcConnection.createStatement();
             ResultSet rs = statement.executeQuery(query);
             String jsonObject2 = UtilFuctions.convertObject(rs).toString();
@@ -73,10 +73,10 @@ public class TipoMonedaRest {
 
     @DeleteMapping("/Moneda/Eliminar/{id}")
     public ResponseEntity<?> eliminarProducto(@PathVariable("id") int id, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try {
             try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
-                String query = "EXEC usp_CatMonedaEliminarPQ " + id + "";
+                String query = "EXEC usp_CatMonedaEliminarPQ " + id;
                 Statement statement = jdbcConnection.createStatement();
                 statement.executeUpdate(query);
             } catch (Exception e) {
@@ -93,7 +93,7 @@ public class TipoMonedaRest {
 
     @PostMapping("/Moneda/Agregar")
     public ResponseEntity<?> postMoneda(@RequestBody TarifasRequest request, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
 
         if (request.getM_sMoneda() == "") {
             return ResponseEntity.status(500).body("La moneda es un campo requerido");
@@ -131,7 +131,7 @@ public class TipoMonedaRest {
 
     @PutMapping("/Moneda/Modificar/{id}")
     public ResponseEntity<?> putMoneda(@RequestBody TarifasRequest request, @PathVariable("id") int id,
-                                       @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                       @RequestHeader("RFC") String rfc) throws Exception {
         if (request.getM_sMoneda() == "") {
             return ResponseEntity.status(500).body("La moneda es un campo requerido");
         }
@@ -147,7 +147,7 @@ public class TipoMonedaRest {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "EXEC usp_CatMonedaModificarPQ '" + request.getM_sMoneda() + "', '"
                     + request.getM_sCodigo() + "', '" + request.getM_sSimbolo() + "', '"
-                    + request.getM_sAbreviacion() + "', " + id + "";
+                    + request.getM_sAbreviacion() + "', " + id;
             try {
                 Statement statement = jdbcConnection.createStatement();
                 statement.executeUpdate(query);

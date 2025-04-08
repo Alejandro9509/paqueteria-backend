@@ -8,6 +8,7 @@ import com.certuit.base.util.UtilFuctions;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -27,9 +28,10 @@ public class GuiaService {
     @Autowired
     ConceptosService conceptosService;
     @Autowired
+    @Lazy
     GuiaService guiaService;
 
-    public JSONArray getGuiasPaquetes(int id, Connection jdbcConnection) throws SQLException, Exception {
+    public JSONArray getGuiasPaquetes(int id, Connection jdbcConnection) throws Exception {
         String query = "SELECT  " +
                 "    pe.IdEmbarqueDetalle as m_nIdEmbarqueDetalle  " +
                 "      ,pe.IdEmbarque as m_nIdEmbarque,  " +
@@ -122,7 +124,7 @@ public class GuiaService {
     }
 
     public JSONArray getGuiasUltimaMilla(Connection jdbcConnection, int idParadaUltimaMilla)
-            throws SQLException, Exception {
+            throws Exception {
         String query = "EXEC usp_ProIdUltimaMillaGetPaquetesPQ " + idParadaUltimaMilla;
         Statement statement = jdbcConnection.createStatement();
         ResultSet rs = statement.executeQuery(query);
@@ -149,7 +151,7 @@ public class GuiaService {
     }
 
     public JSONArray getPaquetesRecoleccionUltimaMilla(int idRecoleccion,Connection jdbcConnection)
-            throws SQLException, Exception {
+            throws Exception {
         String query = "SELECT\n" +
                 "IdPaquete as m_nIdPaquete\n" +
                 ",Peso as m_rPeso\n" +
@@ -201,7 +203,7 @@ public class GuiaService {
 			guia.m_arrImagenes = ClsImagenes::GetImagenPaquete(guia.m_nId,guia.m_bEsRecoleccion )*/
     }
 
-    public JSONArray getPaquetesGuiaUltimaMilla(int idParadaGuia, Connection jdbcConnection) throws SQLException,
+    public JSONArray getPaquetesGuiaUltimaMilla(int idParadaGuia, Connection jdbcConnection) throws
             Exception {
         String query = "declare @EsEntregaParcial bit = 0, @idGuia int = 0, @idParadaGuia int ="+idParadaGuia+"\n" +
                 "select @EsEntregaParcial = ISNULL(EsEntregaParcial,0), @idGuia = m_nIdGuia " +
@@ -243,7 +245,7 @@ public class GuiaService {
         return UtilFuctions.convertArray(rs);
     }
 
-    public JSONArray getImagenesGuiaUltimaMilla(int idGuia, boolean esRecoleccion,Connection jdbcConnection) throws SQLException, Exception {
+    public JSONArray getImagenesGuiaUltimaMilla(int idGuia, boolean esRecoleccion,Connection jdbcConnection) throws Exception {
         int esRec;
         if(esRecoleccion) {
             esRec = 1;
@@ -298,7 +300,7 @@ public class GuiaService {
         return jsonArray;
     }
 
-    public JSONArray getListadoByGuiaId(int id, Connection jdbcConnection) throws SQLException, Exception {
+    public JSONArray getListadoByGuiaId(int id, Connection jdbcConnection) throws Exception {
         String query = " select *\n" +
                 "      ,(select ConceptoFacturacion from  CatConceptosFacturacion cf where cf.IdConceptoFacturacion " +
                 "= pg.IdConceptoFacturacion) as Concepto\n" +
@@ -312,7 +314,7 @@ public class GuiaService {
                 "where c.IdImpuesto = pg.IdImpuestoTraslada) as PorcentajeTraslada\n" +
                 "\t  from ProGuiaConceptoPQ pg\n" +
                 "      \n" +
-                "\tWHERE IdGuia = "+id+"";
+                "\tWHERE IdGuia = "+id;
         Statement statement = jdbcConnection.createStatement();
         ResultSet rs = statement.executeQuery(query);
         JSONArray array = new JSONArray();
@@ -364,7 +366,7 @@ public class GuiaService {
         return array;
     }
 
-    public JSONArray getGuiasByIdCorte(int idCorte,Connection jdbcConnection) throws SQLException, Exception {
+    public JSONArray getGuiasByIdCorte(int idCorte,Connection jdbcConnection) throws Exception {
         String query = "EXEC usp_ProCorteCajaGuiasGetByIdCortePQ_762 "+idCorte;
         Statement statement = jdbcConnection.createStatement();
         ResultSet rs = statement.executeQuery(query);
@@ -373,15 +375,13 @@ public class GuiaService {
     }
 
     public Boolean agregarConceptosGuia(ProGuiaConceptosRequest conceptos, Connection jdbcConnection)
-            throws SQLException, Exception {
+            throws Exception {
         String query = "EXEC usp_ProGuiaConceptosAgregarPQ "+conceptos.getM_nIdGuia()+","
-                +conceptos.getM_nIdConceptosFacturacion()+"," +
-                ""+conceptos.getM_cImporte()+","+conceptos.getM_nIdImpuestoTraslada()+","
-                +conceptos.getM_cImporteIva()+"," +
-                ""+ conceptos.getM_nIdImpuestoRetiene()+","+conceptos.getM_cImporteRetiene()
+                +conceptos.getM_nIdConceptosFacturacion()+"," +conceptos.getM_cImporte()+","+conceptos.getM_nIdImpuestoTraslada()+","
+                +conceptos.getM_cImporteIva()+"," + conceptos.getM_nIdImpuestoRetiene()+","+conceptos.getM_cImporteRetiene()
                 +",null,"+conceptos.getM_nCreadoPor()+"," +
                 "null,"+conceptos.getM_nModificadoPor()+","+(conceptos.getM_bActivo()?1:0)
-                +","+conceptos.getM_cDescuento()+"";
+                +","+conceptos.getM_cDescuento();
         Boolean resultado = false;
         Statement statement = jdbcConnection.createStatement();
         try {
@@ -394,8 +394,8 @@ public class GuiaService {
         return resultado;
     }
 
-    public Boolean eliminarGuia(int idGuia,Connection jdbcConnection)throws SQLException, Exception {
-        String query = "EXEC usp_ProGuiaEliminarPQ "+idGuia+"";
+    public Boolean eliminarGuia(int idGuia,Connection jdbcConnection)throws Exception {
+        String query = "EXEC usp_ProGuiaEliminarPQ "+idGuia;
 
         Statement statement = jdbcConnection.createStatement();
         Boolean resultado = false;
@@ -575,10 +575,7 @@ public class GuiaService {
             EmailService emailService = new EmailService(jdbcConnection);
 
             String[] todosLosCorreos=new String[correos.length+1];
-            for(int i=0;i<correos.length;i++)
-            {
-                todosLosCorreos[i]=correos[i];
-            }
+            System.arraycopy(correos, 0, todosLosCorreos, 0, correos.length);
             todosLosCorreos[todosLosCorreos.length-1]=guiaRequest.getM_sCorreoDestinatario();
             if(correos[0]==""){todosLosCorreos=new String[]{guiaRequest.getM_sCorreoDestinatario()};}
             emailService.sendMail(plantillaCorreo, "Seguimiento de la guia " +

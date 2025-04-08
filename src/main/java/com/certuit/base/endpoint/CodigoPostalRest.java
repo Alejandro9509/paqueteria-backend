@@ -21,7 +21,7 @@ public class CodigoPostalRest {
 
     @GetMapping("/CodigoPostal/GetById/{id}")
     public ResponseEntity<?> getCodigoPostal(@PathVariable("id") int id, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT " +
                     "    CP.IdCodigoPostal as m_nIdCP, " +
@@ -50,7 +50,7 @@ public class CodigoPostalRest {
 
     @GetMapping("/CodigoPostal/GetByCode/{code}")
     public ResponseEntity<?> getCodigoPostal(@PathVariable("code") String code, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         Connection jdbcConnection = dbConection.getconnection(rfc);
         String query = "SELECT " +
                 "    CP.IdCodigoPostal as m_nIdCP,\n" +
@@ -71,7 +71,7 @@ public class CodigoPostalRest {
     public ResponseEntity<?> getCodigoPostalByEstadoMunicipio(@PathVariable("idestado") String idEstado,
                                                               @PathVariable("idmunicipio") String idMunicipio,
                                                               @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         String query;
         Statement statement;
         ResultSet rs;
@@ -132,7 +132,7 @@ public class CodigoPostalRest {
     public ResponseEntity<?> getCodigoPostalByEstadoMunicipioDisponibles(@PathVariable("idestado") String idEstado,
                                                                          @PathVariable("idmunicipio") String idMunicipio,
                                                                          @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         String query;
         Statement statement;
         ResultSet rs;
@@ -194,7 +194,7 @@ public class CodigoPostalRest {
     }
 
     @GetMapping("/CodigoPostal/GetListado")
-    public ResponseEntity<?> getListadoCP(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getListadoCP(@RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT * FROM CatCodigosPostales order by CodigoPostal, Colonia";
             Statement statement = jdbcConnection.createStatement();

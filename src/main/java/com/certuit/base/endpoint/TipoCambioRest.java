@@ -18,7 +18,7 @@ public class TipoCambioRest {
     DBConection dbConection;
 
     @GetMapping("/TipoCambio/GetListado")
-    public ResponseEntity<?> getOrigenDestino(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getOrigenDestino(@RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT " +
@@ -39,7 +39,7 @@ public class TipoCambioRest {
 
     @GetMapping("/TipoCambio/GetById/{id}")
     public ResponseEntity<?> getTipoCambio(@PathVariable("id") int id, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             ResultSet rs;
             try {
@@ -52,7 +52,7 @@ public class TipoCambioRest {
                         "\tModificadoEl as m_dtModificadoEl,\n" +
                         "\tModificadoPor as m_nModificadoPor\n" +
                         "\tFROM CatTiposCambioPQ\n" +
-                        "\tWHERE IdTipoCambio =" + id + "";
+                        "\tWHERE IdTipoCambio =" + id;
                 Statement statement = jdbcConnection.createStatement();
                 rs = statement.executeQuery(query);
             } catch (Exception e) {

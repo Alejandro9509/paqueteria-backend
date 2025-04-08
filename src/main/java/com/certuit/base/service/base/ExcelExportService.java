@@ -647,9 +647,6 @@ public class ExcelExportService {
             Statement statement = jdbcConnection.createStatement();
             ResultSet rs = statement.executeQuery(query);
             JSONObject json = convertObject(rs);
-            if (json == null){
-                return null;
-            }
             return json;
         } catch (Exception e) {
             return null;

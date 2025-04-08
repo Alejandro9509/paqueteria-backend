@@ -21,7 +21,7 @@ public class UnidadesMedidaRest {
     DBConection dbConection;
 
     @GetMapping("/UnidadesMedida/GetListado")
-    public ResponseEntity<?> getOrigenDestino(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getOrigenDestino(@RequestHeader("RFC") String rfc) throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT IdUnidadMedida, UnidadMedida, EsPeso, EquivalenciaEDI\n" +

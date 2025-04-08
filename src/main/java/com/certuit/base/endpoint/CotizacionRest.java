@@ -22,7 +22,7 @@ public class CotizacionRest {
 
     @PostMapping("/Cotizador/Agregar")
     public ResponseEntity<?> postCotizacion(@RequestBody CotizacionRequest request, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
         String query = "EXEC usp_CatCotizacionAgregarPQ " +
                 request.getIdOrigen() +
@@ -90,7 +90,7 @@ public class CotizacionRest {
 
     @PostMapping("/Cotizador/Busqueda")
     public ResponseEntity<?> postCotizacionBsuqueda(@RequestBody CotizacionRequest request,
-                                                    @RequestHeader("RFC") String rfc) throws SQLException, Exception{
+                                                    @RequestHeader("RFC") String rfc) throws Exception{
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "EXEC usp_CatCotizacionAgregarPQ " +
                     request.getIdOrigen() +

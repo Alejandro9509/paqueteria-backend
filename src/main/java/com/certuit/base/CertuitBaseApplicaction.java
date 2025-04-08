@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
+
 @SpringBootApplication
 @EnableAsync
 @EnableScheduling
@@ -24,3 +25,4 @@ public class CertuitBaseApplicaction extends SpringBootServletInitializer {
 		return application.sources(CertuitBaseApplicaction.class);
 	}
 }
+

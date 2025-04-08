@@ -5,6 +5,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 public class ForHuaweiCloudFunctions {
     public static String CARPETA="GMTERPV8PQ/";
@@ -51,7 +52,7 @@ public class ForHuaweiCloudFunctions {
         String algorithm="HmacSHA256";
         Mac mac=Mac.getInstance(algorithm);
         mac.init(new SecretKeySpec(key,algorithm));
-        String p= org.apache.commons.codec.binary.Hex.encodeHexString(mac.doFinal(data.getBytes("UTF-8")));
-        return mac.doFinal(data.getBytes("UTF-8"));
+        String p= org.apache.commons.codec.binary.Hex.encodeHexString(mac.doFinal(data.getBytes(StandardCharsets.UTF_8)));
+        return mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
     }
 }

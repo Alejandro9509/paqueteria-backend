@@ -20,7 +20,7 @@ public class TipoCobroRest {
     DBConection dbConection;
 
     @GetMapping("/TipoCobro/GetListado")
-    public ResponseEntity<?> getOrigenDestino(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getOrigenDestino(@RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT" +
                     "  IdTipoCobro as m_nIdTipoCobro," +
@@ -49,7 +49,7 @@ public class TipoCobroRest {
 
     @GetMapping("/TipoCobro/GetTipoCobro/{id}")
     public ResponseEntity<?> getOrigenDestino(@PathVariable("id") int idTipoCobro, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT\n" +
                     "\t  IdTipoCobro,\n" +
@@ -76,7 +76,7 @@ public class TipoCobroRest {
 
     @PostMapping("/TipoCobro/Agregar")
     public ResponseEntity<?> postTipoCobro(@RequestBody TipoCobroRequest request, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
 
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "EXEC usp_CatTipoCobroAgregarPQ  " +
@@ -109,7 +109,7 @@ public class TipoCobroRest {
     @PutMapping("/TipoCobro/Modificar/{id}")
     public ResponseEntity<?> putTipoCobro(@PathVariable("id") int idTipoCobro,
                                           @RequestBody TipoCobroRequest request,
-                                          @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                          @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "EXEC usp_CatTipoCobroModificarPQ  " +
                     +idTipoCobro +
@@ -139,7 +139,7 @@ public class TipoCobroRest {
 
     @DeleteMapping("/TipoCobro/Eliminar/{id}")
     public ResponseEntity<?> deleteTipoCobro(@PathVariable("id") int idTipoCobro,
-                                             @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                             @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "";
             Statement statement = jdbcConnection.createStatement();

@@ -20,10 +20,10 @@ public class RutasRest {
 
     @GetMapping("/Rutas/GetRutasByIdCliente/{idCliente}")
     public ResponseEntity<?> getRutasByIdCliente(@PathVariable("idCliente") int idCliente,
-                                                 @RequestHeader("RFC") String rfc) throws SQLException, Exception {
+                                                 @RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "select ct.IdRuta,ct.Kilometros,ct.Horas,ct.DescripcionRuta from CatRutas ct " +
-                    "where ct.IdCliente=" + idCliente + "";
+                    "where ct.IdCliente=" + idCliente;
             Statement statement = jdbcConnection.createStatement();
             ResultSet rs = statement.executeQuery(query);
             String jsonArray = UtilFuctions.convertArray(rs).toString();
@@ -40,7 +40,7 @@ public class RutasRest {
                                                               @PathVariable("idOrigen") int idOrigen,
                                                               @PathVariable("idDestino") int idDestino,
                                                               @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "select " +
                     "ct.IdRuta," +
@@ -67,7 +67,7 @@ public class RutasRest {
     public ResponseEntity<?> getRutasByOrigenDestino(@PathVariable("idOrigen") int idOrigen,
                                                      @PathVariable("idDestino") int idDestino,
                                                      @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "select " +
                     "ct.IdRuta," +
@@ -93,7 +93,7 @@ public class RutasRest {
     @GetMapping("/Rutas/GetTrayectosRuta/{idRuta}")
     public ResponseEntity<?> getRutas(@PathVariable("idRuta") int idRuta,
                                       @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "select " +
                     "IdRutaTrayecto," +
@@ -106,7 +106,7 @@ public class RutasRest {
                     "Kilometros," +
                     "Horas " +
                     "from CatRutasTrayectos " +
-                    "where IdRuta=" + idRuta + "";
+                    "where IdRuta=" + idRuta;
             Statement statement = jdbcConnection.createStatement();
             ResultSet rs = statement.executeQuery(query);
             String jsonArray = UtilFuctions.convertArray(rs).toString();
@@ -120,11 +120,11 @@ public class RutasRest {
 
     @GetMapping("/Rutas/GetById/{idRuta}")
     public ResponseEntity<?> getById(@PathVariable("idRuta") int idRuta, @RequestHeader("RFC") String rfc)
-            throws SQLException, Exception {
+            throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT IdRuta, DescripcionRuta, IdOrigen, IdDestino, IdCliente\n" +
                     "from CatRutas\n" +
-                    "where IdRuta = " + idRuta + "";
+                    "where IdRuta = " + idRuta;
             Statement statement = jdbcConnection.createStatement();
             ResultSet rs = statement.executeQuery(query);
             JSONObject jsonObject = UtilFuctions.convertObject(rs);

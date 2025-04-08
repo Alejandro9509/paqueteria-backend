@@ -14,7 +14,7 @@ import java.sql.Statement;
 public class ConvenioService {
     @Autowired
     ConceptosService conceptosService;
-    public JSONArray getTarifasConvenioPorIdConvenio(int idConvenio, Connection jdbcConnection) throws SQLException, Exception{
+    public JSONArray getTarifasConvenioPorIdConvenio(int idConvenio, Connection jdbcConnection) throws Exception{
         String query = "SELECT  " +
                 "    tc.IdTarifaConvenio as m_nIdTarifaConvenio,  " +
                 "    t.IdTarifa as m_nIdTarifa,  " +
@@ -50,7 +50,7 @@ public class ConvenioService {
         return convertirConcepto(rs, jdbcConnection);
     }
 
-    public JSONArray getZonasConvenioPorIdConvenio(int idConvenio, Connection jdbcConnection) throws SQLException, Exception{
+    public JSONArray getZonasConvenioPorIdConvenio(int idConvenio, Connection jdbcConnection) throws Exception{
         String query = "select  " +
                 "m_nIdZonaConvenio = IdZonaConvenio, " +
                 "  m_nIdConvenio = IdConvenio, " +

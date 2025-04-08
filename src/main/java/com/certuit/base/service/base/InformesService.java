@@ -23,7 +23,7 @@ public class InformesService {
     @Autowired
     EmbarqueService embarqueService;
 
-    public JSONArray getGuiasInforme(int id, Connection jdbcConnection) throws SQLException, Exception {
+    public JSONArray getGuiasInforme(int id, Connection jdbcConnection) throws Exception {
         String query = "SELECT " +
                 " g.IdGuia as m_nIdGuia, " +
                 "ISNULL(g.Timbrado,0) as m_sTimbrado,"+
@@ -44,7 +44,7 @@ public class InformesService {
         return UtilFuctions.convertArray(rs);
     }
 
-    public JSONArray getGuiasPaquetesInforme(int id, Connection jdbcConnection) throws SQLException, Exception {
+    public JSONArray getGuiasPaquetesInforme(int id, Connection jdbcConnection) throws Exception {
         String query = "SELECT " +
                 " g.IdGuia as m_nIdGuia, " +
                 " (select Estatus from CatEstatusGuiasPQ eg where eg.IdEstatusGuias = g.IdEstatusGuia ) as m_sEstatusGuia " +
@@ -68,7 +68,7 @@ public class InformesService {
         return guiaService.convertGuia(rs,jdbcConnection);
     }
 
-    public JSONObject getInformeId(int id, Connection jdbcConnection) throws SQLException, Exception {
+    public JSONObject getInformeId(int id, Connection jdbcConnection) throws Exception {
         String query = "SELECT cin.IdInforme                                                                                       as m_nIdInforme, \n" +
                 "           cin.FolioInforme                                                                                    as m_sFolioInforme, \n" +
                 "           cin.Fecha                                                                                           as m_dFecha, \n" +
@@ -139,7 +139,7 @@ public class InformesService {
         return jsonObject;
     }
 
-    public JSONObject getInformeIdEscaner(int id, Connection jdbcConnection) throws SQLException, Exception {
+    public JSONObject getInformeIdEscaner(int id, Connection jdbcConnection) throws Exception {
         String query = "SELECT " +
                 "    cin.IdInforme as m_nIdInforme, " +
                 "    cin.FolioInforme as m_sFolioInforme, " +
@@ -195,7 +195,7 @@ public class InformesService {
         return jsonObject;
     }
 
-    public JSONObject getInformeIdEscanerValidar(int id, Connection jdbcConnection) throws SQLException, Exception {
+    public JSONObject getInformeIdEscanerValidar(int id, Connection jdbcConnection) throws Exception {
         String query = "SELECT " +
                 "    cin.IdInforme as m_nIdInforme, " +
                 "    cin.FolioInforme as m_sFolioInforme, " +
@@ -321,7 +321,7 @@ public class InformesService {
 
     }
 
-    public JSONArray getListadoPorInformes(int id, Connection jdbcConnection) throws SQLException, Exception {
+    public JSONArray getListadoPorInformes(int id, Connection jdbcConnection) throws Exception {
         String query = "SELECT\n" +
                 "\t\tg.IdEmbarque\n" +
                 "\t\t,(select FolioEmbarque from ProEmbarquePQ e where g.IdEmbarque = e.IdEmbarque) as FolioEmbarque\n" +
@@ -458,7 +458,7 @@ public class InformesService {
         return array;
     }
 
-    public void agregarInformeGuia(InformeGuiaRequest i, int id, int creadoPor, Connection jdbcConnection) throws SQLException, Exception {
+    public void agregarInformeGuia(InformeGuiaRequest i, int id, int creadoPor, Connection jdbcConnection) throws Exception {
         try {
             String query = "insert into ProInformeGuiaPQ (IdInforme,IdGuia, CreadoPor) " +
                     "values (" + id + "," + i.getM_nIdGuia() + "," + creadoPor + ")";
@@ -466,7 +466,7 @@ public class InformesService {
             statement.executeUpdate(query);
 
             String query2 = "update ProGuiaPQ set IdInforme = " + id + ",IdEstatusGuia=5 " +
-                    "where IdGuia = " + i.getM_nIdGuia() + "";
+                    "where IdGuia = " + i.getM_nIdGuia();
             Statement statement2 = jdbcConnection.createStatement();
             statement2.executeUpdate(query2);
 

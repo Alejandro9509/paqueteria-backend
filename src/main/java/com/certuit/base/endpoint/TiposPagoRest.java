@@ -21,7 +21,7 @@ public class TiposPagoRest {
     DBConection dbConection;
 
     @GetMapping("/TiposPago/GetListado")
-    public ResponseEntity<?> getTiposPagos(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getTiposPagos(@RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT Clave as m_nIdTipoPago,MetodoPago as m_sTipoPago FROM CatMetodosPagos";
             Statement statement = jdbcConnection.createStatement();

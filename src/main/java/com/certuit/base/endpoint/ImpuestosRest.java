@@ -18,7 +18,7 @@ public class ImpuestosRest {
     DBConection dbConection;
 
     @GetMapping("/Impuestos/GetListado")
-    public ResponseEntity<?> getImpuestos(@RequestHeader("RFC") String rfc) throws SQLException, Exception {
+    public ResponseEntity<?> getImpuestos(@RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
             String query = "SELECT " +
                     "IdImpuesto as m_nIdImpuesto," +

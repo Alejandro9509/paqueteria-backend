@@ -6,7 +6,7 @@
 	<groupId>com.certuit</groupId>
 	<artifactId>certuit-base</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<name>certuit-base</name>
 	<description>Demo project for Spring Boot</description>
@@ -21,7 +21,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
+		<java.version>1.21</java.version>
 	</properties>
 
 	<dependencies>
@@ -57,7 +57,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
+
 		</dependency>
 		<dependency>
 		<groupId>net.sf.barcode4j</groupId>
@@ -98,6 +98,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+
 		</dependency>
 		<dependency>
 			<groupId>com.twilio.sdk</groupId>
@@ -109,6 +110,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
@@ -220,16 +222,10 @@
 
 	<repositories>
 		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
+			<id>central</id>
+			<name>Maven Central Repository</name>
+			<url>https://repo.maven.apache.org/maven2</url>
 		</repository>
 	</repositories>
-
-
-
 
 </project>

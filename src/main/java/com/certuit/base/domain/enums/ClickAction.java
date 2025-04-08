@@ -8,11 +8,11 @@ public enum ClickAction {
     int id;
     String descripcion;
 
-    private ClickAction(int id) {
+    ClickAction(int id) {
         this.id = id;
     }
 
-    private ClickAction(int id, String descripcion) {
+    ClickAction(int id, String descripcion) {
         this.id = id;
         this.descripcion = descripcion;
     }
