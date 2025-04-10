@@ -9,14 +9,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    @Override
     public void addCorsMappings(CorsRegistry registry) {
         long MAX_AGE_SECS = 3600;
         registry.addMapping("/**")
-        .allowedOrigins("http://localhost:8091", "https://tu-frontend.com")
-        .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
-        .allowCredentials(true)
-        .maxAge(MAX_AGE_SECS);
+                .allowedOriginPatterns("*") // <- permite todos los orígenes con credentials
+                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+                .allowCredentials(true)
+                .maxAge(MAX_AGE_SECS);
     }
 
     @Override

@@ -8,6 +8,7 @@ import com.certuit.base.util.DBConection;
 import com.certuit.base.util.UtilFuctions;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,44 +38,47 @@ public class ClienteRest {
     @GetMapping("/Clientes/GetListado")
     public ResponseEntity<?> getClientesListado(@RequestHeader("RFC") String rfc) throws Exception {
         try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
-            String query = "select " +
-                    "    cl.IdCliente as m_nIdCliente, " +
-                    "    cl.NumeroCliente as m_nNumeroCliente, " +
-                    "    cl.TipoCliente as m_nTipoCliente, " +
-                    "    cl.RFC as m_sRFC, " +
-                    "    cl.NombreFiscal as m_sNombreFiscal, " +
-                    "    cl.NombreCorto as m_sNombreCorto, " +
-                    "    cl.Activo as m_bActivo, " +
-                    "    cl.CodigoPostal as m_nIdCP, " +
-                    "    cl.CodigoPostal as m_sCodigoPostal, " +
-                    "    cl.IdEstado as m_nIdEstado, " +
-                    "    cl.Municipio as m_sMunicipio, " +
-                    "    cl.Localidad as m_sLocalidad, " +
-                    "    cl.Colonia as m_sColonia, " +
-                    "    cl.Calle as m_sCalle, " +
-                    "    cl.NoExterior as m_sNoExterior, " +
-                    "    cl.NoInterior as m_sNoInterior, " +
-                    "    cl.Telefono as m_sTelefono, " +
-                    "    cl.Celular as m_sCelular, " +
-                    "    cl.Celular as m_sTelefonoCelular, " +
-                    "    cl.Nextel as m_sNextel, " +
-                    "    cl.CorreoElectronico m_sCorreoElectronico, " +
-                    "    (case when cl.TieneSeguro is null or cl.TieneSeguro = 0 then CAST(0 AS BIT) " +
-                    "else CAST(1 AS BIT) end) as m_bTieneSeguro, " +
-                    "    (case when cl.IdTipoSeguro is null then 0 else cl.IdTipoSeguro end) as m_nIdTipoSeguro, " +
-                    "    (case when cl.PorcentajeSeguro is null then 0 else cl.PorcentajeSeguro end) " +
-                    "as m_cPorcentajeSeguro, " +
-                    "    cl.IdSucursal as m_nIdSucursal, " +
-                    "    cl.IdImpuestoTransladado as m_nIdImpuestoTransladado, " +
-                    " (case when cl.SaldoCredito > 0 or cl.DiasCredito <= 0 then 1 else 0 end) as m_bCreditoVencido, " +
-                    " (case when cl.SaldoCredito > 0 and cl.DiasCredito > 0 then 1 else 0 end) as m_bCreditoDisponible, " +
-                    " (case when cl.SaldoCredito = 0 and cl.DiasCredito = 0 then 1 else 0 end) as m_bSinCredito, " +
-                    " cl.SaldoCredito as m_nSaldoCliente," +
-                    " cl.SaldoCreditoDLLS as m_nSaldoDLLSCliente," +
-                    " cl.DiasCredito as m_nDiasCredito, " +
-                    "    (select Sucursal from CatSucursales s where s.IdSucursal = cl.IdSucursal) as m_sNombreSucursal, " +
-                    "    (select IdPais from CatEstados e where e.IdEstado = cl.IdEstado) as m_nIdPais " +
-                    "from CatClientes cl";
+            String query = """
+                SELECT 
+                    cl.IdCliente AS m_nIdCliente,
+                    cl.NumeroCliente AS m_nNumeroCliente,
+                    cl.TipoCliente AS m_nTipoCliente,
+                    cl.RFC AS m_sRFC,
+                    cl.NombreFiscal AS m_sNombreFiscal,
+                    cl.NombreCorto AS m_sNombreCorto,
+                    cl.Activo AS m_bActivo,
+                    cl.CodigoPostal AS m_nIdCP,
+                    cl.CodigoPostal AS m_sCodigoPostal,
+                    cl.IdEstado AS m_nIdEstado,
+                    cl.Municipio AS m_sMunicipio,
+                    cl.Localidad AS m_sLocalidad,
+                    cl.Colonia AS m_sColonia,
+                    cl.Calle AS m_sCalle,
+                    cl.NoExterior AS m_sNoExterior,
+                    cl.NoInterior AS m_sNoInterior,
+                    cl.Telefono AS m_sTelefono,
+                    cl.Celular AS m_sCelular,
+                    cl.Celular AS m_sTelefonoCelular,
+                    cl.Nextel AS m_sNextel,
+                    cl.CorreoElectronico AS m_sCorreoElectronico,
+                    CASE 
+                        WHEN cl.TieneSeguro IS NULL OR cl.TieneSeguro = 0 THEN CAST(0 AS BIT) 
+                        ELSE CAST(1 AS BIT)
+                    END AS m_bTieneSeguro,
+                    ISNULL(cl.IdTipoSeguro, 0) AS m_nIdTipoSeguro,
+                    ISNULL(cl.PorcentajeSeguro, 0) AS m_cPorcentajeSeguro,
+                    cl.IdSucursal AS m_nIdSucursal,
+                    cl.IdImpuestoTransladado AS m_nIdImpuestoTransladado,
+                    CASE WHEN cl.SaldoCredito > 0 OR cl.DiasCredito <= 0 THEN 1 ELSE 0 END AS m_bCreditoVencido,
+                    CASE WHEN cl.SaldoCredito > 0 AND cl.DiasCredito > 0 THEN 1 ELSE 0 END AS m_bCreditoDisponible,
+                    CASE WHEN cl.SaldoCredito = 0 AND cl.DiasCredito = 0 THEN 1 ELSE 0 END AS m_bSinCredito,
+                    cl.SaldoCredito AS m_nSaldoCliente,
+                    cl.SaldoCreditoDLLS AS m_nSaldoDLLSCliente,
+                    cl.DiasCredito AS m_nDiasCredito,
+                    (SELECT Sucursal FROM CatSucursales s WHERE s.IdSucursal = cl.IdSucursal) AS m_sNombreSucursal,
+                    (SELECT IdPais FROM CatEstados e WHERE e.IdEstado = cl.IdEstado) AS m_nIdPais
+                FROM CatClientes cl
+                """;
             Statement statement = jdbcConnection.createStatement();
             ResultSet rs = statement.executeQuery(query);
             String jsonArray = UtilFuctions.convertArray(rs).toString();
@@ -600,10 +604,17 @@ public class ClienteRest {
         String sCadena2 = String.format("%08d", abs(nNumeroHash));
 
         nNumeroHash = Integer.parseInt(getHash2(("ENTROPIA9"+ sFecha.substring(0,6)),99999999));
+        StringBuilder sCadenaFinal = getStringBuilder(nNumeroHash, sCadena1, sCadena2);
+
+        return sCadenaFinal.toString();
+    }
+
+    @NotNull
+    private static StringBuilder getStringBuilder(long nNumeroHash, String sCadena1, String sCadena2) {
         String sCadena3 = String.format("%08d", abs(nNumeroHash));
 
         StringBuilder sCadenaFinal = new StringBuilder("MKM");
-        String sCadenaCombinada = sCadena1+sCadena2+sCadena3;
+        String sCadenaCombinada = sCadena1 + sCadena2 +sCadena3;
         int nLongitud = sCadenaCombinada.length();
         int nPosicion;
         int nExtraer;
@@ -617,9 +628,9 @@ public class ClienteRest {
 
             sCadenaFinal.append(sValorReferencia.charAt(nExtraer - 1));
         }
-
-        return sCadenaFinal.toString();
+        return sCadenaFinal;
     }
+
     private String cargarClaveEncriptacion() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(new File("/opt/apache-tomcat-8.5.40/webapps/rfc.json"));
@@ -728,6 +739,7 @@ public class ClienteRest {
             return ResponseEntity.status(500).body("Hubo un problema al consultar la información.");
         }
     }
+
 
     @GetMapping("/ValidarLogin/{Usuario}/{Password}")
     public ResponseEntity<?> validarLogin(@PathVariable("Usuario") String Usuario,
