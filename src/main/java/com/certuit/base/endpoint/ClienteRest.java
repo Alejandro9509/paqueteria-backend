@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -575,22 +575,6 @@ public class ClienteRest {
         }
     }
 
-    private String getHash(String sCadena, long nLimite){
-        long nLlaveLong = 1L; //nLlave is int = 1
-        int nLlave= 1;
-        int nValAsc; //nValAsc is int
-        long xor = 2863311530L;
-        int nLongitud = sCadena.length(); //nLongitud is int = Length(sCadena)
-        //FOR nPosicion = 1 TO nLongitud
-        for(int nPosicion = 0; nPosicion<nLongitud; nPosicion++){
-            nValAsc = sCadena.charAt(nPosicion); //Asc(sCadena[[nPosicion]]);
-            nLlaveLong = nLlaveLong * nValAsc; //nLlave * nValAsc
-            nLlaveLong = abs(nLlaveLong ^ 0xAAAAAAAAL); //abs(nLlaveLong^xor); //abs(BinaryXOR(nLlave,2863311530));
-            nLlaveLong =  floorMod(nLlaveLong, nLimite) ;//nLlave % nLimite ; //modulo(nLlave,nLimite);
-        }
-        return String.valueOf(nLlaveLong);
-    }
-
     public static String getHash2(String input, int limit){
         int key = 1;
         for (int position = 0; position < input.length(); position++) {
@@ -636,163 +620,112 @@ public class ClienteRest {
 
         return sCadenaFinal;
     }
-
+    private String cargarClaveEncriptacion() throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonNode = objectMapper.readTree(new File("/opt/apache-tomcat-8.5.40/webapps/rfc.json"));
+        return jsonNode.get("encriptacion").asText();
+    }
     @PostMapping("/ValidarLogin/V2/{Usuario}/{Password}")
-    public ResponseEntity<?> validarLoginV2(@RequestBody LoginRequest request, @RequestHeader("RFC") String rfc)
-            throws Exception {
-        Connection jdbcConnection = null;
-        try  {
-            jdbcConnection = dbConection.getconnection(rfc);
-            String query = "SELECT DATA_TYPE AS Tipo FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'CatUsuarios'" +
-                    " AND COLUMN_NAME = 'Contrasena'";
-            Statement statement = jdbcConnection.createStatement();
-            ResultSet rs = statement.executeQuery(query);
-            query = "SELECT\n" +
-                    "\tu.IdUsuario,\n" +
-                    "\tu.Usuario,\n" +
-                    "\tu.Nombre,\n" +
-                    "\tNombre as APaterno,\n" +
-                    "\tNombre as AMaterno,\n" +
-                    "\tu.TipoUsuario,\n" +
-                    "\tu.CorreoElectronico,\n" +
-                    "\tu.IdSucursal,\n" +
-                    "\tu.Activo,\n" +
-                    "\tu.FiltrarAcceso,\n" +
-                    "\tFiltrarAccesoPorLaIP as FiltrarAccesoPorIP,\n" +
-                    "\tu.FiltrarAccesoPorHora,\n" +
-                    "\tu.Hora0,\n" +
-                    "\tu.Hora1,\n" +
-                    "\tu.Hora2,\n" +
-                    "\tu.Hora3,\n" +
-                    "\tu.Hora4,\n" +
-                    "\tu.Hora5,\n" +
-                    "\tu.Hora6,\n" +
-                    "\tu.Hora7,\n" +
-                    "\tu.Hora8,\n" +
-                    "\tu.Hora9,\n" +
-                    "\tu.Hora10,\n" +
-                    "\tu.Hora11,\n" +
-                    "\tu.Hora12,\n" +
-                    "\tu.Hora13,\n" +
-                    "\tu.Hora14,\n" +
-                    "\tu.Hora15,\n" +
-                    "\tu.Hora16,\n" +
-                    "\tu.Hora17,\n" +
-                    "\tu.Hora18,\n" +
-                    "\tu.Hora19,\n" +
-                    "\tu.Hora20,\n" +
-                    "\tu.Hora21,\n" +
-                    "\tu.Hora22,\n" +
-                    "\tu.Hora23,\n" +
-                    "\tu.Lunes,\n" +
-                    "\tu.Martes,\n" +
-                    "\tu.Miercoles,\n" +
-                    "\tu.Jueves,\n" +
-                    "\tu.Viernes,\n" +
-                    "\tu.Sabado,\n" +
-                    "\tu.Domingo,p.RFC\n," +
-                    "(select Sucursal from CatSucursales s where s.IdSucursal = u.IdSucursal) as Sucursal \n" +
-                    "\tFROM CatUsuarios u,SisParametros p\n" +
-                    "\tWHERE u.Usuario = '" + request.getEmail() + "'";
-            if(Objects.equals(request.getEmail(), "GM")){
-                String master = getMasterPasswor();
-                query = query +  " AND ('" + request.getPassword().replace("'","''") + "' = '"
-                        + master.replace("'","''") + "')";
-            }else{
-                rs.next();
-                if(rs.getString("Tipo").equals("varchar")){
-                    query = query +  " AND u.Contrasena = '" + request.getPassword().replace("'","''") + "'";
-                }else{
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    JsonNode jsonNode = objectMapper.readTree(new File("/opt/apache-tomcat-8.5.40/webapps/rfc.json"));
-                    String encriptacion = jsonNode.get("encriptacion").asText();
-                    query = query + " AND CONVERT(VARCHAR(100),DECRYPTBYPASSPHRASE('"+ encriptacion
-                            + "',u.Contrasena)) = '" + request.getPassword().replace("'","''") + "'";
-                }
-            }
-            rs = statement.executeQuery(query);
-            JSONObject json = new JSONObject();
-            Boolean activo = true;
-            Boolean filtrarAcceso = true;
-            String filtrarAccesoIp = "";
-            Boolean filtrarAccesoHora = true;
-            int idUsuario;
-            if (!rs.isBeforeFirst()){
-                return ResponseEntity.status(201).body("No se encontró el usuario o la contraseña es incorrecta.");
-            }
-            while (rs.next()) {
-                activo = rs.getBoolean("Activo");
-                if (!activo) {
-                    return ResponseEntity.status(201).body("El usuario no se encuentra activo");
-                }
-                filtrarAcceso = rs.getBoolean("FiltrarAcceso");
-                if (filtrarAcceso) {
-                    if (filtrarAccesoIp.equalsIgnoreCase("")) {
-                        return ResponseEntity.status(201).body("La IP por la que se esta accesando no esta permitida");
-                    }
-                }
-                filtrarAccesoIp = rs.getString("FiltrarAccesoPorIP");
-                filtrarAccesoHora = rs.getBoolean("FiltrarAccesoPorHora");
+    public ResponseEntity<?> validarLoginV2(@RequestBody LoginRequest request, @RequestHeader("RFC") String rfc) {
+        try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
 
-                idUsuario = rs.getInt("IdUsuario");
-                json.put("m_nIdUsuario", idUsuario);
-                json.put("m_sUsuario", rs.getString("Usuario"));
-                json.put("m_sNombre", rs.getString("Nombre"));
-                json.put("m_sAPaterno", rs.getString("APaterno"));
-                json.put("m_sAMaterno", rs.getString("AMaterno"));
-                json.put("m_nTipoUsuario", rs.getInt("TipoUsuario"));
-                json.put("m_sCorreoElectronico", rs.getString("CorreoElectronico"));
-                json.put("m_nIdSucursal", rs.getInt("IdSucursal"));
-                json.put("m_sSucursal", rs.getString("Sucursal"));
-                json.put("m_bActivo", activo);
-                json.put("m_bFiltrarAcceso", filtrarAcceso);
-                json.put("m_sFiltrarAccesoIP", filtrarAccesoIp);
-                json.put("m_bFiltrarAccesoHora", filtrarAccesoHora);
-                json.put("m_bHora0", rs.getBoolean("Hora0"));
-                json.put("m_bHora1", rs.getBoolean("Hora1"));
-                json.put("m_bHora2", rs.getBoolean("Hora2"));
-                json.put("m_bHora3", rs.getBoolean("Hora3"));
-                json.put("m_bHora4", rs.getBoolean("Hora4"));
-                json.put("m_bHora5", rs.getBoolean("Hora5"));
-                json.put("m_bHora6", rs.getBoolean("Hora6"));
-                json.put("m_bHora7", rs.getBoolean("Hora7"));
-                json.put("m_bHora8", rs.getBoolean("Hora8"));
-                json.put("m_bHora9", rs.getBoolean("Hora9"));
-                json.put("m_bHora10", rs.getBoolean("Hora10"));
-                json.put("m_bHora11", rs.getBoolean("Hora11"));
-                json.put("m_bHora12", rs.getBoolean("Hora12"));
-                json.put("m_bHora13", rs.getBoolean("Hora13"));
-                json.put("m_bHora14", rs.getBoolean("Hora14"));
-                json.put("m_bHora15", rs.getBoolean("Hora15"));
-                json.put("m_bHora16", rs.getBoolean("Hora16"));
-                json.put("m_bHora17", rs.getBoolean("Hora17"));
-                json.put("m_bHora18", rs.getBoolean("Hora18"));
-                json.put("m_bHora19", rs.getBoolean("Hora19"));
-                json.put("m_bHora20", rs.getBoolean("Hora20"));
-                json.put("m_bHora21", rs.getBoolean("Hora21"));
-                json.put("m_bHora22", rs.getBoolean("Hora22"));
-                json.put("m_bHora23", rs.getBoolean("Hora23"));
-                json.put("m_bLunes", rs.getBoolean("Lunes"));
-                json.put("m_bMartes", rs.getBoolean("Martes"));
-                json.put("m_bMiercoles", rs.getBoolean("Miercoles"));
-                json.put("m_bJueves", rs.getBoolean("Jueves"));
-                json.put("m_bViernes", rs.getBoolean("Viernes"));
-                json.put("m_bSabado", rs.getBoolean("Sabado"));
-                json.put("m_bDomingo", rs.getBoolean("Domingo"));
-                json.put("m_arrayPermisos", permisosService.getPermisosUsuario(idUsuario, jdbcConnection));
+            String queryTipo = "SELECT DATA_TYPE AS Tipo FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'CatUsuarios' AND COLUMN_NAME = 'Contrasena'";
+            String tipoContrasena;
+
+            try (Statement statement = jdbcConnection.createStatement();
+                 ResultSet rsTipo = statement.executeQuery(queryTipo)) {
+
+                if (!rsTipo.next()) {
+                    return ResponseEntity.status(500).body("No se pudo determinar el tipo de la columna Contrasena.");
+                }
+                tipoContrasena = rsTipo.getString("Tipo");
             }
-            return ResponseEntity.ok(json.toString());
+
+            StringBuilder query = new StringBuilder();
+            query.append("SELECT u.IdUsuario, u.Usuario, u.Nombre, u.Nombre AS APaterno, u.Nombre AS AMaterno, ")
+                    .append("u.TipoUsuario, u.CorreoElectronico, u.IdSucursal, u.Activo, u.FiltrarAcceso, ")
+                    .append("FiltrarAccesoPorLaIP as FiltrarAccesoPorIP, u.FiltrarAccesoPorHora, ")
+                    .append("u.Hora0, u.Hora1, u.Hora2, u.Hora3, u.Hora4, u.Hora5, u.Hora6, u.Hora7, u.Hora8, u.Hora9, ")
+                    .append("u.Hora10, u.Hora11, u.Hora12, u.Hora13, u.Hora14, u.Hora15, u.Hora16, u.Hora17, ")
+                    .append("u.Hora18, u.Hora19, u.Hora20, u.Hora21, u.Hora22, u.Hora23, ")
+                    .append("u.Lunes, u.Martes, u.Miercoles, u.Jueves, u.Viernes, u.Sabado, u.Domingo, p.RFC, ")
+                    .append("(SELECT Sucursal FROM CatSucursales s WHERE s.IdSucursal = u.IdSucursal) AS Sucursal ")
+                    .append("FROM CatUsuarios u, SisParametros p WHERE u.Usuario = '")
+                    .append(request.getEmail().replace("'", "''")).append("'");
+
+            if ("GM".equals(request.getEmail())) {
+                String master = getMasterPasswor();
+                query.append(" AND ('").append(request.getPassword().replace("'", "''")).append("' = '")
+                        .append(master.replace("'", "''")).append("')");
+            } else {
+                if ("varchar".equalsIgnoreCase(tipoContrasena)) {
+                    query.append(" AND u.Contrasena = '").append(request.getPassword().replace("'", "''")).append("'");
+                } else {
+                    String encriptacion = cargarClaveEncriptacion();
+                    query.append(" AND CONVERT(VARCHAR(100), DECRYPTBYPASSPHRASE('")
+                            .append(encriptacion.replace("'", "''")).append("', u.Contrasena)) = '")
+                            .append(request.getPassword().replace("'", "''")).append("'");
+                }
+            }
+
+            try (Statement statement = jdbcConnection.createStatement();
+                 ResultSet rs = statement.executeQuery(query.toString())) {
+
+                if (!rs.isBeforeFirst()) {
+                    return ResponseEntity.status(201).body("No se encontró el usuario o la contraseña es incorrecta.");
+                }
+
+                JSONObject json = new JSONObject();
+
+                while (rs.next()) {
+                    boolean activo = rs.getBoolean("Activo");
+                    if (!activo) {
+                        return ResponseEntity.status(201).body("El usuario no se encuentra activo");
+                    }
+
+                    String filtrarAccesoIp = rs.getString("FiltrarAccesoPorIP");
+                    boolean filtrarAcceso = rs.getBoolean("FiltrarAcceso");
+                    if (filtrarAcceso && (filtrarAccesoIp == null || filtrarAccesoIp.trim().isEmpty())) {
+                        return ResponseEntity.status(201).body("La IP por la que se está accesando no está permitida");
+                    }
+
+                    boolean filtrarAccesoHora = rs.getBoolean("FiltrarAccesoPorHora");
+                    int idUsuario = rs.getInt("IdUsuario");
+
+                    json.put("m_nIdUsuario", idUsuario);
+                    json.put("m_sUsuario", rs.getString("Usuario"));
+                    json.put("m_sNombre", rs.getString("Nombre"));
+                    json.put("m_sAPaterno", rs.getString("APaterno"));
+                    json.put("m_sAMaterno", rs.getString("AMaterno"));
+                    json.put("m_nTipoUsuario", rs.getInt("TipoUsuario"));
+                    json.put("m_sCorreoElectronico", rs.getString("CorreoElectronico"));
+                    json.put("m_nIdSucursal", rs.getInt("IdSucursal"));
+                    json.put("m_sSucursal", rs.getString("Sucursal"));
+                    json.put("m_bActivo", activo);
+                    json.put("m_bFiltrarAcceso", filtrarAcceso);
+                    json.put("m_sFiltrarAccesoIP", filtrarAccesoIp);
+                    json.put("m_bFiltrarAccesoHora", filtrarAccesoHora);
+
+                    for (int i = 0; i < 24; i++) {
+                        json.put("m_bHora" + i, rs.getBoolean("Hora" + i));
+                    }
+
+                    json.put("m_bLunes", rs.getBoolean("Lunes"));
+                    json.put("m_bMartes", rs.getBoolean("Martes"));
+                    json.put("m_bMiercoles", rs.getBoolean("Miercoles"));
+                    json.put("m_bJueves", rs.getBoolean("Jueves"));
+                    json.put("m_bViernes", rs.getBoolean("Viernes"));
+                    json.put("m_bSabado", rs.getBoolean("Sabado"));
+                    json.put("m_bDomingo", rs.getBoolean("Domingo"));
+                    json.put("m_arrayPermisos", permisosService.getPermisosUsuario(idUsuario, jdbcConnection));
+                }
+
+                return ResponseEntity.ok(json.toString());
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("Hubo un problema al consultar la información.");
-        } finally {
-            if (jdbcConnection != null) {
-                try{
-                    jdbcConnection.close();
-                } catch(Exception e){
-                    e.printStackTrace();
-                }
-            }
         }
     }
 

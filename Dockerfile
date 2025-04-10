@@ -15,7 +15,7 @@ WORKDIR /app
 COPY target/mi-app.jar app.jar
 
 # Expón el puerto en el que corre tu app (normalmente 8080)
-EXPOSE 8080
+EXPOSE 8091
 
 # Comando para ejecutar la app
 CMD ["java", "-jar", "app.jar"]
