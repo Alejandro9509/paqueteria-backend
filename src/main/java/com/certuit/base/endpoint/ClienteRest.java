@@ -602,7 +602,7 @@ public class ClienteRest {
         nNumeroHash = Integer.parseInt(getHash2(("ENTROPIA9"+ sFecha.substring(0,6)),99999999));
         String sCadena3 = String.format("%08d", abs(nNumeroHash));
 
-        String sCadenaFinal = "MKM";
+        StringBuilder sCadenaFinal = new StringBuilder("MKM");
         String sCadenaCombinada = sCadena1+sCadena2+sCadena3;
         int nLongitud = sCadenaCombinada.length();
         int nPosicion;
@@ -610,15 +610,15 @@ public class ClienteRest {
         String sValorReferencia ="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%*()_-+=:;?.,/<>||\"'&{}[]1234567890";
         for(nPosicion = 0; nPosicion < nLongitud; nPosicion += 2){
             String extract = sCadenaCombinada.substring(nPosicion, nPosicion+2);
-            nExtraer = Integer.parseInt(extract);//nExtraer = sCadenaCombinada[[nPosicion TO nPosicion+1]]
+            nExtraer = Integer.parseInt(extract);
             if(nExtraer == 0){
                 nExtraer = 1;
             }
-            //System.out.println(nPosicion + " -- " + extract + " -- " + sValorReferencia.charAt(nExtraer));
-            sCadenaFinal += sValorReferencia.charAt(nExtraer-1);
+
+            sCadenaFinal.append(sValorReferencia.charAt(nExtraer - 1));
         }
 
-        return sCadenaFinal;
+        return sCadenaFinal.toString();
     }
     private String cargarClaveEncriptacion() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
