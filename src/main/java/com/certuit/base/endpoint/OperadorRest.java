@@ -130,59 +130,93 @@ public class OperadorRest {
      * En esta version se retorna el id del sistema al que pertenece el operador.
      * */
     @PostMapping("/v2/Operador/ValidarLoginPaqueteria")
-    public ResponseEntity<?> loginOperadorv2(@RequestBody LoginAppRequest
-                                                   loginAppRequest, @RequestHeader("RFC") String rfc) throws Exception {
-        try {
-            Connection jdbcConnection = dbConection.getconnection(rfc);
-            String query = "SELECT top 1 o.IdOperador FROM CatOperadores o WHERE o.NumeroOperador = ?";
-            PreparedStatement preparedStatement = jdbcConnection.prepareStatement(query);
-            preparedStatement.setString(1, loginAppRequest.getUsername());
-            ResultSet rs = preparedStatement.executeQuery();
-            JSONObject jsonObject = UtilFuctions.convertObject(rs);
-            if (jsonObject == null) {
+    public ResponseEntity<?> loginOperadorv2(@RequestBody LoginAppRequest loginAppRequest,
+                                             @RequestHeader("RFC") String rfc) {
+        try (Connection jdbcConnection = dbConection.getconnection(rfc)) {
+
+            Integer idOperador = obtenerIdOperador(jdbcConnection, loginAppRequest.getUsername());
+            if (idOperador == null) {
                 return ResponseEntity.status(401).body("No se encontró el operador. Verifique la información.");
             }
-            query = "update CatOperadores set DeviceId = ? where IdOperador = ?";
-            preparedStatement = jdbcConnection.prepareStatement(query);
-            preparedStatement.setString(1, loginAppRequest.getDeviceId());
-            preparedStatement.setInt(2, jsonObject.getInt("IdOperador"));
-            int result = preparedStatement.executeUpdate();
 
-            if (result != 1) {
+            boolean actualizado = actualizarDeviceId(jdbcConnection, idOperador, loginAppRequest.getDeviceId());
+            if (!actualizado) {
                 return ResponseEntity.status(500).body("Ocurrió un problema al iniciar sesión");
             }
 
-            query = "SELECT top 1 o.IdOperador                                                    as m_nIdOperador,\n" +
-                    "             o.Activo                                                        as m_bActivo,\n" +
-                    "             o.LicenciaVencimiento                                           as m_dtLicenciaVencimiento,\n" +
-                    "             o.NumeroOperador                                                AS m_nNumeroOperador,\n" +
-                    "             o.CorreoOperador                                                as m_sCorreoOperador,\n" +
-                    "             ''                                                              as m_sFotoOperador,\n" +
-                    "             o.Licencia                                                      as m_sLicencia,\n" +
-                    "             (o.Nombres + ' ' + o.ApellidoPaterno + ' ' + o.ApellidoMaterno) as m_sNombreCompleto,\n" +
-                    "             cu.Sucursal                                                     as m_sSucursal,\n" +
-                    "             o.DeviceId                                                      as m_sDeviceId\n" +
-                    "FROM CatOperadores o\n" +
-                    "         LEFT JOIN CatSucursales cu on o.IdSucursal = cu.IdSucursal\n" +
-                    "WHERE o.IdOperador = ?";
-            preparedStatement = jdbcConnection.prepareStatement(query);
-            preparedStatement.setInt(1, jsonObject.getInt("IdOperador"));
-            rs = preparedStatement.executeQuery();
-            jsonObject = UtilFuctions.convertObject(rs);
-            query = "SELECT top 1 TipoModulo as idSistema  from SisParametros";
-            preparedStatement = jdbcConnection.prepareStatement(query);
-            ResultSet rs2 = preparedStatement.executeQuery();
-            JSONObject jsonObject2 = UtilFuctions.convertObject(rs2);
-            if (jsonObject2 == null) {
-                return ResponseEntity.status(401).body("No se encontró el operador. Verifique la información.");
+            JSONObject datosOperador = obtenerDatosOperador(jdbcConnection, idOperador);
+            if (datosOperador == null) {
+                return ResponseEntity.status(500).body("No se pudieron obtener los datos del operador.");
             }
-            jsonObject.put("idSistema", jsonObject2.getInt("idSistema"));
-            return ResponseEntity.ok(jsonObject.toString());
+
+            Integer idSistema = obtenerIdSistema(jdbcConnection);
+            if (idSistema == null) {
+                return ResponseEntity.status(500).body("No se encontró información del sistema.");
+            }
+
+            datosOperador.put("idSistema", idSistema);
+            return ResponseEntity.ok(datosOperador.toString());
+
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("Ocurrió un problema al iniciar sesión");
         }
+    }
 
+    private Integer obtenerIdOperador(Connection conn, String numeroOperador) throws Exception {
+        String query = "SELECT TOP 1 o.IdOperador FROM CatOperadores o WHERE o.NumeroOperador = ?";
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, numeroOperador);
+            try (ResultSet rs = ps.executeQuery()) {
+                JSONObject result = UtilFuctions.convertObject(rs);
+                return (result != null) ? result.getInt("IdOperador") : null;
+            }
+        }
+    }
+
+    private boolean actualizarDeviceId(Connection conn, int idOperador, String deviceId) throws SQLException {
+        String query = "UPDATE CatOperadores SET DeviceId = ? WHERE IdOperador = ?";
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, deviceId);
+            ps.setInt(2, idOperador);
+            return ps.executeUpdate() == 1;
+        }
+    }
+
+    private JSONObject obtenerDatosOperador(Connection conn, int idOperador) throws SQLException {
+        String query = """
+        SELECT TOP 1 
+               o.IdOperador AS m_nIdOperador,
+               o.Activo AS m_bActivo,
+               o.LicenciaVencimiento AS m_dtLicenciaVencimiento,
+               o.NumeroOperador AS m_nNumeroOperador,
+               o.CorreoOperador AS m_sCorreoOperador,
+               '' AS m_sFotoOperador,
+               o.Licencia AS m_sLicencia,
+               (o.Nombres + ' ' + o.ApellidoPaterno + ' ' + o.ApellidoMaterno) AS m_sNombreCompleto,
+               cu.Sucursal AS m_sSucursal,
+               o.DeviceId AS m_sDeviceId
+        FROM CatOperadores o
+        LEFT JOIN CatSucursales cu ON o.IdSucursal = cu.IdSucursal
+        WHERE o.IdOperador = ?
+        """;
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, idOperador);
+            try (ResultSet rs = ps.executeQuery()) {
+                return UtilFuctions.convertObject(rs);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private Integer obtenerIdSistema(Connection conn) throws Exception {
+        String query = "SELECT TOP 1 TipoModulo AS idSistema FROM SisParametros";
+        try (PreparedStatement ps = conn.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+            JSONObject result = UtilFuctions.convertObject(rs);
+            return (result != null) ? result.getInt("idSistema") : null;
+        }
     }
 
     @PutMapping("/Operador/LogoutPaqueteria")
