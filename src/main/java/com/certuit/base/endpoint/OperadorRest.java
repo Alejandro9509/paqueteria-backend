@@ -77,8 +77,8 @@ public class OperadorRest {
 
     @PostMapping("/Operador/ValidarLoginPaqueteria")
     public ResponseEntity<?> loginOperador(@RequestBody LoginApp2Request loginAppRequest, @RequestHeader("RFC") String rfc) throws Exception {
-        try {
-            Connection jdbcConnection = dbConection.getconnection(rfc);
+        try (Connection jdbcConnection = dbConection.getconnection(rfc)){
+
             Statement statement = jdbcConnection.createStatement();
             String query = "SELECT top 1 o.IdOperador FROM CatOperadores o WHERE o.NumeroOperador = " + loginAppRequest.getUsername();
             ResultSet rs = statement.executeQuery(query);

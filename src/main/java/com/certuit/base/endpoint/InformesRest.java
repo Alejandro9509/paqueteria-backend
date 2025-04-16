@@ -242,7 +242,80 @@ public class InformesRest {
             return ResponseEntity.status(500).body("Hubo un problema al consultar la información. Intente más tarde.");
         }
     }
+    @GetMapping("/Informes/GetListadoEscaner/ByFecha/{fechaInicial}/{fechaFinal}")
+    public ResponseEntity<?> getInformesEscanerByFecha(
+            @RequestHeader("RFC") String rfc,
+            @PathVariable("fechaInicial") String fechaInicial,
+            @PathVariable("fechaFinal") String fechaFinal) {
 
+        String query = """
+                SELECT\s
+                    cin.IdInforme AS m_nIdInforme,
+                    cin.FolioInforme AS m_sFolioInforme,
+                    cin.Fecha AS m_dFecha,
+                    cin.Hora AS m_tHora,
+                    cin.IdEstatusInforme AS m_nIdEstatusInforme,
+                    cin.IdViaje AS m_nIdViaje,
+                    cin.IdRuta AS m_nIdRuta,
+                    v.FolioViaje AS m_sFolioViaje,
+                    cin.IdSucursalEmisora AS m_nIdSucursalEmisora,
+                    se.Sucursal AS m_sSucursalEmisora,
+                    cin.IdSucursalReceptora AS m_nIdSucursalReceptora,
+                    sr.Sucursal AS m_sSucursalReceptora,
+                    cin.IdOperador AS m_nIdOperador,
+                    CONCAT(co.Nombres,' ',co.ApellidoPaterno,' ',co.ApellidoMaterno) AS m_sNombreCompleto,
+                    co.NumeroOperador AS m_sNumeroOperador,
+                    du.Descripcion AS Dolly,
+                    r1.Descripcion AS m_sRemolque1,
+                    r2.Descripcion AS m_sRemolque2,
+                    r1.Codigo AS m_nIdentificador,
+                    cin.IdRemolque1 AS m_nIdRemolque1,
+                    cin.IdRemolque2 AS m_nIdRemolque2,
+                    cin.IdDolly AS m_nIdDolly,
+                    cin.PlacasRemolque1 AS m_sPlacasRemolque1,
+                    cin.PlacasRemolque2 AS m_sPlacasRemolque2,
+                    cin.PlacasDolly AS m_sDolly,
+                    o.OrigenDestino AS m_sCiudadOrigen,
+                    d.OrigenDestino AS m_sCiudadDestino,
+                    ruta.Descripcion AS m_sRuta,
+                    cin.IdCiudadDestino AS m_nIdCiudadDestino,
+                    cin.IdCiudadOrigen AS m_nIdCiudadOrigen,
+                    cin.FechaCancelacion AS m_dtFechaCancelacion,
+                    cin.UsuarioCancelacion AS m_nIdUsuarioCancelacion,
+                    cus.Nombre AS m_sNombre
+                FROM ProInformePQ cin
+                LEFT JOIN CatUsuarios cus ON cin.UsuarioCancelacion = cus.IdUsuario
+                LEFT JOIN CatOperadores co ON cin.IdOperador = co.IdOperador
+                LEFT JOIN ProViajesPQ v ON cin.IdViaje = v.IdViaje
+                LEFT JOIN CatSucursales se ON cin.IdSucursalEmisora = se.IdSucursal
+                LEFT JOIN CatSucursales sr ON cin.IdSucursalReceptora = sr.IdSucursal
+                LEFT JOIN CatUnidades du ON cin.IdDolly = du.IdUnidad
+                LEFT JOIN CatUnidades r1 ON cin.IdRemolque1 = r1.IdUnidad
+                LEFT JOIN CatUnidades r2 ON cin.IdRemolque2 = r2.IdUnidad
+                LEFT JOIN CatOrigenesDestinos o ON cin.IdCiudadOrigen = o.IdOrigenDestino
+                LEFT JOIN CatOrigenesDestinos d ON cin.IdCiudadDestino = d.IdOrigenDestino
+                LEFT JOIN CatDetalleRutasPQ ruta ON cin.IdRuta = ruta.IdDetalleRuta
+                WHERE cin.IdEstatusInforme = 5
+                  AND cin.Fecha BETWEEN ? AND ?
+                ORDER BY cin.FolioInforme DESC;
+        """;
+
+        try (Connection jdbcConnection = dbConection.getconnection(rfc);
+             PreparedStatement ps = jdbcConnection.prepareStatement(query)) {
+
+            ps.setDate(1, java.sql.Date.valueOf(fechaInicial));
+            ps.setDate(2, java.sql.Date.valueOf(fechaFinal));
+
+            try (ResultSet rs = ps.executeQuery()) {
+                JSONArray jsonArray = informesService.convertInformes(rs, jdbcConnection);
+                return ResponseEntity.ok(jsonArray.toString());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Hubo un problema al consultar la información. Intente más tarde.");
+        }
+    }
     @GetMapping("/Informes/GetListadoSinViajes")
     public ResponseEntity<?> getInformesFiltro(
             @RequestHeader("RFC") String rfc) throws Exception {
